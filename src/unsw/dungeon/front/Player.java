@@ -1,4 +1,4 @@
-package unsw.dungeon;
+package unsw.dungeon.front;
 
 /**
  * The player entity

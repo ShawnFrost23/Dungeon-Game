@@ -1,4 +1,4 @@
-package unsw.dungeon;
+package unsw.dungeon.front;
 
 import java.util.ArrayList;
 import java.util.List;

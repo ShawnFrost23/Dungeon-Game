@@ -1,4 +1,4 @@
-package unsw.dungeon;
+package unsw.dungeon.front;
 
 public class Wall extends Entity {
 

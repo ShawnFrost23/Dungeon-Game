@@ -1,4 +1,4 @@
-package unsw.dungeon;
+package unsw.dungeon.front;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
