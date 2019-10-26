@@ -13,7 +13,7 @@ public class Board {
 		Board board = new Board();
 		String[] lines = boardString.split("\n");
 		
-		board.width = lines[1].length();
+		board.width = lines[0].length();
 		board.height = lines.length;
 		
 		board.cells = new Cell[board.width][board.height];
