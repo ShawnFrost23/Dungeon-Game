@@ -47,4 +47,72 @@ public class TestBasics {
 			+ "P\n"
 		);
 	}
+	
+	/**
+	 * Test that a player walk around, but not into walls.
+	 */
+	@Test
+	public void testSimplePlayerNavigation() {
+		Game g = Game.createGame(""
+			+ "     \n"
+			+ "  P  \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.DOWN);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "     \n"
+			+ "  P  \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "     \n"
+			+ " P   \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "     \n"
+			+ "P    \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "     \n"
+			+ " P   \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(g.getBoardString(), ""
+			+ " P   \n"
+			+ "     \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+		g.movePlayer(Direction.DOWN);
+
+		assertEquals(g.getBoardString(), ""
+			+ "     \n"
+			+ " P   \n"
+			+ "  W  \n"
+			+ "     \n"
+		);
+		
+	}
 }
