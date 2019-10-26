@@ -90,16 +90,9 @@ public class Cell {
 		return board.adjacent(this, d);
 	}
 	
-	/**
-	 * True if this Cell will prevent an entry attempt by <b>m</b> -- <b>m</b>
-	 * cannot walk atop of it.s
-	 * @param m MoveableEntity to whether or not en
-	 * @param d
-	 * @return
-	 */
-	public boolean willPreventEntry(MoveableEntity m, Direction d) {
-		for (Entity entity : this.entities) {
-			if (entity.willPreventEntry(m, d)) {
+	public boolean isCollidable() {
+		for (Entity e : this.entities) {
+			if (e instanceof Collidable) {
 				return true;
 			}
 		}
@@ -107,29 +100,36 @@ public class Cell {
 	}
 
 	/**
-	 * Notify all entities on this Cell that MoveableEntity <b>m</b> has just
-	 * left. Furthermore, declare to this Cell itself that <b>m</b> has left.
+	 * Declare that Moveable m has exited this Cell. Notify all listeners.
 	 * @param m MoveableEntity that left this Cell
-	 * @param d Direction they left in
 	 */
-	public void exit(MoveableEntity m, Direction d) {
+	public void exit(Moveable m) {
 		this.entities.remove(m);
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			entity.onExit(m, d);
+			if (entity instanceof ListenForMovement) {
+				((ListenForMovement) entity).onExit(m);
+			}
 		}
 	}
 
 	/**
-	 * Notify all entities on this Cell that MoveableEntity <b>m</b> has just
-	 * entered. Furthermore, declare to this Cell itself that <b>m</b> has
-	 * entered.
+	 * Declare that Moveable m has entered this Cell. Notify all listeners.
 	 * @param m MoveableEntity that entered this Cell
-	 * @param d Direction they came from
 	 */
-	public void enter(MoveableEntity m, Direction d) {
+	public void enter(Moveable m) {
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			entity.onEnter(m, d);
+			if (entity instanceof ListenForMovement) {
+				((ListenForMovement) entity).onEnter(m);
+			}
 		}
 		this.entities.add(m);
+	}
+
+	public void push(Player p, Direction d) {
+		for (Entity entity : new ArrayList<Entity>(this.entities)) {
+			if (entity instanceof Pushable) {
+				((Pushable) entity).push(p, d);
+			}
+		}
 	}
 }

@@ -1,36 +1,33 @@
 package unsw.dungeon.back;
 
-public class Player implements MoveableEntity {
+public class Player implements Moveable, ListenForMovement {
 	private Cell location;
 	
 	public Player() {
 		
 	}
 	
-	// player has a pickup function ...
-	
-	
-	@Override
-	public Cell getLocation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void setLocation(Cell location) {
 		this.location = location;
 	}
+	
+	public void push(Direction d) {
+		this.location.adjacent(d).push(this, d);
+	}
+	
+	// public void swing(Direction d){ }
+	
 
 	@Override
 	public boolean canMove(Direction d) {
-		return !this.location.adjacent(d).willPreventEntry(this, d);
+		return !this.location.adjacent(d).isCollidable();
 	}
 
 	@Override
 	public void move(Direction d) {
-		this.location.exit(this, d);
+		this.location.exit(this);
 		this.location = this.location.adjacent(d);
-		this.location.enter(this, d);
+		this.location.enter(this);
 	}
 
 	@Override
@@ -44,17 +41,12 @@ public class Player implements MoveableEntity {
 	}
 
 	@Override
-	public boolean willPreventEntry(MoveableEntity m, Direction d) {
-		return false;
+	public void onEnter(Moveable m) {
+		// TODO if m is an enemy, one of us should die.
 	}
 
 	@Override
-	public void onEnter(MoveableEntity m, Direction d) {
-		// TODO Auto-generated method stub
-		// if typeof m == enemy, die.
-	}
-
-	@Override
-	public void onExit(MoveableEntity m, Direction d) {
+	public void onExit(Moveable m) {
+		// Do nothing.
 	}
 }

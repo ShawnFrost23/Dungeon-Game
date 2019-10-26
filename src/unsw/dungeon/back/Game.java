@@ -54,6 +54,7 @@ public class Game {
 	 * @param d direction to move the player in.
 	 */
 	public void movePlayer(Direction d) {
+		this.player.push(d);
 		if (this.player.canMove(d)) {
 			this.player.move(d);
 		}
