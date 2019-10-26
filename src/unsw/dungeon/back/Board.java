@@ -73,13 +73,14 @@ public class Board {
 	}
 	
 	
-	public void display() {
-		
+	public String getBoardString() {
+		String s = "";
 		for (int j = 0; j < this.height; ++j) {
 			for (int i = 0; i < this.width; ++i) {
-				System.out.print(cells[i][j].getTexture());
+				s += cells[i][j].getTexture();
 			}
-			System.out.print("\n");
+			s += "\n";
 		}
+		return s;
 	}
 }

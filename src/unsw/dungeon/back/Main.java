@@ -19,7 +19,7 @@ public class Main {
 			System.out.println("");
 		}
 		
-		g.display();
+		System.out.println(g.getBoardString());
 		
 		System.out.println("Your move: ");
 		Scanner sc = new Scanner(System.in);
@@ -42,7 +42,7 @@ public class Main {
 				g.moveEnemies();
 			}
 			
-			g.display();
+			System.out.println(g.getBoardString());
 			
 		}
 		sc.close();

@@ -21,8 +21,8 @@ public class Game {
 		return game;
 	}
 	
-	public void display() {
-		this.board.display();
+	public String getBoardString() {
+		return this.board.getBoardString();
 	}
 	
 	public void movePlayer(Direction d) {
