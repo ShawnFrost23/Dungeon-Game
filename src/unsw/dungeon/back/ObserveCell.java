@@ -1,5 +1,5 @@
 package unsw.dungeon.back;
 
 public interface ObserveCell {
-	public void notify(CellEvent event);
+	public void notifyOf(CellEvent event);
 }

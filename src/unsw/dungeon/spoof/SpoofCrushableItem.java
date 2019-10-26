@@ -30,7 +30,7 @@ public class SpoofCrushableItem implements Entity, ObserveCell {
 	}
 
 	@Override
-	public void notify(CellEvent event) {
+	public void notifyOf(CellEvent event) {
 		if (event instanceof CellEnteredEvent) {
 			CellEnteredEvent cellEnteredEvent = (CellEnteredEvent) event;
 			this.onEnter(cellEnteredEvent.getWhoEntered());

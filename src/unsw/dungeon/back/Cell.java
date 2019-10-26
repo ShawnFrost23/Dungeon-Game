@@ -148,7 +148,7 @@ public class Cell {
 	private void notifyAllOf(CellEvent event) {
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
 			if (entity instanceof ObserveCell) {
-				((ObserveCell) entity).notify(event);
+				((ObserveCell) entity).notifyOf(event);
 			}
 		}
 	}
