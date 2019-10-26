@@ -46,64 +46,70 @@ public class TestBoulder {
 		g.movePlayer(Direction.LEFT);
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "        \n"
 			+ "  B     \n"
 			+ "B PB    \n"
 			+ "  B     \n"
 			+ "        \n"
+			, g.getBoardString()
 		);
 
 		g.movePlayer(Direction.UP);
 		g.movePlayer(Direction.DOWN);
 
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "B PB    \n"
 			+ "  B     \n"
 			+ "        \n"
+			, g.getBoardString()
 		);
 
 		g.movePlayer(Direction.DOWN);
 		g.movePlayer(Direction.UP);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "B PB    \n"
 			+ "        \n"
 			+ "  B     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "B  PB   \n"
 			+ "        \n"
 			+ "  B     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "B   PB  \n"
 			+ "        \n"
 			+ "  B     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "B    PB \n"
 			+ "        \n"
 			+ "  B     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.DOWN);
@@ -116,12 +122,13 @@ public class TestBoulder {
 		g.movePlayer(Direction.LEFT);
 		g.movePlayer(Direction.LEFT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "  B     \n"
 			+ "        \n"
 			+ "BBP     \n"
 			+ "        \n"
 			+ "  B     \n"
+			, g.getBoardString()
 		);
 	}
 	
@@ -139,8 +146,9 @@ public class TestBoulder {
 		g.movePlayer(Direction.LEFT);
 		g.movePlayer(Direction.LEFT);
 
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "BBP B W\n"
+			, g.getBoardString()
 		);
 
 		g.movePlayer(Direction.RIGHT);
@@ -148,8 +156,9 @@ public class TestBoulder {
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "BB  PBW\n"
+			, g.getBoardString()
 		);
 		
 	}
@@ -167,8 +176,9 @@ public class TestBoulder {
 		);
 		
 		g1.movePlayer(Direction.RIGHT);
-		assertEquals(g1.getBoardString(), ""
+		assertEquals(""
 			+ " PB! \n"
+			, g1.getBoardString()
 		);
 		
 		fail("Boulder crushing pickups not implemented!");

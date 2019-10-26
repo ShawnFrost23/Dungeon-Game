@@ -21,8 +21,9 @@ public class TestBasics {
 			+ "  P  \n"
 		);
 		
-		assertEquals(g1.getBoardString(), ""
+		assertEquals(""
 			+ "  P  \n"
+			, g1.getBoardString()
 		);
 		
 		Game g2 = Game.createGame(""
@@ -32,19 +33,21 @@ public class TestBasics {
 			+ " \n"
 		);
 		
-		assertEquals(g2.getBoardString(), ""
+		assertEquals(""
 			+ " \n"
 			+ " \n"
 			+ "P\n"
 			+ " \n"
+			, g2.getBoardString()
 		);
 		
 		Game g3 = Game.createGame(""
 			+ "P\n"
 		);
 		
-		assertEquals(g3.getBoardString(), ""
+		assertEquals(""
 			+ "P\n"
+			, g3.getBoardString()
 		);
 	}
 	
@@ -62,56 +65,62 @@ public class TestBasics {
 		
 		g.movePlayer(Direction.DOWN);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "     \n"
 			+ "  P  \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.LEFT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "     \n"
 			+ " P   \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.LEFT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "     \n"
 			+ "P    \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "     \n"
 			+ " P   \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.UP);
 		
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ " P   \n"
 			+ "     \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.DOWN);
 
-		assertEquals(g.getBoardString(), ""
+		assertEquals(""
 			+ "     \n"
 			+ " P   \n"
 			+ "  W  \n"
 			+ "     \n"
+			, g.getBoardString()
 		);
 		
 	}
