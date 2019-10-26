@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Game;
 
 public class TestBoulder {
@@ -13,15 +14,13 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(
-			""
+		Game g = Game.createGame(""
 			+ " B  \n"
 			+ "  BB\n"
 			+ "    \n"
 		);
 		
-		assertEquals(g.getBoardString(),
-			""
+		assertEquals(g.getBoardString(),""
 			+ " B  \n"
 			+ "  BB\n"
 			+ "    \n"
@@ -34,7 +33,95 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC2() {
-		fail("Not implemented!");
+		Game g = Game.createGame(""
+			+ "        \n"
+			+ "  B     \n"
+			+ " BPB    \n"
+			+ "  B     \n"
+			+ "        \n"
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "        \n"
+			+ "  B     \n"
+			+ "B PB    \n"
+			+ "  B     \n"
+			+ "        \n"
+		);
+
+		g.movePlayer(Direction.UP);
+		g.movePlayer(Direction.DOWN);
+
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "B PB    \n"
+			+ "  B     \n"
+			+ "        \n"
+		);
+
+		g.movePlayer(Direction.DOWN);
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "B PB    \n"
+			+ "        \n"
+			+ "  B     \n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "B  PB   \n"
+			+ "        \n"
+			+ "  B     \n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "B   PB  \n"
+			+ "        \n"
+			+ "  B     \n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "B    PB \n"
+			+ "        \n"
+			+ "  B     \n"
+		);
+		
+		g.movePlayer(Direction.DOWN);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.UP);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "  B     \n"
+			+ "        \n"
+			+ "BBP     \n"
+			+ "        \n"
+			+ "  B     \n"
+		);
+		
 	}
 	
 	/**
