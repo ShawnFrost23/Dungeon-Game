@@ -3,6 +3,8 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import unsw.dungeon.spoof.SpoofCrushableItem;
+
 // TODO: enforce "Cell's shouldn't expose any notion of coordinates".
 
 /**
@@ -55,6 +57,14 @@ public class Cell {
 		this.entities.add(e);
 	}
 
+	/**
+	 * Remove an entity from this cell.
+	 * @param spoofCrushableItem
+	 */
+	public void removeEntity(Entity e) {
+		this.entities.remove(e);
+	}
+	
 	/**
 	 * Get the texture for this cell. This will be the texture of the entity on
 	 * this cell with the largest z-index, or ' ' if none are present.

@@ -171,16 +171,37 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC4() {
+		// Test that boulders cannot be pushed into enemies.
 		Game g1 = Game.createGame(""
-			+ " PB! \n"
+			+ " PB!  \n"
 		);
 		
 		g1.movePlayer(Direction.RIGHT);
 		assertEquals(""
-			+ " PB! \n"
+			+ " PB!  \n"
 			, g1.getBoardString()
 		);
+
+		// First check that we don't pickup the spoof items.
+		Game g2 = Game.createGame(""
+			+ "?PB?  \n"
+		);
+		g2.movePlayer(Direction.LEFT);
+		g2.movePlayer(Direction.RIGHT);
 		
-		fail("Boulder crushing pickups not implemented!");
+		assertEquals(""
+			+ "?PB?  \n"
+			, g2.getBoardString()
+		);
+		
+		// Then check that they disappear once a boulder gets pushed over them.
+		g2.movePlayer(Direction.RIGHT);
+		g2.movePlayer(Direction.RIGHT);
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "?   PB\n"
+			, g2.getBoardString()
+		);		
 	}
 }

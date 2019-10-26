@@ -1,5 +1,7 @@
 package unsw.dungeon.back;
 
+import unsw.dungeon.spoof.*;
+
 /**
  * A collection of cells. Board can tell its user what's effectively to the
  * left, right, above, or below each (non-edge) cell.
@@ -72,6 +74,14 @@ public class Board {
 					e.setLocation(cell);
 					game.trackEnemy(e);
 				}
+				
+				// If the item is a "spoof item" for testing, load it in.
+				if (c == '?') {
+					SpoofCrushableItem crushable = new SpoofCrushableItem();
+					cell.addEntity(crushable);
+					crushable.setLocation(cell);
+				}
+				
 			}
 		}
 		
