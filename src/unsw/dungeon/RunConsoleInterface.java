@@ -1,8 +1,9 @@
-package unsw.dungeon.back;
+package unsw.dungeon;
 
 import java.util.Scanner;
+import unsw.dungeon.back.*;
 
-public class Main {
+public class RunConsoleInterface {
 	public static void main(String[] args) {
 		Game g = Game.createGame(""
 			+ "WWWWWWWWWWWWWWWWWW\n"

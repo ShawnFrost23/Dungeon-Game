@@ -4,9 +4,11 @@ import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
-import unsw.dungeon.back.Direction;
-import unsw.dungeon.back.Game;
+import unsw.dungeon.back.*;
 
+/**
+ * Tests for the Boulder user story.
+ */
 public class TestBoulder {
 	/**
 	 * "Boulders are loaded from the map file and rendered in their correct
@@ -121,7 +123,6 @@ public class TestBoulder {
 			+ "        \n"
 			+ "  B     \n"
 		);
-		
 	}
 	
 	/**
@@ -130,7 +131,27 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC3() {
-		fail("Not implemented!");
+//		Game g = Game.createGame(""
+//			+ "B BPB W\n"
+//		);
+//		
+//		g.movePlayer(Direction.LEFT);
+//		g.movePlayer(Direction.LEFT);
+//		g.movePlayer(Direction.LEFT);
+//
+//		assertEquals(g.getBoardString(), ""
+//			+ "BBP B W\n"
+//		);
+//
+//		g.movePlayer(Direction.RIGHT);
+//		g.movePlayer(Direction.RIGHT);
+//		g.movePlayer(Direction.RIGHT);
+//		g.movePlayer(Direction.RIGHT);
+//		
+//		assertEquals(g.getBoardString(), ""
+//			+ "BB  PBW\n"
+//		);
+		
 	}
 	
 	
@@ -141,6 +162,6 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC4() {
-		fail("Not implemented!");
+		fail("Test not implemented!");
 	}
 }

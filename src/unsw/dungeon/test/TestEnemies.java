@@ -1,7 +1,8 @@
 package unsw.dungeon.test;
 
-import static org.junit.Assert.fail;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
 
@@ -68,5 +69,4 @@ public class TestEnemies {
 	public void AC6() {
 		fail("Test not implemented!");
 	}
-	
 }
