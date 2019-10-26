@@ -6,7 +6,7 @@ import unsw.dungeon.back.*;
  * An item that ought to get crushed by Boulders, but have no other interaction
  * with the world.
  */
-public class SpoofCrushableItem implements Entity, ObserveCell {
+public class SpoofCrushableItem implements ObserveCell {
 	private Cell location;
 	
 	public void setLocation(Cell location) {
