@@ -117,8 +117,8 @@ public class Cell {
 	public void exit(Moveable m) {
 		this.entities.remove(m);
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			if (entity instanceof ListenForMovement) {
-				((ListenForMovement) entity).onExit(m);
+			if (entity instanceof ObserveCell) {
+//				((ObserveCell) entity).onExit(m);
 			}
 		}
 	}
@@ -128,12 +128,8 @@ public class Cell {
 	 * @param m MoveableEntity that entered this Cell
 	 */
 	public void enter(Moveable m) {
-		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			if (entity instanceof ListenForMovement) {
-				((ListenForMovement) entity).onEnter(m);
-			}
-		}
 		this.entities.add(m);
+		this.notifyAllOf(new CellEntered(m));
 	}
 
 	/**
@@ -145,6 +141,14 @@ public class Cell {
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
 			if (entity instanceof Pushable) {
 				((Pushable) entity).push(p, d);
+			}
+		}
+	}
+	
+	private void notifyAllOf(CellEvent event) {
+		for (Entity entity : new ArrayList<Entity>(this.entities)) {
+			if (entity instanceof ObserveCell) {
+				((ObserveCell) entity).notify(event);
 			}
 		}
 	}

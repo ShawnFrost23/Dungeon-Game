@@ -1,6 +1,6 @@
 package unsw.dungeon.back;
 
-public class Player implements Moveable, ListenForMovement {
+public class Player implements Moveable {
 	private Cell location;
 	
 	public Player() {
@@ -38,15 +38,5 @@ public class Player implements Moveable, ListenForMovement {
 	@Override
 	public char getTexture() {
 		return 'P';
-	}
-
-	@Override
-	public void onEnter(Moveable m) {
-		// TODO if m is an enemy, one of us should die.
-	}
-
-	@Override
-	public void onExit(Moveable m) {
-		// Do nothing.
 	}
 }

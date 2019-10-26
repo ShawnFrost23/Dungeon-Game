@@ -6,7 +6,7 @@ import unsw.dungeon.back.*;
  * An item that ought to get crushed by Boulders, but have no other interaction
  * with the world.
  */
-public class SpoofCrushableItem implements ListenForMovement {
+public class SpoofCrushableItem implements Entity, ObserveCell {
 	private Cell location;
 	
 	public void setLocation(Cell location) {
@@ -24,13 +24,12 @@ public class SpoofCrushableItem implements ListenForMovement {
 	}
 
 	@Override
-	public void onEnter(Moveable m) {
-		if (m instanceof Boulder) {
-			this.location.removeEntity(this);
+	public void notify(CellEvent event) {
+		if (event instanceof CellEntered) {
+			CellEntered cellEnteredEvent = (CellEntered) event;
+			if (cellEnteredEvent.getWhoEntered() instanceof Boulder) {
+				this.location.removeEntity(this);
+			}
 		}
-	}
-
-	@Override
-	public void onExit(Moveable m) {
 	}
 }
