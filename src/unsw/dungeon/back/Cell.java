@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TODO: enforce "Cell's shouldn't expose any notion of coordinates".
-// TODO: add push(Dir) method here.
-// TODO: ... a lot of redesign here.
 
 /**
  * A collection of Entities at one discrete location.
