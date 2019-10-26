@@ -17,13 +17,13 @@ public class TestBoulder {
 	@Test
 	public void AC1() {
 		Game g = Game.createGame(""
-			+ " B  \n"
+			+ " B P\n"
 			+ "  BB\n"
 			+ "    \n"
 		);
 		
 		assertEquals(g.getBoardString(),""
-			+ " B  \n"
+			+ " B P\n"
 			+ "  BB\n"
 			+ "    \n"
 		);
