@@ -3,7 +3,7 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: enforce "Cell's shouldn't expose any notion of coordinates".
+// TODO: enforce "Cells shouldn't expose any notion of coordinates".
 
 /**
  * A collection of Entities at one discrete location.
@@ -30,7 +30,7 @@ public class Cell {
 
 	/**
 	 * Get this Cell's x-coordinate. This function should only be used by Board;
-	 * Cell's shouldn't expose any notion of coordinates, just know what is
+	 * Cells shouldn't expose any notion of coordinates, just know what is
 	 * directly adjacent to them.
 	 * @return this Cell's x-coordinate
 	 */
@@ -39,7 +39,7 @@ public class Cell {
 	}
 	/**
 	 * Get this Cell's y-coordinate. This function should only be used by Board;
-	 * Cell's shouldn't expose any notion of coordinates, just know what is
+	 * Cells shouldn't expose any notion of coordinates, just know what is
 	 * directly adjacent to them.
 	 * @return this Cell's y-coordinate
 	 */
