@@ -1,9 +1,8 @@
 package unsw.dungeon.test;
 
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
 
@@ -47,7 +46,5 @@ public class TestBasics {
 		assertEquals(g3.getBoardString(), ""
 			+ "P\n"
 		);
-		
 	}
-
 }
