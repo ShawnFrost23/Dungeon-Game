@@ -3,6 +3,10 @@ package unsw.dungeon.back;
 public class Enemy implements Moveable, Collidable {
 	private Cell location;
 	
+	public void setLocation(Cell location) {
+		this.location = location;
+	}
+	
 	@Override
 	public int getZ() {
 		return 999;
@@ -11,10 +15,6 @@ public class Enemy implements Moveable, Collidable {
 	@Override
 	public char getTexture() {
 		return '!';
-	}
-
-	public void setLocation(Cell location) {
-		this.location = location;
 	}
 
 	@Override

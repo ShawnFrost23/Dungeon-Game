@@ -50,7 +50,13 @@ public class Game {
 	}
 	
 	/**
-	 * Move the player one tile in a particular direction.
+	 * "Move" the player one tile in a particular direction.
+	 * A movement consists of:
+	 * <ol>
+	 *   <li> Push in that direction. </li>
+	 *   <li> Check if we can step in that direction (with no side-effects). </li>
+	 *   <li> If we can step in that direction, do so.</li>
+	 * </ol>
 	 * @param d direction to move the player in.
 	 */
 	public void movePlayer(Direction d) {

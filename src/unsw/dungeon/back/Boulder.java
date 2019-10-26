@@ -8,6 +8,10 @@ public class Boulder implements Moveable, Pushable, Collidable {
 		
 	}
 	
+	public void setLocation(Cell location) {
+		this.location = location;
+	}
+	
 	@Override
 	public int getZ() {
 		return 999;
@@ -16,11 +20,6 @@ public class Boulder implements Moveable, Pushable, Collidable {
 	@Override
 	public char getTexture() {
 		return 'B';
-	}
-
-
-	public void setLocation(Cell location) {
-		this.location = location;
 	}
 
 	@Override
