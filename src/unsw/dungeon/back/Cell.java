@@ -3,8 +3,6 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
-import unsw.dungeon.spoof.SpoofCrushableItem;
-
 // TODO: enforce "Cell's shouldn't expose any notion of coordinates".
 
 /**
