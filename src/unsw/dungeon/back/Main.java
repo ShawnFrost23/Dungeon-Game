@@ -4,8 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		Game g = Game.createGame(
-			""
+		Game g = Game.createGame(""
 			+ "WWWWWWWWWWWWWWWWWW\n"
 			+ "W                W\n"
 			+ "W     W  BWW !   W\n"
