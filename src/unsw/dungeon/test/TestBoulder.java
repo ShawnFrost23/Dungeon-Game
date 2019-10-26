@@ -131,26 +131,26 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC3() {
-//		Game g = Game.createGame(""
-//			+ "B BPB W\n"
-//		);
-//		
-//		g.movePlayer(Direction.LEFT);
-//		g.movePlayer(Direction.LEFT);
-//		g.movePlayer(Direction.LEFT);
-//
-//		assertEquals(g.getBoardString(), ""
-//			+ "BBP B W\n"
-//		);
-//
-//		g.movePlayer(Direction.RIGHT);
-//		g.movePlayer(Direction.RIGHT);
-//		g.movePlayer(Direction.RIGHT);
-//		g.movePlayer(Direction.RIGHT);
-//		
-//		assertEquals(g.getBoardString(), ""
-//			+ "BB  PBW\n"
-//		);
+		Game g = Game.createGame(""
+			+ "B BPB W\n"
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+
+		assertEquals(g.getBoardString(), ""
+			+ "BBP B W\n"
+		);
+
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g.getBoardString(), ""
+			+ "BB  PBW\n"
+		);
 		
 	}
 	
