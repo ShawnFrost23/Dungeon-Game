@@ -1,9 +1,9 @@
 package unsw.dungeon.back;
 
-public class CellEntered implements CellEvent {
+public class CellEnteredEvent implements CellEvent {
 	private Moveable whoEntered;
 	
-	public CellEntered(Moveable whoEntered) {
+	public CellEnteredEvent(Moveable whoEntered) {
 		this.whoEntered = whoEntered;
 	}
 	

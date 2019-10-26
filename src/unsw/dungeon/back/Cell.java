@@ -129,7 +129,7 @@ public class Cell {
 	 */
 	public void enter(Moveable m) {
 		this.entities.add(m);
-		this.notifyAllOf(new CellEntered(m));
+		this.notifyAllOf(new CellEnteredEvent(m));
 	}
 
 	/**

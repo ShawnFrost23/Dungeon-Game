@@ -25,8 +25,8 @@ public class SpoofCrushableItem implements Entity, ObserveCell {
 
 	@Override
 	public void notify(CellEvent event) {
-		if (event instanceof CellEntered) {
-			CellEntered cellEnteredEvent = (CellEntered) event;
+		if (event instanceof CellEnteredEvent) {
+			CellEnteredEvent cellEnteredEvent = (CellEnteredEvent) event;
 			if (cellEnteredEvent.getWhoEntered() instanceof Boulder) {
 				this.location.removeEntity(this);
 			}
