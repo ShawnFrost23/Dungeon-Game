@@ -162,6 +162,15 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC4() {
-		fail("Test not implemented!");
+		Game g1 = Game.createGame(""
+			+ " PB! \n"
+		);
+		
+		g1.movePlayer(Direction.RIGHT);
+		assertEquals(g1.getBoardString(), ""
+			+ " PB! \n"
+		);
+		
+		fail("Boulder crushing pickups not implemented!");
 	}
 }
