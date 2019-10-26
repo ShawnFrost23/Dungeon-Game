@@ -21,7 +21,7 @@ public class Cell {
 	 * Construct a new Cell.
 	 * @param board board to which this cell belongs
 	 * @param x x-coordinate of the cell
-	 * @param y y-cooridnate of the cell
+	 * @param y y-coordinate of the cell
 	 */
 	public Cell(Board board, int x, int y) {
 		this.x = x;
