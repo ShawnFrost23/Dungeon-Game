@@ -8,65 +8,313 @@ import unsw.dungeon.back.*;
 
 /**
  * Tests for the Enemies user story.
+ * @note Many of these tests tests are rendered obsolete by the Smart Enemies
+ * user story. The old behaviour should still be kept and tested with a spoof
+ * DumbEnemy entity.
  */
 public class TestEnemies {
-//	/**
-//	 * "Enemies are loaded from the map file and rendered in their correct
-//	 * position."
-//	 */
-//	@Test
-//	public void AC1() {
-//		fail("Test not implemented!");
-//	}
-//	
-//	/**
-//	 * "Enemies move toward the player at one tile per half second (left, right,
-//	 * up, down)."
-//	 * 
-//	 * @Note Only tests the "moves toward the player", not for the existence of
-//	 * any timers.
-//	 */
-//	@Test
-//	public void AC2() {
-//		fail("Test not implemented!");
-//	}
-//	
-//	/**
-//	 * "Enemies do not move through walls, push boulders. Every tick, they
-//	 * choose their move (or stay still) in a way that minimises their distance
-//	 * (L2) to the player's current position."
-//	 */
-//	@Test
-//	public void AC3() {
-//		fail("Test not implemented!");
-//	}
-//	
-//	/**
-//	 * "Enemies will not stand on top of one another."
-//	 */
-//	@Test
-//	public void AC4() {
-//		fail("Test not implemented!");
-//	}
-//	
-//	/**
-//	 * "If enemies collide with the player (they walk into the player or the
-//	 * player walks into them), the player dies. It is sufficient here that
-//	 * death = the map resets."
-//	 */
-//	@Test
-//	public void AC5() {
-//		fail("Test not implemented!");
-//	}
-//
-//	/**
-//	 * "Enemies do not start moving until the player presses makes their first
-//	 * move -- they are 'paused' until the player is ready to start."
-//	 * 
-//	 * @Note Doesn't actually test for anything.
-//	 */
-//	@Test
-//	public void AC6() {
-//		fail("Test not implemented!");
-//	}
+	/**
+	 * "Enemies are loaded from the map file and rendered in their correct
+	 * position."
+	 */
+	@Test
+	public void AC1() {
+		Game g = Game.createGame(""
+			+ " P  \n"
+			+ "  !!\n"
+			+ " !  \n"
+		);
+		
+		assertEquals(g.getBoardString(),""
+			+ " P  \n"
+			+ "  !!\n"
+			+ " !  \n"
+		);
+	}
+	
+	/**
+	 * "Enemies move toward the player at one tile per half second (left, right,
+	 * up, down)."
+	 * @note The "timer" part is untested; this test should pass if the enemies
+	 * move at only one tile per "tick".
+	 */
+	@Test
+	public void AC2() {
+		Game g = Game.createGame(""
+			+ "!   P   ! \n"
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(g.getBoardString(),""
+			+ " !  P  !  \n"
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(g.getBoardString(),""
+			+ "  ! P !   \n"
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(g.getBoardString(),""
+			+ "   !P!    \n"
+		);
+	}
+	
+	/**
+	 * "Enemies do not move through walls, push boulders. Every tick, they
+	 * choose their move (or stay still) in a way that minimises their distance
+	 * (L2) to the player's current position."
+	 */
+	@Test
+	public void AC3() {
+		Game g1 = Game.createGame(""
+			+ " P        ! \n"
+		);
+		
+		g1.moveEnemies();
+		
+		assertEquals(g1.getBoardString(),""
+			+ " P       !  \n"
+		);
+		
+		g1.moveEnemies();
+		
+		assertEquals(g1.getBoardString(),""
+			+ " P      !   \n"
+		);
+		
+		g1.moveEnemies();
+		
+		assertEquals(g1.getBoardString(),""
+			+ " P     !    \n"
+		);
+		
+		Game g2 = Game.createGame(""
+			+ " !W  P  B! \n"
+			+ "           \n"
+			+ "     !     \n"
+		);
+		
+		g2.moveEnemies();
+		
+		assertEquals(g2.getBoardString(), ""
+			+ " !W  P  B! \n"
+			+ "     !     \n"
+			+ "           \n"
+		);
+
+		Game g3 = Game.createGame(""
+			+ "      \n"
+			+ " P    \n"
+			+ "  W  !\n"
+			+ "  W   \n"
+			+ "  !   \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ " P    \n"
+			+ "  W ! \n"
+			+ "  W   \n"
+			+ " !    \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ " P    \n"
+			+ "  W!  \n"
+			+ " !W   \n"
+			+ "      \n"
+		);
+
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ " P !  \n"
+			+ " !W   \n"
+			+ "  W   \n"
+			+ "      \n"
+		);
+		
+		g3.movePlayer(Direction.UP);
+		g3.movePlayer(Direction.LEFT);
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "P     \n"
+			+ "   !  \n"
+			+ " !W   \n"
+			+ "  W   \n"
+			+ "      \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "P     \n"
+			+ " !!   \n"
+			+ "  W   \n"
+			+ "  W   \n"
+			+ "      \n"
+		);
+		
+		g3.movePlayer(Direction.DOWN);
+		g3.movePlayer(Direction.DOWN);
+		g3.movePlayer(Direction.DOWN);
+		g3.movePlayer(Direction.DOWN);
+		g3.movePlayer(Direction.RIGHT);
+		g3.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ " !!   \n"
+			+ "  W   \n"
+			+ "  W   \n"
+			+ "  P   \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ "  !   \n"
+			+ " !W   \n"
+			+ "  W   \n"
+			+ "  P   \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ "  !   \n"
+			+ "  W   \n"
+			+ " !W   \n"
+			+ "  P   \n"
+		);
+		
+		g3.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ "  !   \n"
+			+ "  W   \n"
+			+ " !W   \n"
+			+ "   P  \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ "   !  \n"
+			+ "  W   \n"
+			+ "  W   \n"
+			+ " ! P  \n"
+		);
+		
+		g3.moveEnemies();
+		
+		assertEquals(g3.getBoardString(), ""
+			+ "      \n"
+			+ "      \n"
+			+ "  W!  \n"
+			+ "  W   \n"
+			+ "  !P  \n"
+		);
+	}
+	
+	/**
+	 * "Enemies will not stand on top of one another."
+	 */
+	@Test
+	public void AC4() {
+		Game g1 = Game.createGame(""
+			+ "P W!! \n"
+		);
+		
+		g1.moveEnemies();
+		
+		assertEquals(g1.getBoardString(), ""
+			+ "P W!! \n"
+		);
+		
+		Game g2 = Game.createGame(""
+			+ "  W!  \n"
+			+ " P  ! \n"
+		);
+		
+		g2.moveEnemies();
+		
+		if (
+			g2.getBoardString().equals(""
+			+ "  W!  \n"
+			+ " P !  \n"
+		)) {
+			// pass: the bottom enemy moved first 
+		} else if (
+			g2.getBoardString().equals(""
+			+ "  W   \n"
+			+ " P !! \n"
+		)) {
+			// pass: the top enemy moved first
+		} else {
+			fail("Enemies did not block one another.");
+		}
+	}
+	
+	/**
+	 * "If enemies collide with the player (they walk into the player or the
+	 * player walks into them), the player dies. It is sufficient here that
+	 * death = the map resets."
+	 */
+	@Test
+	public void AC5() {
+		Game g1 = Game.createGame(""
+			+ " P ! \n"
+		);
+		
+		g1.moveEnemies();
+		
+		assertEquals(g1.getBoardString(), ""
+			+ " P!  \n"
+		);
+		
+		g1.moveEnemies();
+		
+		fail("Check for player death not implemented.");
+		
+		Game g2 = Game.createGame(""
+			+ " P ! \n"
+		);
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertEquals(g1.getBoardString(), ""
+			+ "  P! \n"
+		);
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		fail("Check for player death not implemented.");
+		
+	}
+
+	/**
+	 * "Enemies do not start moving until the player presses makes their first
+	 * move -- they are 'paused' until the player is ready to start."
+	 * 
+	 * @note Doesn't actually test for anything, this is concerned with timers.
+	 */
+	@Test
+	public void AC6() {
+		// Test passed!
+	}
 }
