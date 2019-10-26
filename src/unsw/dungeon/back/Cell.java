@@ -116,11 +116,7 @@ public class Cell {
 	 */
 	public void exit(Moveable m) {
 		this.entities.remove(m);
-		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			if (entity instanceof ObserveCell) {
-//				((ObserveCell) entity).onExit(m);
-			}
-		}
+		this.notifyAllOf(new CellExitedEvent(m));
 	}
 
 	/**
