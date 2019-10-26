@@ -13,7 +13,7 @@ public class Main {
 			+ "W  P  B          W\n"
 			+ "W            !   W\n"
 			+ "WWWWWWWWWWWWWWWWWW\n"
-			);
+		);
 		
 		for (int i = 0; i < 40; ++i) {
 			System.out.println("");
