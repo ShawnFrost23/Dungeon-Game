@@ -98,6 +98,11 @@ public class Cell {
 		return board.adjacent(this, d);
 	}
 	
+	/**
+	 * Determine whether this cell should prevent
+	 * {@link MoveableEntity MoveableEntities} from entering it.
+	 * @return true if any entities on this cell are collidable
+	 */
 	public boolean isCollidable() {
 		for (Entity e : this.entities) {
 			if (e instanceof Collidable) {
@@ -133,6 +138,11 @@ public class Cell {
 		this.entities.add(m);
 	}
 
+	/**
+	 * Declare that a Player has attempted to push the things in this cell.
+	 * @param p Player who's pushing
+	 * @param d direction they're pushing
+	 */
 	public void push(Player p, Direction d) {
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
 			if (entity instanceof Pushable) {
