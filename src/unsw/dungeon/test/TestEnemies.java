@@ -3,6 +3,11 @@ package unsw.dungeon.test;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
+import unsw.dungeon.back.*;
+
+/**
+ * Tests for the Enemies user story.
+ */
 public class TestEnemies {
 	/**
 	 * "Enemies are loaded from the map file and rendered in their correct
@@ -10,7 +15,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC1() {
-		fail("Not implemented!");
+		fail("Test not implemented!");
 	}
 	
 	/**
@@ -22,7 +27,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC2() {
-		fail("Not implemented!");
+		fail("Test not implemented!");
 	}
 	
 	/**
@@ -32,7 +37,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC3() {
-		fail("Not implemented!"); 
+		fail("Test not implemented!");
 	}
 	
 	/**
@@ -40,7 +45,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC4() {
-		fail("Not implemented!"); 
+		fail("Test not implemented!");
 	}
 	
 	/**
@@ -50,7 +55,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC5() {
-		fail("Not implemented!"); 
+		fail("Test not implemented!");
 	}
 
 	/**
@@ -61,7 +66,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC6() {
-		fail("Not implemented!"); 
+		fail("Test not implemented!");
 	}
 	
 }
