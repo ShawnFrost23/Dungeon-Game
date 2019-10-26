@@ -1,7 +1,10 @@
 package unsw.dungeon.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import unsw.dungeon.back.Game;
 
 public class TestBoulder {
 	/**
@@ -10,7 +13,19 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC1() {
-		fail("Not implemented!");
+		Game g = Game.createGame(
+			""
+			+ " B  \n"
+			+ "  BB\n"
+			+ "    \n"
+		);
+		
+		assertEquals(g.getBoardString(),
+			""
+			+ " B  \n"
+			+ "  BB\n"
+			+ "    \n"
+		);
 	}
 	
 	/**
