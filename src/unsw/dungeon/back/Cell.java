@@ -130,6 +130,7 @@ public class Cell {
 
 	/**
 	 * Declare that a Player has attempted to push the things in this cell.
+	 * Notify all listeners.
 	 * @param p Player who's pushing
 	 * @param d direction they're pushing
 	 */
@@ -137,6 +138,10 @@ public class Cell {
 		this.notifyAllOf(new CellPushedEvent(p, d));
 	}
 	
+	/**
+	 * Notify all observers that a CellEvent has been fired.
+	 * @param event event that has been fired
+	 */
 	private void notifyAllOf(CellEvent event) {
 		for (Entity entity : new ArrayList<Entity>(this.entities)) {
 			if (entity instanceof ObserveCell) {

@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+/**
+ * An event that is fired whenever a Moveable exits a cell.
+ */
 public class CellExitedEvent implements CellEvent {
 	private Moveable whoExited;
 	

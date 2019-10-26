@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+/**
+ * A type of Entity that is able to move from one Cell to another.
+ */
 public interface Moveable extends Entity {
 	/**
 	 * True if this entity is allowed to move in the given direction.

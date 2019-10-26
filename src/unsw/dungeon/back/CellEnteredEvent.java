@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+/**
+ * An event that is fired whenever a Moveable enters a cell.
+ */
 public class CellEnteredEvent implements CellEvent {
 	private Moveable whoEntered;
 	

@@ -1,5 +1,13 @@
 package unsw.dungeon.back;
 
+/**
+ * Classes that implement this interface will be notified whenever a
+ * {@link CellEvent} in the cell they belong to.
+ */
 public interface ObserveCell {
+	/**
+	 * Notify the observer that a CellEvent has been fired.
+	 * @param event event that has been fired
+	 */
 	public void notifyOf(CellEvent event);
 }

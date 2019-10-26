@@ -3,7 +3,6 @@ package unsw.dungeon.back;
 public class Boulder implements Moveable, Collidable, ObserveCell {
 	private Cell location;
 	
-	
 	public Boulder() {
 		
 	}
