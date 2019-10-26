@@ -39,7 +39,7 @@ public class Board {
 					Player p = new Player();
 					cell.addEntity(p);
 					p.setLocation(cell);
-					game.setPlayer(p);
+					game.trackPlayer(p);
 				} else if (c == 'B') {
 					Boulder b = new Boulder();
 					cell.addEntity(b);
@@ -48,7 +48,7 @@ public class Board {
 					Enemy e = new Enemy();
 					cell.addEntity(e);
 					e.setLocation(cell);
-					game.addEnemy(e);
+					game.trackEnemy(e);
 				}
 			}
 			
