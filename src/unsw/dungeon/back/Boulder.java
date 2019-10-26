@@ -1,6 +1,6 @@
 package unsw.dungeon.back;
 
-public class Boulder implements Moveable, Pushable, Collidable {
+public class Boulder implements Moveable, Collidable, ObserveCell {
 	private Cell location;
 	
 	
@@ -10,6 +10,13 @@ public class Boulder implements Moveable, Pushable, Collidable {
 	
 	public void setLocation(Cell location) {
 		this.location = location;
+	}
+	
+	private void onPush(CellPushedEvent event) {
+		Direction d = event.getDirectionPushed();
+		if (this.canMove(d)) {
+			this.move(d);
+		}
 	}
 	
 	@Override
@@ -35,9 +42,9 @@ public class Boulder implements Moveable, Pushable, Collidable {
 	}
 
 	@Override
-	public void push(Player p, Direction d) {
-		if (this.canMove(d)) {
-			this.move(d);
+	public void notifyOf(CellEvent event) {
+		if (event instanceof CellPushedEvent) {
+			this.onPush((CellPushedEvent) event);
 		}
 	}
 }

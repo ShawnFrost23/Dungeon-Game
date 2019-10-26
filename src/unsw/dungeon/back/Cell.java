@@ -134,11 +134,7 @@ public class Cell {
 	 * @param d direction they're pushing
 	 */
 	public void push(Player p, Direction d) {
-		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			if (entity instanceof Pushable) {
-				((Pushable) entity).push(p, d);
-			}
-		}
+		this.notifyAllOf(new CellPushedEvent(p, d));
 	}
 	
 	private void notifyAllOf(CellEvent event) {
