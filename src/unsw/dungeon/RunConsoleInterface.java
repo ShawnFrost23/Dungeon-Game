@@ -10,8 +10,8 @@ public class RunConsoleInterface {
 			+ "W                W\n"
 			+ "W     W  BWW !   W\n"
 			+ "W          W     W\n"
-			+ "W  P  B          W\n"
-			+ "W            !   W\n"
+			+ "W  P  B _        W\n"
+			+ "W            ! _ W\n"
 			+ "WWWWWWWWWWWWWWWWWW\n"
 		);
 		
