@@ -9,7 +9,7 @@ import unsw.dungeon.back.event.CellPushedEvent;
 
 public class Enemy implements Moveable, Collidable, Observer {
 	public interface MovementStrategy {
-		public Direction chooseMove(Enemy me, WorldState world);
+		public Direction chooseMove(WorldState world);
 	}
 	
 	private Cell location;
@@ -23,8 +23,8 @@ public class Enemy implements Moveable, Collidable, Observer {
 	 * @return direction to move in or <code>null</code> if the Enemy does not
 	 * wish to move 
 	 */
-	public Direction chooseMove(Player p, WorldState world) {
-		return this.movementStrategy.chooseMove(this, world);
+	public Direction chooseMove(WorldState world) {
+		return this.movementStrategy.chooseMove(world);
 	}
 	
 	/**

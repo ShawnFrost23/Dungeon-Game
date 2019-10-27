@@ -1,7 +1,8 @@
 package unsw.dungeon.back;
 
 /**
- * A world that 
+ * A world that {@link Enemy.MovementStrategy} can query to decide what move to
+ * make.
  */
 public class WorldState {
 	private Cell[][] worldState;
@@ -19,6 +20,9 @@ public class WorldState {
 	}
 
 	public boolean getIsCollidable(int x, int y) {
+		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
+			return true;
+		}
 		return worldState[x][y].isCollidable();
 	}
 
