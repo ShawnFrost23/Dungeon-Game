@@ -2,13 +2,14 @@ package unsw.dungeon.spoof;
 
 import unsw.dungeon.back.*;
 import unsw.dungeon.back.event.CellEnteredEvent;
-import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
 
 /**
  * An item that ought to get crushed by Boulders, but have no other interaction
  * with the world.
  */
-public class SpoofCrushableItem implements ObserveCell {
+public class SpoofCrushableItem implements Entity, Observer {
 	private Cell location;
 	
 	public void setLocation(Cell location) {
@@ -33,7 +34,7 @@ public class SpoofCrushableItem implements ObserveCell {
 	}
 
 	@Override
-	public void notifyOf(CellEvent event) {
+	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);
 		}

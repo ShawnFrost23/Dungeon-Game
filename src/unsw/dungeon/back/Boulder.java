@@ -1,9 +1,10 @@
 package unsw.dungeon.back;
 
-import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.CellPushedEvent;
 
-public class Boulder implements Moveable, Collidable, ObserveCell {
+public class Boulder implements Moveable, Collidable, Observer {
 	private Cell location;
 	
 	public Boulder() {
@@ -44,7 +45,7 @@ public class Boulder implements Moveable, Collidable, ObserveCell {
 	}
 
 	@Override
-	public void notifyOf(CellEvent event) {
+	public void notifyOf(Event event) {
 		if (event instanceof CellPushedEvent) {
 			this.onPush((CellPushedEvent) event);
 		}

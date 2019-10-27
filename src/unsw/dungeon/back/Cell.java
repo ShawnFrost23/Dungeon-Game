@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unsw.dungeon.back.event.CellEnteredEvent;
-import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 
@@ -13,12 +15,13 @@ import unsw.dungeon.back.event.CellPushedEvent;
 /**
  * A collection of Entities at one discrete location.
  */
-public class Cell {
+public class Cell implements Subject {
 	private Board board;
 	private int x;
 	private int y;
 	
 	private List<Entity> entities;
+	private List<Observer> observers;
 	
 	/**
 	 * Construct a new Cell.
@@ -31,6 +34,7 @@ public class Cell {
 		this.y = y;
 		this.board = board;
 		this.entities = new ArrayList<Entity>();
+		this.observers = new ArrayList<Observer>();
 	}
 
 	/**
@@ -53,19 +57,25 @@ public class Cell {
 	}
 	
 	/**
-	 * Add an entity to this cell. Should only be used to create a Board.
+	 * Add an entity to this cell.
 	 * @param e entity to add
 	 */
 	public void addEntity(Entity e) {
 		this.entities.add(e);
+		if (e instanceof Observer) {
+			this.observers.add((Observer) e);
+		}
 	}
 
 	/**
 	 * Remove an entity from this cell.
-	 * @param spoofCrushableItem
+	 * @param e entity to remove
 	 */
 	public void removeEntity(Entity e) {
 		this.entities.remove(e);
+		if (e instanceof Observer) {
+			this.observers.remove((Observer) e);
+		}
 	}
 	
 	/**
@@ -120,7 +130,7 @@ public class Cell {
 	 * @param m MoveableEntity that left this Cell
 	 */
 	public void exit(Moveable m) {
-		this.entities.remove(m);
+		this.removeEntity(m);
 		this.notifyAllOf(new CellExitedEvent(m));
 	}
 
@@ -129,8 +139,8 @@ public class Cell {
 	 * @param m MoveableEntity that entered this Cell
 	 */
 	public void enter(Moveable m) {
-		this.entities.add(m);
 		this.notifyAllOf(new CellEnteredEvent(m));
+		this.addEntity(m);
 	}
 
 	/**
@@ -143,15 +153,27 @@ public class Cell {
 		this.notifyAllOf(new CellPushedEvent(p, d));
 	}
 	
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+		
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+	}
+
 	/**
 	 * Notify all observers that a CellEvent has been fired.
 	 * @param event event that has been fired
 	 */
-	private void notifyAllOf(CellEvent event) {
-		for (Entity entity : new ArrayList<Entity>(this.entities)) {
-			if (entity instanceof ObserveCell) {
-				((ObserveCell) entity).notifyOf(event);
-			}
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : new ArrayList<Observer>(this.observers)) {
+			observer.notifyOf(event);
+			
 		}
 	}
+	
 }

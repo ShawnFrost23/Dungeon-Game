@@ -1,9 +1,10 @@
 package unsw.dungeon.back;
 
 import unsw.dungeon.back.event.CellEnteredEvent;
-import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
 
-public class Player implements Moveable, ObserveCell {
+public class Player implements Moveable, Observer {
 	private Cell location;
 	
 	public Player() {
@@ -62,7 +63,7 @@ public class Player implements Moveable, ObserveCell {
 	}
 
 	@Override
-	public void notifyOf(CellEvent event) {
+	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);
 		}

@@ -1,12 +1,13 @@
 package unsw.dungeon.back;
 
-import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.CellPushedEvent;
 
 // TODO: major refactoring here and in Cell. Will do soon. Try to implement
 // heuristic and a spoofBoard to simulate moves on.
 
-public class Enemy implements Moveable, Collidable, ObserveCell {
+public class Enemy implements Moveable, Collidable, Observer {
 	public interface MovementStrategy {
 		public Direction chooseMove(Enemy e, Player p);
 	}
@@ -100,7 +101,7 @@ public class Enemy implements Moveable, Collidable, ObserveCell {
 	}
 
 	@Override
-	public void notifyOf(CellEvent event) {
+	public void notifyOf(Event event) {
 		if (event instanceof CellPushedEvent) {
 			this.onPush((CellPushedEvent) event);
 		}

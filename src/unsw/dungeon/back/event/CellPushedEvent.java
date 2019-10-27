@@ -9,7 +9,7 @@ import unsw.dungeon.back.Player;
  * Note: this event is fired in the cell that is being pushed, not in the cell
  * that the player is in when they're pushing.
  */
-public class CellPushedEvent implements CellEvent {
+public class CellPushedEvent implements Event {
 	private Player whoPushed;
 	private Direction directionPushed;
 	
