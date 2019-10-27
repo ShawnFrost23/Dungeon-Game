@@ -1,6 +1,6 @@
 package unsw.dungeon.back;
 
-public class Player implements Moveable {
+public class Player implements Moveable, ObserveCell {
 	private Cell location;
 	
 	public Player() {
@@ -21,6 +21,20 @@ public class Player implements Moveable {
 	
 	// public void swing(Direction d){ }
 	
+	public void onEnter(CellEnteredEvent event) {
+		Moveable who = event.getWhoEntered();
+		if (who instanceof Enemy) {
+			this.touchEnemy();
+		}
+	}
+	
+	public void touchEnemy() {
+		this.kill();
+	}
+	
+	public void kill() {
+		System.out.println("Ded");
+	}
 
 	@Override
 	public boolean canMove(Direction d) {
@@ -42,5 +56,12 @@ public class Player implements Moveable {
 	@Override
 	public char getTexture() {
 		return 'P';
+	}
+
+	@Override
+	public void notifyOf(CellEvent event) {
+		if (event instanceof CellEnteredEvent) {
+			this.onEnter((CellEnteredEvent) event);
+		}
 	}
 }

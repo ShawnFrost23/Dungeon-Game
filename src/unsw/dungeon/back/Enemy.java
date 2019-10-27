@@ -3,7 +3,7 @@ package unsw.dungeon.back;
 // TODO: major refactoring here and in Cell. Will do soon. Try to implement
 // heuristic and a spoofBoard to simulate moves on.
 
-public class Enemy implements Moveable, Collidable {
+public class Enemy implements Moveable, Collidable, ObserveCell {
 	public interface MovementStrategy {
 		public Direction chooseMove(Enemy e, Player p);
 	}
@@ -69,6 +69,11 @@ public class Enemy implements Moveable, Collidable {
 		this.movementStrategy = movementStrategy;
 	}
 	
+	public void onPush(CellPushedEvent event) {
+		Player p = event.getWhoPushed();
+		p.touchEnemy();
+	}
+	
 	@Override
 	public int getZ() {
 		return 999;
@@ -89,5 +94,12 @@ public class Enemy implements Moveable, Collidable {
 		this.location.exit(this);
 		this.location = this.location.adjacent(d);
 		this.location.enter(this);
+	}
+
+	@Override
+	public void notifyOf(CellEvent event) {
+		if (event instanceof CellPushedEvent) {
+			this.onPush((CellPushedEvent) event);
+		}
 	}
 }
