@@ -1,12 +1,22 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.PlayerKilledEvent;
+import unsw.dungeon.back.event.Subject;
 
-public class Player implements Moveable, Observer {
+public class Player implements Moveable, Subject, Observer {
 	private Cell location;
-		
+	private List<Observer> observers;
+	
+	public Player() {
+		this.observers = new ArrayList<Observer>();
+	}
+
 	/**
 	 * Set the location of this player.
 	 * @param location location to set
@@ -37,7 +47,7 @@ public class Player implements Moveable, Observer {
 	 * the death of the enemy, or the death of the player.
 	 */
 	public void touchEnemy(Enemy e) {
-		System.out.println("Ded");
+		this.notifyAllOf(new PlayerKilledEvent());
 	}
 
 	@Override
@@ -62,6 +72,23 @@ public class Player implements Moveable, Observer {
 		return 'P';
 	}
 
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+	}
+
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : this.observers) {
+			observer.notifyOf(event);
+		}
+	}
+	
 	@Override
 	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {

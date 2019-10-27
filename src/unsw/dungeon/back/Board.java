@@ -2,6 +2,8 @@ package unsw.dungeon.back;
 
 import unsw.dungeon.spoof.*;
 
+// TODO: Board creational methods ...
+
 /**
  * A collection of cells. Board can tell its user what's effectively to the
  * left, right, above, or below each (non-edge) cell.

@@ -3,10 +3,14 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.PlayerKilledEvent;
+
 /**
  * The interface through which all changes to the Board state must occur.
  */
-public class Game {
+public class Game implements Observer {
 	private Board board;
 	private Player player;
 	private List<Enemy> enemies;
@@ -25,6 +29,20 @@ public class Game {
 		game.enemies = new ArrayList<Enemy>();
 		game.board = Board.createBoard(boardString, game);
 		return game;
+	}
+
+	/**
+	 * Declare that the game has been won; print "Game won." to the screen.
+	 */
+	private void win() {
+		System.out.println("Game won.");
+	}
+	
+	/**
+	 * Declare that the game has been lost; print "Game lost." to the screen.
+	 */
+	private void lose() {
+		System.out.println("Game lost.");
 	}
 	
 	/**
@@ -88,6 +106,7 @@ public class Game {
 	 */
 	public void trackPlayer(Player player) {
 		this.player = player;
+		this.player.attachListener(this);
 	}
 	
 	/**
@@ -98,5 +117,24 @@ public class Game {
 	public void trackEnemy(Enemy enemy) {
 		this.enemies.add(enemy);
 	}
+
+	/**
+	 * Get the Player of this board.
+	 * Should only be used publicly for testing. 
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
 	
+	
+	@Override
+	public void notifyOf(Event event) {
+		if (event instanceof PlayerKilledEvent) {
+			this.onPlayerKilled((PlayerKilledEvent) event);
+		}
+	}
+	
+	private void onPlayerKilled(PlayerKilledEvent event) {
+		this.lose();
+	}
 }
