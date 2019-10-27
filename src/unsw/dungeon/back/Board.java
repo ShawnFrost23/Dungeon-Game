@@ -74,6 +74,9 @@ public class Board {
 					e.setLocation(cell);
 					e.setMovementStrategy(new NaiveMovementStrategy());
 					game.trackEnemy(e);
+				} else if (c == '_') {
+					FloorSwitch f = new FloorSwitch();
+					cell.addEntity(f);	
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
