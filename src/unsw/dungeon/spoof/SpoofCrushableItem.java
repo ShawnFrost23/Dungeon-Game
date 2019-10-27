@@ -16,13 +16,6 @@ public class SpoofCrushableItem implements Entity, Observer {
 		this.location = location;
 	}
 
-	private void onEnter(CellEnteredEvent event) {
-		Moveable who = event.getWhoEntered();
-		if (who instanceof Boulder) {
-			this.location.removeEntity(this);
-		}
-	}
-	
 	@Override
 	public int getZ() {
 		return 9999;
@@ -37,6 +30,13 @@ public class SpoofCrushableItem implements Entity, Observer {
 	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);
+		}
+	}
+	
+	private void onEnter(CellEnteredEvent event) {
+		Moveable who = event.getWhoEntered();
+		if (who instanceof Boulder) {
+			this.location.removeEntity(this);
 		}
 	}
 }
