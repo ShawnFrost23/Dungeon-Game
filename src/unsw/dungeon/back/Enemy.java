@@ -56,26 +56,41 @@ public class Enemy implements Moveable, Collidable, Observer {
 	
 	private Cell location;
 	private MovementStrategy movementStrategy;
-	
+
+	// TODO: take in EffectiveWorldState instead (with no side effects).
+	/**
+	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
+	 * would like to make.
+	 * @param p the Player that this Enemy is targeting
+	 * @return direction to move in or <code>null</code> if the Enemy does not
+	 * wish to move 
+	 */
 	public Direction chooseMove(Player p) {
 		return this.movementStrategy.chooseMove(this, p);
 	}
 	
+	/**
+	 * Set the location of this Enemy.
+	 * @param location location to set
+	 */
 	public void setLocation(Cell location) {
 		this.location = location;
 	}
 	
+	/**
+	 * Get the location of this enemy.
+	 * @return this enemy's location
+	 */
 	public Cell getLocation() {
 		return this.location;
 	}
 	
+	/**
+	 * Set the strategy that this Enemy will use to choose its moves.
+	 * @param movementStrategy strategy to use
+	 */
 	public void setMovementStrategy(MovementStrategy movementStrategy) {
 		this.movementStrategy = movementStrategy;
-	}
-	
-	public void onPush(CellPushedEvent event) {
-		Player p = event.getWhoPushed();
-		p.touchEnemy();
 	}
 	
 	@Override
@@ -105,5 +120,10 @@ public class Enemy implements Moveable, Collidable, Observer {
 		if (event instanceof CellPushedEvent) {
 			this.onPush((CellPushedEvent) event);
 		}
+	}
+	
+	private void onPush(CellPushedEvent event) {
+		Player p = event.getWhoPushed();
+		p.touchEnemy(this);
 	}
 }

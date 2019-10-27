@@ -6,20 +6,13 @@ import unsw.dungeon.back.event.CellPushedEvent;
 
 public class Boulder implements Moveable, Collidable, Observer {
 	private Cell location;
-	
-	public Boulder() {
-		
-	}
-	
+
+	/**
+	 * Set the location of this boulder.
+	 * @param location location to set
+	 */
 	public void setLocation(Cell location) {
 		this.location = location;
-	}
-	
-	private void onPush(CellPushedEvent event) {
-		Direction d = event.getDirectionPushed();
-		if (this.canMove(d)) {
-			this.move(d);
-		}
 	}
 	
 	@Override
@@ -48,6 +41,13 @@ public class Boulder implements Moveable, Collidable, Observer {
 	public void notifyOf(Event event) {
 		if (event instanceof CellPushedEvent) {
 			this.onPush((CellPushedEvent) event);
+		}
+	}
+	
+	private void onPush(CellPushedEvent event) {
+		Direction d = event.getDirectionPushed();
+		if (this.canMove(d)) {
+			this.move(d);
 		}
 	}
 }

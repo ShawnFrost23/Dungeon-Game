@@ -126,7 +126,9 @@ public class Cell implements Subject {
 	}
 
 	/**
-	 * Declare that Moveable m has exited this Cell. Notify all listeners.
+	 * Declare that Moveable m has exited this Cell. Generate a
+	 * {@link unsw.dungeon.back.event.CellExitedEvent CellExitedEvent} 
+	 * and notify all listeners.
 	 * @param m MoveableEntity that left this Cell
 	 */
 	public void exit(Moveable m) {
@@ -135,7 +137,9 @@ public class Cell implements Subject {
 	}
 
 	/**
-	 * Declare that Moveable m has entered this Cell. Notify all listeners.
+	 * Declare that Moveable m has entered this Cell. Generate a
+	 * {@link unsw.dungeon.back.event.CellEnteredEvent CellEnteredEvent} 
+	 * and notify all listeners.
 	 * @param m MoveableEntity that entered this Cell
 	 */
 	public void enter(Moveable m) {
@@ -145,7 +149,9 @@ public class Cell implements Subject {
 
 	/**
 	 * Declare that a Player has attempted to push the things in this cell.
-	 * Notify all listeners.
+	 * Generate a
+	 * {@link unsw.dungeon.back.event.CellPushedEvent CellPushedEvent}
+	 * and notify all listeners.
 	 * @param p Player who's pushing
 	 * @param d direction they're pushing
 	 */
@@ -156,7 +162,6 @@ public class Cell implements Subject {
 	@Override
 	public void attachListener(Observer observer) {
 		this.observers.add(observer);
-		
 	}
 
 	@Override
@@ -164,15 +169,10 @@ public class Cell implements Subject {
 		this.observers.remove(observer);
 	}
 
-	/**
-	 * Notify all observers that a CellEvent has been fired.
-	 * @param event event that has been fired
-	 */
 	@Override
 	public void notifyAllOf(Event event) {
 		for (Observer observer : new ArrayList<Observer>(this.observers)) {
 			observer.notifyOf(event);
-			
 		}
 	}
 	

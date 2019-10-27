@@ -6,37 +6,37 @@ import unsw.dungeon.back.event.Observer;
 
 public class Player implements Moveable, Observer {
 	private Cell location;
-	
-	public Player() {
 		
-	}
-	
+	/**
+	 * Set the location of this player.
+	 * @param location location to set
+	 */
 	public void setLocation(Cell location) {
 		this.location = location;
 	}
 	
+	/**
+	 * Get the location of this player.
+	 * @return this player's location
+	 */
 	public Cell getLocation() {
 		return this.location;
 	}
 	
+	/**
+	 * Signal that the player is trying to "push" from their current location
+	 * in the given direction.
+	 * @param d direction to push in
+	 */
 	public void push(Direction d) {
 		this.location.adjacent(d).push(this, d);
 	}
-	
-	// public void swing(Direction d){ }
-	
-	public void onEnter(CellEnteredEvent event) {
-		Moveable who = event.getWhoEntered();
-		if (who instanceof Enemy) {
-			this.touchEnemy();
-		}
-	}
-	
-	public void touchEnemy() {
-		this.kill();
-	}
-	
-	public void kill() {
+
+	/**
+	 * Signal that this player has touched an enemy. This will result in either
+	 * the death of the enemy, or the death of the player.
+	 */
+	public void touchEnemy(Enemy e) {
 		System.out.println("Ded");
 	}
 
@@ -66,6 +66,13 @@ public class Player implements Moveable, Observer {
 	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);
+		}
+	}
+	
+	private void onEnter(CellEnteredEvent event) {
+		Moveable who = event.getWhoEntered();
+		if (who instanceof Enemy) {
+			this.touchEnemy((Enemy) who);
 		}
 	}
 }
