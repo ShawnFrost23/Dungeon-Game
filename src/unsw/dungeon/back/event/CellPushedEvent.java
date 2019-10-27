@@ -4,7 +4,7 @@ import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Player;
 
 /**
- * An event that is fired whenever a Player attempts to push a cell in a
+ * An event that is fired whenever a Player attempts to push a {@link Cell} in a
  * particular direction.
  * Note: this event is fired in the cell that is being pushed, not in the cell
  * that the player is in when they're pushing.

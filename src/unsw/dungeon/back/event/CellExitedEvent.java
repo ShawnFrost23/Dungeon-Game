@@ -3,7 +3,7 @@ package unsw.dungeon.back.event;
 import unsw.dungeon.back.Moveable;
 
 /**
- * An event that is fired whenever a Moveable exits a cell.
+ * An event that is fired whenever a Moveable exits a {@link Cell}.
  */
 public class CellExitedEvent implements Event {
 	private Moveable whoExited;
