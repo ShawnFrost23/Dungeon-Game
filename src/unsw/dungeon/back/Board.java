@@ -72,6 +72,7 @@ public class Board {
 					Enemy e = new Enemy();
 					cell.addEntity(e);
 					e.setLocation(cell);
+					e.setMovementStrategy(Enemy.Naive);
 					game.trackEnemy(e);
 				}
 				

@@ -71,19 +71,10 @@ public class Game {
 	 */
 	public void moveEnemies() {
 		for (Enemy enemy : this.enemies) {
-			
-			Direction d;
-			double r = Math.random();
-			if (r < 0.25) {
-				d = Direction.UP;
-			} else if (r < 0.5) {
-				d = Direction.DOWN;
-			} else if (r < 0.75) {
-				d = Direction.LEFT;
-			} else {
-				d = Direction.RIGHT;
+			Direction d = enemy.chooseMove(this.player);
+			if (d == null) {
+				continue;
 			}
-			
 			if (enemy.canMove(d)) {
 				enemy.move(d);
 			}

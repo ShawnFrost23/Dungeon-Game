@@ -11,6 +11,10 @@ public class Player implements Moveable {
 		this.location = location;
 	}
 	
+	public Cell getLocation() {
+		return this.location;
+	}
+	
 	public void push(Direction d) {
 		this.location.adjacent(d).push(this, d);
 	}
