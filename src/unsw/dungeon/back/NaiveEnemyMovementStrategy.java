@@ -3,8 +3,6 @@ package unsw.dungeon.back;
 /**
  * A naive movement strategy whereby Enemies move in such a way to minimise
  * the L2 norm to the player, getting stuck on any obstacles inbetween.
- * 
- *
  */
 public class NaiveEnemyMovementStrategy implements Enemy.MovementStrategy {
 	@Override
