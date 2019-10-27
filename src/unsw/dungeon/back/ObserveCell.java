@@ -1,5 +1,7 @@
 package unsw.dungeon.back;
 
+import unsw.dungeon.back.event.CellEvent;
+
 /**
  * Entities that implement this interface will be notified whenever a
  * {@link CellEvent} in the cell they belong to.

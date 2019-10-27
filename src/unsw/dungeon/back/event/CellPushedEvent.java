@@ -1,4 +1,7 @@
-package unsw.dungeon.back;
+package unsw.dungeon.back.event;
+
+import unsw.dungeon.back.Direction;
+import unsw.dungeon.back.Player;
 
 /**
  * An event that is fired whenever a Player attempts to push a cell in a

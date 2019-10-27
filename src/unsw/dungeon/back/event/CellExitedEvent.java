@@ -1,4 +1,6 @@
-package unsw.dungeon.back;
+package unsw.dungeon.back.event;
+
+import unsw.dungeon.back.Moveable;
 
 /**
  * An event that is fired whenever a Moveable exits a cell.

@@ -1,4 +1,6 @@
-package unsw.dungeon.back;
+package unsw.dungeon.back.event;
+
+import unsw.dungeon.back.Cell;
 
 /**
  * An event that is concerned with the happenings of a Cell. It is {@link Cell}'s job

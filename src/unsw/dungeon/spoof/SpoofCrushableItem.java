@@ -1,6 +1,8 @@
 package unsw.dungeon.spoof;
 
 import unsw.dungeon.back.*;
+import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.CellEvent;
 
 /**
  * An item that ought to get crushed by Boulders, but have no other interaction

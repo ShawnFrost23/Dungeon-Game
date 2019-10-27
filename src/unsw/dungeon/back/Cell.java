@@ -3,6 +3,11 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.CellExitedEvent;
+import unsw.dungeon.back.event.CellPushedEvent;
+
 // TODO: enforce "Cells shouldn't expose any notion of coordinates".
 
 /**

@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.CellPushedEvent;
+
 public class Boulder implements Moveable, Collidable, ObserveCell {
 	private Cell location;
 	

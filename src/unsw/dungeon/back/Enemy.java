@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+import unsw.dungeon.back.event.CellEvent;
+import unsw.dungeon.back.event.CellPushedEvent;
+
 // TODO: major refactoring here and in Cell. Will do soon. Try to implement
 // heuristic and a spoofBoard to simulate moves on.
 

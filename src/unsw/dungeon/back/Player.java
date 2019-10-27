@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.CellEvent;
+
 public class Player implements Moveable, ObserveCell {
 	private Cell location;
 	
