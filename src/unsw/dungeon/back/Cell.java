@@ -10,8 +10,6 @@ import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 
-// TODO: enforce "Cells shouldn't expose any notion of coordinates".
-
 /**
  * A collection of Entities at one discrete location.
  */
@@ -38,18 +36,16 @@ public class Cell implements Subject {
 	}
 
 	/**
-	 * Get this Cell's x-coordinate. This function should only be used by Board;
-	 * Cells shouldn't expose any notion of coordinates, just know what is
-	 * directly adjacent to them.
+	 * Get this Cell's x-coordinate. Coordinates should only be used in the
+	 * context of a board.
 	 * @return this Cell's x-coordinate
 	 */
 	public int getX() {
 		return this.x;
 	}
 	/**
-	 * Get this Cell's y-coordinate. This function should only be used by Board;
-	 * Cells shouldn't expose any notion of coordinates, just know what is
-	 * directly adjacent to them.
+	 * Get this Cell's y-coordinate. Coordinates should only be used in the
+	 * context of a board.
 	 * @return this Cell's y-coordinate
 	 */
 	public int getY() {
