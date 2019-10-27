@@ -8,12 +8,8 @@ import unsw.dungeon.back.event.CellPushedEvent;
 // heuristic and a spoofBoard to simulate moves on.
 
 public class Enemy implements Moveable, Collidable, Observer {
-	public interface MovementStrategy {
-		public Direction chooseMove(WorldState world);
-	}
-	
 	private Cell location;
-	private MovementStrategy movementStrategy;
+	private EnemyMovementStrategy movementStrategy;
 
 	// TODO: take in EffectiveWorldState instead (with no side effects).
 	/**
@@ -47,7 +43,7 @@ public class Enemy implements Moveable, Collidable, Observer {
 	 * Set the strategy that this Enemy will use to choose its moves.
 	 * @param movementStrategy strategy to use
 	 */
-	public void setMovementStrategy(MovementStrategy movementStrategy) {
+	public void setMovementStrategy(EnemyMovementStrategy movementStrategy) {
 		this.movementStrategy = movementStrategy;
 	}
 	
