@@ -3,6 +3,7 @@ package unsw.dungeon.back;
 import unsw.dungeon.spoof.*;
 
 // TODO: Board creational methods ...
+// TODO: my source of unease ... `Cell location` -- a cell isn't a location!
 
 /**
  * A collection of cells. Board can tell its user what's effectively to the
@@ -23,9 +24,6 @@ public class Board {
 	private int height;
 	private int width;
 	
-	private Board() {
-		
-	}
 	
 	/**
 	 * Create a Board from a string representation. Valid string representations
@@ -74,7 +72,7 @@ public class Board {
 					Enemy e = new Enemy();
 					cell.addEntity(e);
 					e.setLocation(cell);
-					e.setMovementStrategy(Enemy.Naive);
+					e.setMovementStrategy(new NaiveEnemyMovementStrategy());
 					game.trackEnemy(e);
 				}
 				
@@ -126,5 +124,9 @@ public class Board {
 			s += "\n";
 		}
 		return s;
+	}
+	
+	public WorldState createWorldState(Cell playerLocation, Cell enemyLocation) {
+		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
 }

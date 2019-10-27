@@ -9,50 +9,8 @@ import unsw.dungeon.back.event.CellPushedEvent;
 
 public class Enemy implements Moveable, Collidable, Observer {
 	public interface MovementStrategy {
-		public Direction chooseMove(Enemy e, Player p);
+		public Direction chooseMove(Enemy me, WorldState world);
 	}
-	
-	public static MovementStrategy Naive = (
-		(Enemy e, Player p) -> {
-			int Dx = e.getLocation().getX() - p.getLocation().getX();
-			int Dy = e.getLocation().getY() - p.getLocation().getY();
-
-			
-			if (Math.abs(Dx) > Math.abs(Dy)) {
-				if (Dx > 0 ) {
-					if (e.canMove(Direction.LEFT)) {
-						return Direction.LEFT;
-					}
-				} else if (Dx < 0) {
-					if (e.canMove(Direction.RIGHT)) {
-						return Direction.RIGHT;
-					}
-				}
-			}
-			
-			if (Dy > 0) {
-				if (e.canMove(Direction.UP)) {
-					return Direction.UP;
-				}
-			} else if (Dy < 0){
-				if (e.canMove(Direction.DOWN)) {
-					return Direction.DOWN;
-				}
-			}
-			
-			if (Dx > 0 ) {
-				if (e.canMove(Direction.LEFT)) {
-					return Direction.LEFT;
-				}
-			} else if (Dx < 0) {
-				if (e.canMove(Direction.RIGHT)) {
-					return Direction.RIGHT;
-				}
-			}
-			
-			return null;
-		}
-	);
 	
 	private Cell location;
 	private MovementStrategy movementStrategy;
@@ -65,8 +23,8 @@ public class Enemy implements Moveable, Collidable, Observer {
 	 * @return direction to move in or <code>null</code> if the Enemy does not
 	 * wish to move 
 	 */
-	public Direction chooseMove(Player p) {
-		return this.movementStrategy.chooseMove(this, p);
+	public Direction chooseMove(Player p, WorldState world) {
+		return this.movementStrategy.chooseMove(this, world);
 	}
 	
 	/**
