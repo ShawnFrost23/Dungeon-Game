@@ -4,18 +4,30 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.CellPushedEvent;
 
-// TODO: major refactoring here and in Cell. Will do soon. Try to implement
-// heuristic and a spoofBoard to simulate moves on.
-
 public class Enemy implements Moveable, Collidable, Observer {
+	/** 
+	 * Classes that implement this interface can be used to decide which move
+	 * an {@link Enemy} will make.
+	 * @see {@link Enemy#chooseMove(WorldState)}
+	 */
+	public interface MovementStrategy {
+		/**
+		 * Decide which move the enemy would like to make.
+		 * @param world
+		 * @return direction to move in or <code>null</code> if the Enemy does
+		 * not wish to move
+		 * @see {@link Enemy#chooseMove(WorldState)}
+		 */
+		public Direction chooseMove(WorldState world);
+	}
+	
 	private Cell location;
-	private EnemyMovementStrategy movementStrategy;
+	private NaiveMovementStrategy movementStrategy;
 
-	// TODO: take in EffectiveWorldState instead (with no side effects).
 	/**
 	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
 	 * would like to make.
-	 * @param p the Player that this Enemy is targeting
+	 * @param world WorldState instance representing the current world state
 	 * @return direction to move in or <code>null</code> if the Enemy does not
 	 * wish to move 
 	 */
@@ -43,7 +55,7 @@ public class Enemy implements Moveable, Collidable, Observer {
 	 * Set the strategy that this Enemy will use to choose its moves.
 	 * @param movementStrategy strategy to use
 	 */
-	public void setMovementStrategy(EnemyMovementStrategy movementStrategy) {
+	public void setMovementStrategy(NaiveMovementStrategy movementStrategy) {
 		this.movementStrategy = movementStrategy;
 	}
 	
