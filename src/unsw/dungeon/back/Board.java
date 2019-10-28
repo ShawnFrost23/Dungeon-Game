@@ -143,7 +143,12 @@ public class Board {
 				
 				if (e != null) {
 					this.entities.add(e);
-					cell.addEntity(e);
+					if (e instanceof Moveable) {
+						// Trigger events when we add!
+						cell.enter((Moveable) e);
+					} else {
+						cell.addEntity(e);
+					}
 				}
 			}
 		}

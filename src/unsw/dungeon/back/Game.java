@@ -40,7 +40,7 @@ public class Game implements Observer {
 	 *   <br />
 	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
 	 *   <br />
-	 *   &nbsp;&nbsp;"&nbsp;&nbsp;P&nbsp;B\n" +
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;P&nbsp;_\n" +
 	 *   <br />
 	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" ,
 	 *   <br /> 
@@ -48,12 +48,18 @@ public class Game implements Observer {
 	 *   <br />
 	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
 	 *   <br />
-	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;_\n" +
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;B\n" +
 	 *   <br />
 	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n"
 	 *   <br />
 	 *   );
 	 * </code>
+	 * <br />
+	 * <br />
+	 * Note: Proceeding from the first string in <b>boardStrings</b> last, when
+	 * {@link Moveable} entities are spawned, only entities that have already 
+	 * been loaded will be sent
+	 * {@link unsw.dungeon.back.event.CellEnteredEvent CellEnteredEvents}. 
 	 * <br />
 	 * @param goal Goal object representing the Game's win conditions
 	 * @param boardStrings valid string representation of Entities on the board
