@@ -14,8 +14,13 @@ public class Game implements Observer {
 	private Board board;
 	private Player player;
 	private List<Enemy> enemies;
+
+	private boolean hasWon;
+	private boolean hasLost;
 	
 	private Game() {
+		this.hasWon = false;
+		this.hasLost = false;
 	}
 	
 	/**
@@ -47,11 +52,11 @@ public class Game implements Observer {
 		return game;
 	}
 	
-
 	/**
 	 * Declare that the game has been won; print "Game won." to the screen.
 	 */
 	private void win() {
+		this.hasWon = true;
 		System.out.println("Game won.");
 	}
 	
@@ -59,6 +64,7 @@ public class Game implements Observer {
 	 * Declare that the game has been lost; print "Game lost." to the screen.
 	 */
 	private void lose() {
+		this.hasLost = true;
 		System.out.println("Game lost.");
 	}
 	
@@ -135,14 +141,14 @@ public class Game implements Observer {
 		this.enemies.add(enemy);
 	}
 
-	/**
-	 * Get the Player of this board.
-	 * Should only be used publicly for testing. 
-	 */
-	public Player getPlayer() {
-		return this.player;
+
+	public boolean getHasWon() {
+		return this.hasWon;
 	}
 	
+	public boolean getHasLost() {
+		return this.hasLost;
+	}
 	
 	@Override
 	public void notifyOf(Event event) {

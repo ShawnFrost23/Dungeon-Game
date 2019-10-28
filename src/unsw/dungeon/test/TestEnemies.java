@@ -1,13 +1,12 @@
 package unsw.dungeon.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
-import unsw.dungeon.back.event.Event;
-import unsw.dungeon.back.event.Observer;
-import unsw.dungeon.back.event.PlayerKilledEvent;
 
 /**
  * Tests for the Enemies user story.
@@ -273,10 +272,6 @@ public class TestEnemies {
 		}
 	}
 	
-	private static class KillListener {
-		static boolean hasBeenKilled;
-	}
-	
 	/**
 	 * "If enemies collide with the player (they walk into the player or the
 	 * player walks into them), the player dies. It is sufficient here that
@@ -287,15 +282,6 @@ public class TestEnemies {
 		Game g1 = Game.createGame(""
 			+ " P ! \n"
 		);
-
-		KillListener.hasBeenKilled = false;
-		g1.getPlayer().attachListener(
-			(Event event) -> {
-				if (event instanceof PlayerKilledEvent) {
-					KillListener.hasBeenKilled = true;
-				}
-			}
-		);
 		
 		g1.moveEnemies();
 		
@@ -303,23 +289,14 @@ public class TestEnemies {
 			+ " P!  \n"
 		);
 		
+		assertFalse(g1.getHasLost());
+		
 		g1.moveEnemies();
 		
-		if (!KillListener.hasBeenKilled) {
-			fail("Player was not killed when an enemy walked into them.");
-		}
+		assertTrue(g1.getHasLost());
 		
 		Game g2 = Game.createGame(""
 			+ " P ! \n"
-		);
-		
-		KillListener.hasBeenKilled = false;
-		g2.getPlayer().attachListener(
-			(Event event) -> {
-				if (event instanceof PlayerKilledEvent) {
-					KillListener.hasBeenKilled = true;
-				}
-			}
 		);
 		
 		g2.movePlayer(Direction.RIGHT);
@@ -328,12 +305,11 @@ public class TestEnemies {
 			+ "  P! \n"
 		);
 		
+		assertFalse(g2.getHasLost());
+		
 		g2.movePlayer(Direction.RIGHT);
 		
-		if (!KillListener.hasBeenKilled) {
-			fail("Player was not killed when they pushed an enemy");
-		}
-		
+		assertTrue(g2.getHasLost());
 	}
 
 	/**
