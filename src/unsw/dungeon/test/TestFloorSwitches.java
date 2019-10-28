@@ -66,4 +66,22 @@ public class TestFloorSwitches {
 	public void AC3() {
 		fail("Test not implemented!");
 	}
+	
+	/**
+	 * "Boulders that start on top of floor switches will cause the switch to
+	 * start in a pressed state."
+	 */
+	@Test
+	public void AC4() {
+		fail("Test not implemented!");
+	}
+	
+	/**
+	 * "Pushing a boulder directly from one floor switch to another will not
+	 * cause both to be temporarily pressed at once."
+	 */
+	@Test
+	public void AC5() {
+		fail("Test not implemented!");
+	}	
 }
