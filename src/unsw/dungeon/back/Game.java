@@ -180,4 +180,9 @@ public class Game implements Observer {
 	private void onPlayerKilled(PlayerKilledEvent event) {
 		this.lose();
 	}
+
+	public void declarePuzzleGoal() {
+		// TODO Auto-generated method stub
+		
+	}
 }
