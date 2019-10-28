@@ -158,9 +158,9 @@ public class TestFloorSwitches {
 	@Test
 	public void AC4() {
 		Game g1 = Game.createGame(new PuzzleGoal(), ""
-			+ "  P_ \n"
+			+ " BP_ \n"
 			, ""
-			+ "   B \n"
+			+ " _ B \n"
 		);
 		
 		assertTrue(g1.getHasWon());
