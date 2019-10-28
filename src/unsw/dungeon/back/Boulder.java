@@ -11,14 +11,6 @@ public class Boulder implements Moveable, Collidable, Observer {
 		this.location = cell;
 	}
 
-	/**
-	 * Set the location of this boulder.
-	 * @param location location to set
-	 */
-	public void setLocation(Cell location) {
-		this.location = location;
-	}
-	
 	@Override
 	public int getZ() {
 		return 999;
