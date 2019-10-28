@@ -22,7 +22,7 @@ public class Enemy implements Moveable, Collidable, Observer {
 	}
 	
 	private Cell location;
-	private NaiveMovementStrategy movementStrategy;
+	private MovementStrategy movementStrategy;
 
 	/**
 	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
