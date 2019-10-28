@@ -18,15 +18,6 @@ public class Player implements Moveable, Subject, Observer {
 		this.location = c;
 	}
 	
-
-	/**
-	 * Set the location of this player.
-	 * @param location location to set
-	 */
-	public void setLocation(Cell location) {
-		this.location = location;
-	}
-	
 	/**
 	 * Get the location of this player.
 	 * @return this player's location
