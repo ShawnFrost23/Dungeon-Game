@@ -132,7 +132,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testOverlayBoardConstruction() {
-		Game g = Game.createGame(Arrays.asList(""
+		Game g = Game.createGame(""
 			+ "  W \n"
 			+ "P_  \n"
 			+ "    \n"
@@ -144,7 +144,7 @@ public class TestBasics {
 			+ "    \n"
 			+ "_   \n"
 			+ "    \n"
-		));
+		);
 		
 		assertEquals(""
 			+ "  W \n"

@@ -21,33 +21,52 @@ public class Game implements Observer {
 	private Game() {
 		this.hasWon = false;
 		this.hasLost = false;
+		this.enemies = new ArrayList<Enemy>();
 	}
-	
+
 	/**
 	 * Create a new Game object from a Board's string representation.
-	 * @param boardString the string representation of the board
-	 * @return a Game object
+	 * <p>
+	 * It is possible to place entities on top of one another by passing in a
+	 * <b>boardStrings</b> argument with more than one String. For example, the
+	 * following will create a Game that has a Boulder sitting on top of a
+	 * FloorSwitch. 
+	 * </p>
+	 * 
+	 * <code>
+	 *   Game.createGame(
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;P&nbsp;B\n" +
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" ,
+	 *   <br /> 
+	 *   &nbsp;&nbsp;
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n" + 
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;_\n" +
+	 *   <br />
+	 *   &nbsp;&nbsp;"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n"
+	 *   <br />
+	 *   );
+	 * </code>
+	 * <br />
+	 * 
+	 * @param boardStrings valid string representation of Entities on the board
+	 * @return a Game object with entities as specified in <b>boardStrings</b>
 	 * @see {@link #getBoardString()}
 	 */
-	public static Game createGame(String boardString) {
-		Game game = new Game();
-		game.enemies = new ArrayList<Enemy>();
-		game.board = Board.createBoard(boardString, game);
-		return game;
-	}
-	
-	
-	/**
-	 * Create a game by overlaying a series of same-dimension boardStrings,
-	 * allowing a board with multiple entities in one cell to be created. 
-	 * 
-	 * @param boardStrings string representations of the board to overlay
-	 * 
-	 */
-	public static Game createGame(List<String> boardStrings) {
-		Game game = Game.createGame(boardStrings.get(0));
-		for (int i = 1; i < boardStrings.size(); ++i) {
-			game.board.overlay(boardStrings.get(i), game);
+	public static Game createGame(String ...boardStrings) {
+		Game game = null;
+		for (String boardString : boardStrings) {
+			if (game == null) {
+				game = new Game();
+				game.board = Board.createBoard(boardString, game);
+			} else {
+				game.board.overlay(boardString, game);
+			}
 		}
 		return game;
 	}
@@ -85,6 +104,7 @@ public class Game implements Observer {
 	 * centre and a wall two tiles to the right of the player.
 	 * 
 	 * @return a string representation for this game's board.
+	 * @see {@link #createGame(String...)}
 	 */
 	public String getBoardString() {
 		return this.board.getBoardString();
