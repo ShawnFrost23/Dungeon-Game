@@ -41,9 +41,6 @@ public class Treasure implements Entity, Observer {
 			this.onEnter((CellEnteredEvent) event);
 		} 
 		
-//		else if (event instanceof CellExitedEvent) {
-//			this.onExit((CellExitedEvent) event); 
-//		}
 	}
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
@@ -52,10 +49,4 @@ public class Treasure implements Entity, Observer {
 		}
 	}
 	
-	// Dont think this is necessary 
-//	private void onExit(CellExitedEvent event) {
-//		if (event.getWhoExited() instanceof Player) {
-//			// Removes itself from Board Cell
-//		}
-//	}
 }
