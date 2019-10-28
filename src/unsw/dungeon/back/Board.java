@@ -24,7 +24,6 @@ import unsw.dungeon.spoof.*;
 // a Board to plan their moves on. Both seem sane.
 public class Board {
 	private Cell[][] cells;
-	private List<Entity> entities;
 	private int height;
 	private int width;
 	
@@ -32,7 +31,6 @@ public class Board {
 		this.width = width;
 		this.height = height;
 		this.cells = new Cell[width][height];
-		this.entities = new ArrayList<Entity>();
 		
 		for (int y = 0; y < this.height; ++y) {
 			for (int x = 0; x < this.width; ++x) {
@@ -49,10 +47,8 @@ public class Board {
 				board = new Board(lines[0].length(), lines.length);
 			}
 			
-			board.addEntities(boardString, game);
+			board.addEntities(boardString, game, goal);
 		}
-		
-		board.attachGoalListeners(goal);
 		
 		return board;
 	}
@@ -98,18 +94,7 @@ public class Board {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
 
-
-	/**
-	 * Loop through all entities on the board and attach goal listeners.
-	 */
-	private void attachGoalListeners(Goal goal) {
-		for (Entity e : this.entities) {
-			goal.trackEntity(e);
-		}
-		// TODO a player that spawns on treasure should automatically pick it up ...
-	}
-	
-	private void addEntities(String boardString, Game game) {
+	private void addEntities(String boardString, Game game, Goal goal) {
 		String[] lines = boardString.split("\n");
 
 		for (int y = 0; y < this.height; ++y) {
@@ -142,13 +127,13 @@ public class Board {
 				}
 				
 				if (e != null) {
-					this.entities.add(e);
 					if (e instanceof Moveable) {
 						// Trigger events when we add!
 						cell.enter((Moveable) e);
 					} else {
 						cell.addEntity(e);
 					}
+					goal.trackEntity(e);
 				}
 			}
 		}
