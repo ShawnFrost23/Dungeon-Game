@@ -1,5 +1,6 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import unsw.dungeon.spoof.*;
@@ -27,8 +28,17 @@ public class Board {
 	private int height;
 	private int width;
 	
-	private Board() {
+	private Board(int width, int height) {
+		this.width = width;
+		this.height = height;
+		this.cells = new Cell[width][height];
+		this.entities = new ArrayList<Entity>();
 		
+		for (int y = 0; y < this.height; ++y) {
+			for (int x = 0; x < this.width; ++x) {
+				this.cells[x][y] = new Cell(this, x, y);
+			}
+		}
 	}
 	
 	/**
@@ -41,23 +51,9 @@ public class Board {
 	 * @return a Board object
 	 */
 	public static Board createBoard(String boardString, Game game) {
-		Board board = new Board();
 		String[] lines = boardString.split("\n");
 		
-		board.width = lines[0].length();
-		board.height = lines.length;
-		
-		board.cells = new Cell[board.width][board.height];
-
-		for (int lineNum = 0; lineNum < lines.length; ++lineNum) {
-			String line = lines[lineNum];
-			
-			for (int charNum = 0; charNum < line.length(); ++charNum) {
-				int x = charNum;
-				int y = lineNum;
-				board.cells[x][y] = new Cell(board, x, y);
-			}
-		}
+		Board board = new Board(lines[0].length(), lines.length);
 		
 		board.addEntities(boardString, game);
 		
@@ -118,29 +114,24 @@ public class Board {
 
 
 	/**
-	 * Loop through all entities on the board and attack goal listeners.
+	 * Loop through all entities on the board and attach goal listeners.
 	 */
 	public void attachGoalListeners(Goal goal) {
 		for (Entity e : this.entities) {
-			if (e instanceof FloorSwitch) {
-				
-			}
+			goal.trackEntity(e);
 		}
 		// TODO a player that spawns on treasure should automatically pick it up ...
 	}
 	
 	private void addEntities(String boardString, Game game) {
 		String[] lines = boardString.split("\n");
-		
-		for (int lineNum = 0; lineNum < lines.length; ++lineNum) {
-			String line = lines[lineNum];
-			
-			for (int charNum = 0; charNum < line.length(); ++charNum) {
-				int x = charNum;
-				int y = lineNum;
+
+		for (int y = 0; y < this.height; ++y) {
+			String line = lines[y];
+			for (int x = 0; x < this.width; ++x) {
 				Cell cell = this.cells[x][y];
 				
-				char c = line.charAt(charNum);
+				char c = line.charAt(x);
 				Entity e = null;
 				
 				if (c == ' ') {
@@ -165,10 +156,11 @@ public class Board {
 				}
 				
 				if (e != null) {
+					this.entities.add(e);
 					cell.addEntity(e);
 				}
-				
 			}
+			
 		}
 	}
 }

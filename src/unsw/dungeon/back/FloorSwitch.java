@@ -6,6 +6,8 @@ import java.util.List;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.FloorSwitchPressedEvent;
+import unsw.dungeon.back.event.FloorSwitchUnpressedEvent;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Subject;
 
@@ -21,13 +23,15 @@ public class FloorSwitch implements Entity, Observer, Subject {
 	
 	public void press() {
 		this.isPressed = true;
+		this.notifyAllOf(new FloorSwitchPressedEvent());
 	}
 	
 	public void unpress() {
 		this.isPressed = false;
+		this.notifyAllOf(new FloorSwitchUnpressedEvent());
 	}
 	
-	public boolean isPressed() {
+	private boolean isPressed() {
 		return isPressed;
 	}
 	
