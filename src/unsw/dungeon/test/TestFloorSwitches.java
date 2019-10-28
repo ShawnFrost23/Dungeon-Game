@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
+import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
  * Tests for the Floor Switches user story.
@@ -18,7 +19,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "      _ \n"
 			+ "    _   \n"
 			+ "  P     \n"
@@ -41,7 +42,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "  P_ \n"
 		);
 		
@@ -66,11 +67,10 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(""
+		Game g1 = Game.createGame(new PuzzleGoal(), ""
 			+ " PB_ \n"
 		);
 		
-		g1.declarePuzzleGoal();
 		
 		assertFalse(g1.getHasWon());
 		
@@ -78,13 +78,11 @@ public class TestFloorSwitches {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(""
+		Game g2 = Game.createGame(new PuzzleGoal(), ""
 			+ " PB_ \n"
 			+ "_BB  \n"
 			+ "  _  \n"
 		);
-		
-		g2.declarePuzzleGoal();
 		
 		assertFalse(g2.getHasWon());
 		
@@ -107,12 +105,10 @@ public class TestFloorSwitches {
 		
 		assertTrue(g2.getHasWon());
 
-		Game g3 = Game.createGame(""
+		Game g3 = Game.createGame(new PuzzleGoal(), ""
 			+ "  PB_   \n"
 			+ "      B_\n"
 		);
-		
-		g3.declarePuzzleGoal();
 		
 		g3.movePlayer(Direction.RIGHT);
 		g3.movePlayer(Direction.RIGHT);
@@ -160,23 +156,19 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC4() {
-		Game g1 = Game.createGame(""
+		Game g1 = Game.createGame(new PuzzleGoal(), ""
 			+ "  P_ \n"
 			, ""
 			+ "   B \n"
 		);
 		
-		g1.declarePuzzleGoal();
-		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(""
+		Game g2 = Game.createGame(new PuzzleGoal(), ""
 			+ "_BP_ \n"
 			, ""
 			+ "   B \n"
 		);
-		
-		g2.declarePuzzleGoal();
 		
 		assertFalse(g2.getHasWon());
 		
@@ -191,7 +183,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC5() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new PuzzleGoal(), ""
 			+ "PB__\n"
 		);
 		

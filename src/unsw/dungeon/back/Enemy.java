@@ -24,6 +24,11 @@ public class Enemy implements Moveable, Collidable, Observer {
 	private Cell location;
 	private MovementStrategy movementStrategy;
 
+	public Enemy(Cell cell, MovementStrategy movementStrategy) {
+		this.location = cell;
+		this.movementStrategy = movementStrategy;
+	}
+	
 	/**
 	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
 	 * would like to make.

@@ -6,6 +6,10 @@ import unsw.dungeon.back.event.CellPushedEvent;
 
 public class Boulder implements Moveable, Collidable, Observer {
 	private Cell location;
+	
+	public Boulder(Cell cell) {
+		this.location = cell;
+	}
 
 	/**
 	 * Set the location of this boulder.

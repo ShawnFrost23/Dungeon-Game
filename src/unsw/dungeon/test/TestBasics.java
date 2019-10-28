@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
+import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
  * Tests for basic game engine things that don't really fit in any user story.
@@ -20,7 +21,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testTinyDungeons() {
-		Game g1 = Game.createGame(""
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
 			+ "  P  \n"
 		);
 		
@@ -29,7 +30,7 @@ public class TestBasics {
 			, g1.getBoardString()
 		);
 		
-		Game g2 = Game.createGame(""
+		Game g2 = Game.createGame(new ImpossibleGoal(), ""
 			+ " \n"
 			+ " \n"
 			+ "P\n"
@@ -44,7 +45,7 @@ public class TestBasics {
 			, g2.getBoardString()
 		);
 		
-		Game g3 = Game.createGame(""
+		Game g3 = Game.createGame(new ImpossibleGoal(), ""
 			+ "P\n"
 		);
 		
@@ -59,7 +60,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testSimplePlayerNavigation() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "     \n"
 			+ "  P  \n"
 			+ "  W  \n"
@@ -132,7 +133,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testOverlayBoardConstruction() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "  W \n"
 			+ "P_  \n"
 			+ "    \n"

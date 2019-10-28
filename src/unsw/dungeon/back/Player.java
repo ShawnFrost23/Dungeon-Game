@@ -13,9 +13,11 @@ public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
 	
-	public Player() {
+	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
+		this.location = c;
 	}
+	
 
 	/**
 	 * Set the location of this player.

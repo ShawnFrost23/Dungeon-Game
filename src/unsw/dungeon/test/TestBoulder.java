@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
+import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
  * Tests for the Boulder user story.
@@ -16,7 +17,7 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ " B P\n"
 			+ "  BB\n"
 			+ "    \n"
@@ -35,7 +36,7 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "        \n"
 			+ "  B     \n"
 			+ " BPB    \n"
@@ -138,7 +139,7 @@ public class TestBoulder {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(""
+		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "B BPB W\n"
 		);
 		
@@ -172,7 +173,7 @@ public class TestBoulder {
 	@Test
 	public void AC4() {
 		// Test that boulders cannot be pushed into enemies.
-		Game g1 = Game.createGame(""
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
 			+ " PB!  \n"
 		);
 		
@@ -183,7 +184,7 @@ public class TestBoulder {
 		);
 
 		// First check that we don't pickup the spoof items.
-		Game g2 = Game.createGame(""
+		Game g2 = Game.createGame(new ImpossibleGoal(), ""
 			+ "?PB?  \n"
 		);
 		g2.movePlayer(Direction.LEFT);

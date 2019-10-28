@@ -12,6 +12,10 @@ import unsw.dungeon.back.event.Observer;
 public class SpoofCrushableItem implements Entity, Observer {
 	private Cell location;
 	
+	public SpoofCrushableItem(Cell cell) {
+		this.location = cell;
+	}
+
 	public void setLocation(Cell location) {
 		this.location = location;
 	}

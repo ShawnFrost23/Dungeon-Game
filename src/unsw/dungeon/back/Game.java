@@ -14,14 +14,16 @@ public class Game implements Observer {
 	private Board board;
 	private Player player;
 	private List<Enemy> enemies;
+	private Goal goal;
 
 	private boolean hasWon;
 	private boolean hasLost;
 	
-	private Game() {
+	private Game(Goal goal) {
 		this.hasWon = false;
 		this.hasLost = false;
 		this.enemies = new ArrayList<Enemy>();
+		this.goal = goal;
 	}
 
 	/**
@@ -53,22 +55,26 @@ public class Game implements Observer {
 	 *   );
 	 * </code>
 	 * <br />
-	 * 
+	 * @param goal Goal object representing the Game's win conditions
 	 * @param boardStrings valid string representation of Entities on the board
 	 * @return a Game object with entities as specified in <b>boardStrings</b>
 	 * @see {@link #getBoardString()}
 	 */
-	public static Game createGame(String ...boardStrings) {
+	public static Game createGame(Goal goal, String ...boardStrings) {
 		Game game = null;
 		for (String boardString : boardStrings) {
 			if (game == null) {
-				game = new Game();
+				game = new Game(goal);
 				game.board = Board.createBoard(boardString, game);
 			} else {
 				game.board.overlay(boardString, game);
 			}
 		}
 		return game;
+	}
+	
+	public Goal getGoal() {
+		return this.goal;
 	}
 	
 	/**
@@ -161,7 +167,6 @@ public class Game implements Observer {
 		this.enemies.add(enemy);
 	}
 
-
 	public boolean getHasWon() {
 		return this.hasWon;
 	}
@@ -179,10 +184,5 @@ public class Game implements Observer {
 	
 	private void onPlayerKilled(PlayerKilledEvent event) {
 		this.lose();
-	}
-
-	public void declarePuzzleGoal() {
-		// TODO Auto-generated method stub
-		
 	}
 }

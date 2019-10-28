@@ -1,5 +1,7 @@
 package unsw.dungeon.back;
 
+import java.util.List;
+
 import unsw.dungeon.spoof.*;
 
 // TODO: Board creational methods ...
@@ -21,9 +23,13 @@ import unsw.dungeon.spoof.*;
 // a Board to plan their moves on. Both seem sane.
 public class Board {
 	private Cell[][] cells;
+	private List<Entity> entities;
 	private int height;
 	private int width;
 	
+	private Board() {
+		
+	}
 	
 	/**
 	 * Create a Board from a string representation. Valid string representations
@@ -49,8 +55,7 @@ public class Board {
 			for (int charNum = 0; charNum < line.length(); ++charNum) {
 				int x = charNum;
 				int y = lineNum;
-				Cell cell = new Cell(board, x, y);
-				board.cells[x][y] = cell;
+				board.cells[x][y] = new Cell(board, x, y);
 			}
 		}
 		
@@ -112,6 +117,17 @@ public class Board {
 	}
 
 
+	/**
+	 * Loop through all entities on the board and attack goal listeners.
+	 */
+	public void attachGoalListeners(Goal goal) {
+		for (Entity e : this.entities) {
+			if (e instanceof FloorSwitch) {
+				
+			}
+		}
+		// TODO a player that spawns on treasure should automatically pick it up ...
+	}
 	
 	private void addEntities(String boardString, Game game) {
 		String[] lines = boardString.split("\n");
@@ -125,39 +141,34 @@ public class Board {
 				Cell cell = this.cells[x][y];
 				
 				char c = line.charAt(charNum);
+				Entity e = null;
+				
 				if (c == ' ') {
 					
 				} else if (c == 'W') {
-					cell.addEntity(new Wall());
+					e = new Wall();
 				} else if (c == 'P') {
-					Player p = new Player();
-					cell.addEntity(p);
-					p.setLocation(cell);
-					game.trackPlayer(p);
+					e = new Player(cell);
+					game.trackPlayer((Player) e);
 				} else if (c == 'B') {
-					Boulder b = new Boulder();
-					cell.addEntity(b);
-					b.setLocation(cell);
+					e = new Boulder(cell);
 				} else if (c == '!') {
-					Enemy e = new Enemy();
-					cell.addEntity(e);
-					e.setLocation(cell);
-					e.setMovementStrategy(new NaiveMovementStrategy());
-					game.trackEnemy(e);
+					e = new Enemy(cell, new NaiveMovementStrategy());
+					game.trackEnemy((Enemy) e);
 				} else if (c == '_') {
-					FloorSwitch f = new FloorSwitch();
-					cell.addEntity(f);	
+					e = new FloorSwitch();
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
 				if (c == '?') {
-					SpoofCrushableItem crushable = new SpoofCrushableItem();
-					cell.addEntity(crushable);
-					crushable.setLocation(cell);
+					e = new SpoofCrushableItem(cell);
+				}
+				
+				if (e != null) {
+					cell.addEntity(e);
 				}
 				
 			}
 		}
 	}
-	
 }

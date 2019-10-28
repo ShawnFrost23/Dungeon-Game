@@ -85,7 +85,7 @@ public class Cell implements Subject {
 		if (this.entities.size() == 0) {
 			return ' ';
 		}
-		
+
 		int maxZ = this.entities.get(0).getZ();
 		char texture = this.entities.get(0).getTexture();
 		for (Entity entity : this.entities) {
