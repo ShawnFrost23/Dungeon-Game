@@ -60,149 +60,149 @@ public class TestFloorSwitches {
 		);
 	}
 	
-//	/**
-//	 * "If a player pushes boulders over every switch when a puzzle-goal is
-//	 * specified, they win the game (win = the map is reloaded)."
-//	 */
-//	@Test
-//	public void AC3() {
-//		Game g1 = Game.createGame(""
-//			+ " PB_ \n"
-//		);
-//		
-//		g1.declarePuzzleGoal();
-//		
-//		assertFalse(g1.getHasWon());
-//		
-//		g1.movePlayer(Direction.RIGHT);
-//		
-//		assertTrue(g1.getHasWon());
-//		
-//		Game g2 = Game.createGame(""
-//			+ " PB_ \n"
-//			+ "_BB  \n"
-//			+ "  _  \n"
-//		);
-//		
-//		g2.declarePuzzleGoal();
-//		
-//		assertFalse(g2.getHasWon());
-//		
-//		g2.movePlayer(Direction.RIGHT);
-//		
-//		assertFalse(g2.getHasWon());
-//		
-//		g2.movePlayer(Direction.DOWN);
-//
-//		assertFalse(g2.getHasWon());
-//		
-//		assertEquals(""
-//			+ "   B \n"
-//			+ "_BP  \n"
-//			+ "  B  \n"
-//			, g2.getBoardString()
-//		);
-//		
-//		g2.movePlayer(Direction.LEFT);
-//		
-//		assertTrue(g2.getHasWon());
-//
-//		Game g3 = Game.createGame(""
-//			+ "  PB_   \n"
-//			+ "      B_\n"
-//		);
-//		
-//		g3.declarePuzzleGoal();
-//		
-//		g3.movePlayer(Direction.RIGHT);
-//		g3.movePlayer(Direction.RIGHT);
-//		g3.movePlayer(Direction.RIGHT);
-//		
-//		assertEquals(""
-//			+ "    _PB  \n"
-//			+ "       B_\n"
-//			, g3.getBoardString()
-//		);
-//		
-//		g3.movePlayer(Direction.DOWN);
-//		g3.movePlayer(Direction.RIGHT);
-//		g3.movePlayer(Direction.RIGHT);
-//		
-//		assertEquals(""
-//			+ "    _ B  \n"
-//			+ "       PB\n"
-//			, g3.getBoardString()
-//		);
-//		
-//		assertFalse(g3.getHasWon());
-//		
-//		g3.movePlayer(Direction.UP);
-//		g3.movePlayer(Direction.LEFT);
-//
-//		
-//		assertEquals(""
-//			+ "    _BP  \n"
-//			+ "        B\n"
-//			, g3.getBoardString()
-//		);
-//		
-//		assertFalse(g3.getHasWon());
-//		
-//		g3.movePlayer(Direction.LEFT);
-//		
-//		assertTrue(g3.getHasWon());
-//		
-//	}
-//	
-//	/**
-//	 * "Boulders that start on top of floor switches will cause the switch to
-//	 * start in a pressed state."
-//	 */
-//	@Test
-//	public void AC4() {
-//		Game g1 = Game.createGame(""
-//			+ "  P_ \n"
-//			, ""
-//			+ "   B \n"
-//		);
-//		
-//		g1.declarePuzzleGoal();
-//		
-//		assertTrue(g1.getHasWon());
-//		
-//		Game g2 = Game.createGame(""
-//			+ "_BP_ \n"
-//			, ""
-//			+ "   B \n"
-//		);
-//		
-//		g2.declarePuzzleGoal();
-//		
-//		assertFalse(g2.getHasWon());
-//		
-//		g2.movePlayer(Direction.LEFT);
-//		
-//		assertTrue(g2.getHasWon());
-//	}
-//	
-//	/**
-//	 * "Pushing a boulder directly from one floor switch to another will not
-//	 * cause both to be temporarily pressed at once."
-//	 */
-//	@Test
-//	public void AC5() {
-//		Game g = Game.createGame(""
-//			+ "PB__\n"
-//		);
-//		
-//		g.movePlayer(Direction.RIGHT);
-//		g.movePlayer(Direction.RIGHT);
-//		
-//		assertEquals(""
-//			+ "  PB\n"
-//			, g.getBoardString()
-//		);
-//		
-//		assertFalse(g.getHasWon());
-//	}	
+	/**
+	 * "If a player pushes boulders over every switch when a puzzle-goal is
+	 * specified, they win the game (win = the map is reloaded)."
+	 */
+	@Test
+	public void AC3() {
+		Game g1 = Game.createGame(""
+			+ " PB_ \n"
+		);
+		
+		g1.declarePuzzleGoal();
+		
+		assertFalse(g1.getHasWon());
+		
+		g1.movePlayer(Direction.RIGHT);
+		
+		assertTrue(g1.getHasWon());
+		
+		Game g2 = Game.createGame(""
+			+ " PB_ \n"
+			+ "_BB  \n"
+			+ "  _  \n"
+		);
+		
+		g2.declarePuzzleGoal();
+		
+		assertFalse(g2.getHasWon());
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertFalse(g2.getHasWon());
+		
+		g2.movePlayer(Direction.DOWN);
+
+		assertFalse(g2.getHasWon());
+		
+		assertEquals(""
+			+ "   B \n"
+			+ "_BP  \n"
+			+ "  B  \n"
+			, g2.getBoardString()
+		);
+		
+		g2.movePlayer(Direction.LEFT);
+		
+		assertTrue(g2.getHasWon());
+
+		Game g3 = Game.createGame(""
+			+ "  PB_   \n"
+			+ "      B_\n"
+		);
+		
+		g3.declarePuzzleGoal();
+		
+		g3.movePlayer(Direction.RIGHT);
+		g3.movePlayer(Direction.RIGHT);
+		g3.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "    _PB  \n"
+			+ "       B_\n"
+			, g3.getBoardString()
+		);
+		
+		g3.movePlayer(Direction.DOWN);
+		g3.movePlayer(Direction.RIGHT);
+		g3.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "    _ B  \n"
+			+ "       PB\n"
+			, g3.getBoardString()
+		);
+		
+		assertFalse(g3.getHasWon());
+		
+		g3.movePlayer(Direction.UP);
+		g3.movePlayer(Direction.LEFT);
+
+		
+		assertEquals(""
+			+ "    _BP  \n"
+			+ "        B\n"
+			, g3.getBoardString()
+		);
+		
+		assertFalse(g3.getHasWon());
+		
+		g3.movePlayer(Direction.LEFT);
+		
+		assertTrue(g3.getHasWon());
+		
+	}
+	
+	/**
+	 * "Boulders that start on top of floor switches will cause the switch to
+	 * start in a pressed state."
+	 */
+	@Test
+	public void AC4() {
+		Game g1 = Game.createGame(""
+			+ "  P_ \n"
+			, ""
+			+ "   B \n"
+		);
+		
+		g1.declarePuzzleGoal();
+		
+		assertTrue(g1.getHasWon());
+		
+		Game g2 = Game.createGame(""
+			+ "_BP_ \n"
+			, ""
+			+ "   B \n"
+		);
+		
+		g2.declarePuzzleGoal();
+		
+		assertFalse(g2.getHasWon());
+		
+		g2.movePlayer(Direction.LEFT);
+		
+		assertTrue(g2.getHasWon());
+	}
+	
+	/**
+	 * "Pushing a boulder directly from one floor switch to another will not
+	 * cause both to be temporarily pressed at once."
+	 */
+	@Test
+	public void AC5() {
+		Game g = Game.createGame(""
+			+ "PB__\n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  PB\n"
+			, g.getBoardString()
+		);
+		
+		assertFalse(g.getHasWon());
+	}	
 }
