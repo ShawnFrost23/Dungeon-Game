@@ -61,15 +61,8 @@ public class Game implements Observer {
 	 * @see {@link #getBoardString()}
 	 */
 	public static Game createGame(Goal goal, String ...boardStrings) {
-		Game game = null;
-		for (String boardString : boardStrings) {
-			if (game == null) {
-				game = new Game(goal);
-				game.board = Board.createBoard(game, goal, boardString);
-			} else {
-				game.board.overlay(boardString, game);
-			}
-		}
+		Game game = new Game(goal);
+		game.board = Board.createBoard(game, goal, boardStrings);
 		return game;
 	}
 	

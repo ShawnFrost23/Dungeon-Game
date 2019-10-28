@@ -58,17 +58,6 @@ public class Board {
 	}
 	
 	/**
-	 * Add entities from another boardString on top of entities that are
-	 * already in this board. 
-	 * @param boardString string representation of the Board (entities on the
-	 * board) to take union of current board with
-	 * @param game to add entities to
-	 */
-	public void overlay(String boardString, Game game) {
-		this.addEntities(boardString, game);
-	}
-	
-	/**
 	 * Get the Cell that is effectively adjacent to <b>c</b> in direction
 	 * <b>d</b>.
 	 * @param c cell to check next to
