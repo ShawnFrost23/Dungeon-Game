@@ -59,7 +59,7 @@ public class Cell implements Subject {
 	public void addEntity(Entity e) {
 		this.entities.add(e);
 		if (e instanceof Observer) {
-			this.observers.add((Observer) e);
+			this.attachListener((Observer) e);
 		}
 	}
 
@@ -70,7 +70,7 @@ public class Cell implements Subject {
 	public void removeEntity(Entity e) {
 		this.entities.remove(e);
 		if (e instanceof Observer) {
-			this.observers.remove((Observer) e);
+			this.detachListener((Observer) e);
 		}
 	}
 	
