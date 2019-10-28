@@ -106,8 +106,8 @@ public class TestFloorSwitches {
 		assertTrue(g2.getHasWon());
 
 		Game g3 = Game.createGame(new PuzzleGoal(), ""
-			+ "  PB_   \n"
-			+ "      B_\n"
+			+ "   PB_    \n"
+			+ "        B_\n"
 		);
 		
 		g3.movePlayer(Direction.RIGHT);
@@ -115,8 +115,8 @@ public class TestFloorSwitches {
 		g3.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "    _PB  \n"
-			+ "       B_\n"
+			+ "     _PB  \n"
+			+ "        B_\n"
 			, g3.getBoardString()
 		);
 		
@@ -125,8 +125,8 @@ public class TestFloorSwitches {
 		g3.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "    _ B  \n"
-			+ "       PB\n"
+			+ "     _ B  \n"
+			+ "        PB\n"
 			, g3.getBoardString()
 		);
 		
@@ -137,8 +137,9 @@ public class TestFloorSwitches {
 
 		
 		assertEquals(""
-			+ "    _BP  \n"
-			+ "        B\n"
+			+ "     _BP  \n"
+			+ "         B\n"
+			
 			, g3.getBoardString()
 		);
 		

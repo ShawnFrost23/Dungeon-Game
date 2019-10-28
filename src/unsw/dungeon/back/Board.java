@@ -41,21 +41,18 @@ public class Board {
 		}
 	}
 	
-	/**
-	 * Create a Board from a string representation. Valid string representations
-	 * must have exactly one Player, see the docs for
-	 * {@link Game#getBoardString()}.
-	 * @param boardString a valid string representation of the Board
-	 * @param game game which will be responsible for moving this Board's Player
-	 * and Enemies.
-	 * @return a Board object
-	 */
-	public static Board createBoard(String boardString, Game game) {
-		String[] lines = boardString.split("\n");
+	public static Board createBoard(Game game, Goal goal, String ...boardStrings) {
+		Board board = null;
+		for (String boardString : boardStrings) {
+			if (board == null) {
+				String[] lines = boardString.split("\n");
+				board = new Board(lines[0].length(), lines.length);
+			}
+			
+			board.addEntities(boardString, game);
+		}
 		
-		Board board = new Board(lines[0].length(), lines.length);
-		
-		board.addEntities(boardString, game);
+		board.attachGoalListeners(goal);
 		
 		return board;
 	}
@@ -116,7 +113,7 @@ public class Board {
 	/**
 	 * Loop through all entities on the board and attach goal listeners.
 	 */
-	public void attachGoalListeners(Goal goal) {
+	private void attachGoalListeners(Goal goal) {
 		for (Entity e : this.entities) {
 			goal.trackEntity(e);
 		}
@@ -160,7 +157,6 @@ public class Board {
 					cell.addEntity(e);
 				}
 			}
-			
 		}
 	}
 }

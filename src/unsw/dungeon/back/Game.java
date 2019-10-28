@@ -65,16 +65,12 @@ public class Game implements Observer {
 		for (String boardString : boardStrings) {
 			if (game == null) {
 				game = new Game(goal);
-				game.board = Board.createBoard(boardString, game);
+				game.board = Board.createBoard(game, goal, boardString);
 			} else {
 				game.board.overlay(boardString, game);
 			}
 		}
 		return game;
-	}
-	
-	public Goal getGoal() {
-		return this.goal;
 	}
 	
 	/**
@@ -168,7 +164,7 @@ public class Game implements Observer {
 	}
 
 	public boolean getHasWon() {
-		return this.hasWon;
+		return this.goal.isSatisfied();
 	}
 	
 	public boolean getHasLost() {
