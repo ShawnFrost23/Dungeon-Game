@@ -1,6 +1,9 @@
 package unsw.dungeon.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
@@ -122,6 +125,42 @@ public class TestBasics {
 			+ "     \n"
 			, g.getBoardString()
 		);
+	}
+	
+	/**
+	 * Test that boards can be properly overlayed
+	 */
+	@Test
+	public void testOverlayBoardConstruction() {
+		Game g = Game.createGame(Arrays.asList(""
+			+ "  W \n"
+			+ "P_  \n"
+			+ "    \n"
+			, ""
+			+ "    \n"
+			+ " B  \n"
+			+ "  W \n"
+			, ""
+			+ "    \n"
+			+ "_   \n"
+			+ "    \n"
+		));
 		
+		assertEquals(""
+			+ "  W \n"
+			+ "PB  \n"
+			+ "  W \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  W \n"
+			+ "__PB\n"
+			+ "  W \n"
+			, g.getBoardString()
+		);
 	}
 }

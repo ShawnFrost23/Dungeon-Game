@@ -42,7 +42,6 @@ public class Board {
 		board.height = lines.length;
 		
 		board.cells = new Cell[board.width][board.height];
-		
 
 		for (int lineNum = 0; lineNum < lines.length; ++lineNum) {
 			String line = lines[lineNum];
@@ -51,45 +50,24 @@ public class Board {
 				int x = charNum;
 				int y = lineNum;
 				Cell cell = new Cell(board, x, y);
-				
 				board.cells[x][y] = cell;
-				
-				char c = line.charAt(charNum);
-				if (c == ' ') {
-					
-				} else if (c == 'W') {
-					cell.addEntity(new Wall());
-				} else if (c == 'P') {
-					Player p = new Player();
-					cell.addEntity(p);
-					p.setLocation(cell);
-					game.trackPlayer(p);
-				} else if (c == 'B') {
-					Boulder b = new Boulder();
-					cell.addEntity(b);
-					b.setLocation(cell);
-				} else if (c == '!') {
-					Enemy e = new Enemy();
-					cell.addEntity(e);
-					e.setLocation(cell);
-					e.setMovementStrategy(new NaiveMovementStrategy());
-					game.trackEnemy(e);
-				} else if (c == '_') {
-					FloorSwitch f = new FloorSwitch();
-					cell.addEntity(f);	
-				}
-				
-				// If the item is a "spoof item" for testing, load it in.
-				if (c == '?') {
-					SpoofCrushableItem crushable = new SpoofCrushableItem();
-					cell.addEntity(crushable);
-					crushable.setLocation(cell);
-				}
-				
 			}
 		}
 		
+		board.addEntities(boardString, game);
+		
 		return board;
+	}
+	
+	/**
+	 * Add entities from another boardString on top of entities that are
+	 * already in this board. 
+	 * @param boardString string representation of the Board (entities on the
+	 * board) to take union of current board with
+	 * @param game to add entities to
+	 */
+	public void overlay(String boardString, Game game) {
+		this.addEntities(boardString, game);
 	}
 	
 	/**
@@ -132,4 +110,54 @@ public class Board {
 	public WorldState createWorldState(Cell playerLocation, Cell enemyLocation) {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
+
+
+	
+	private void addEntities(String boardString, Game game) {
+		String[] lines = boardString.split("\n");
+		
+		for (int lineNum = 0; lineNum < lines.length; ++lineNum) {
+			String line = lines[lineNum];
+			
+			for (int charNum = 0; charNum < line.length(); ++charNum) {
+				int x = charNum;
+				int y = lineNum;
+				Cell cell = this.cells[x][y];
+				
+				char c = line.charAt(charNum);
+				if (c == ' ') {
+					
+				} else if (c == 'W') {
+					cell.addEntity(new Wall());
+				} else if (c == 'P') {
+					Player p = new Player();
+					cell.addEntity(p);
+					p.setLocation(cell);
+					game.trackPlayer(p);
+				} else if (c == 'B') {
+					Boulder b = new Boulder();
+					cell.addEntity(b);
+					b.setLocation(cell);
+				} else if (c == '!') {
+					Enemy e = new Enemy();
+					cell.addEntity(e);
+					e.setLocation(cell);
+					e.setMovementStrategy(new NaiveMovementStrategy());
+					game.trackEnemy(e);
+				} else if (c == '_') {
+					FloorSwitch f = new FloorSwitch();
+					cell.addEntity(f);	
+				}
+				
+				// If the item is a "spoof item" for testing, load it in.
+				if (c == '?') {
+					SpoofCrushableItem crushable = new SpoofCrushableItem();
+					cell.addEntity(crushable);
+					crushable.setLocation(cell);
+				}
+				
+			}
+		}
+	}
+	
 }

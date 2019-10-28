@@ -30,6 +30,23 @@ public class Game implements Observer {
 		game.board = Board.createBoard(boardString, game);
 		return game;
 	}
+	
+	
+	/**
+	 * Create a game by overlaying a series of same-dimension boardStrings,
+	 * allowing a board with multiple entities in one cell to be created. 
+	 * 
+	 * @param boardStrings string representations of the board to overlay
+	 * 
+	 */
+	public static Game createGame(List<String> boardStrings) {
+		Game game = Game.createGame(boardStrings.get(0));
+		for (int i = 1; i < boardStrings.size(); ++i) {
+			game.board.overlay(boardStrings.get(i), game);
+		}
+		return game;
+	}
+	
 
 	/**
 	 * Declare that the game has been won; print "Game won." to the screen.

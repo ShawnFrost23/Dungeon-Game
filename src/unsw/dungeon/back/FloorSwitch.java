@@ -52,4 +52,8 @@ public class FloorSwitch implements Entity, Observer {
 		}
 	}
 
+	public boolean isPressed() {
+		return isPressed;
+	}
+
 }
