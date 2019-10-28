@@ -41,14 +41,6 @@ public class Enemy implements Moveable, Collidable, Observer {
 	}
 	
 	/**
-	 * Set the location of this Enemy.
-	 * @param location location to set
-	 */
-	public void setLocation(Cell location) {
-		this.location = location;
-	}
-	
-	/**
 	 * Get the location of this enemy.
 	 * @return this enemy's location
 	 */
