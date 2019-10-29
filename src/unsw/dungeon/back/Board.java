@@ -119,6 +119,8 @@ public class Board {
 					game.trackEnemy((Enemy) e);
 				} else if (c == '_') {
 					e = new FloorSwitch();
+				} else if (c == 'T' ) {
+					e = new Treasure(cell);
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
