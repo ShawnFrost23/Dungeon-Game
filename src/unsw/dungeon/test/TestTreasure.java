@@ -17,7 +17,7 @@ public class TestTreasure {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new PuzzleGoal(), ""
+		Game g1 = Game.createGame(new TreasureGoal(), ""
 			+ " PT  \n"
 		);
 		
@@ -27,7 +27,7 @@ public class TestTreasure {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(new PuzzleGoal(), ""
+		Game g2 = Game.createGame(new TreasureGoal(), ""
 				+ " PT  \n"
 				+ " TT  \n"
 				+ "     \n"
