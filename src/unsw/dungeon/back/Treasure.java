@@ -8,7 +8,7 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Treasure implements Entity, Observer {
+public class Treasure implements Entity, Observer, Subject{
 	
 	private Cell location;
 	
@@ -18,9 +18,9 @@ public class Treasure implements Entity, Observer {
 		this.location = c;
 	}
 	
-	public void pickUp(Player player) {
-		// Add to player list
-		player.attachListener(this);
+	public void pickUp() {
+		
+		this.notifyAllOf(new TreasurePickedUpEvent());
 		// Remove from Board cell
 		this.location.removeEntity(this);
 	}
@@ -45,7 +45,7 @@ public class Treasure implements Entity, Observer {
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
 			//Calls pickUp
-			this.pickUp(event.getWhoEntered());
+			this.pickUp();
 		}
 	}
 	
