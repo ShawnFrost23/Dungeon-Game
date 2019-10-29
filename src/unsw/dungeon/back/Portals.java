@@ -5,12 +5,20 @@ public class Portals implements Entity {
     private Cell location;
     private Portals pairPortal;
 
-    public Portals(Cell location, Cell pairPortalLocation) {
+    // Constructor for Portal class.
+    public Portals(Cell location) {
         this.location = location;
-        this.pairPortal.setLocation(pairPortalLocation);
 
     }
 
+
+    public boolean checkValidMove(Direction d) {
+        Cell cellToMoveTo = this.pairPortal.getLocation();
+        return !cellToMoveTo.adjacent(d).isCollidable();
+    }
+
+    // Getters and Setters
+    //===============================================
     public Cell getLocation() {
         return location;
     }
@@ -26,7 +34,7 @@ public class Portals implements Entity {
     public void setPairPortal(Portals pairPortal) {
         this.pairPortal = pairPortal;
     }
-
+    //===============================================
 
 
     //Over ridden funtions of entity Interface.

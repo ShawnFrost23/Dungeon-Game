@@ -104,7 +104,14 @@ public class Cell implements Subject {
 	 * @return the cell that is adjacent to this one in direction <b>d</b>
 	 */
 	public Cell adjacent(Direction d) {
-		return board.adjacent(this, d);
+		Cell adjacent = board.adjacent(this, d);
+
+		for (Entity entity : adjacent.entities) {
+			if (entity instanceof Portals) {
+				return ((Portals) entity).getPairPortal().getLocation().adjacent(d);
+			}
+		}
+		return adjacent;
 	}
 	
 	/**
