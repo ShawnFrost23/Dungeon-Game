@@ -18,9 +18,8 @@ public class TreasureGoal implements Goal, Observer{
 	public void notifyOf(Event event) {
 		if (event instanceof TreasurePickedUpEvent) {
 			this.numTreasureRemaining -= 1;
+		}
 	}
-	
-}
 
 	@Override
 	public void trackEntity(Entity e) {
