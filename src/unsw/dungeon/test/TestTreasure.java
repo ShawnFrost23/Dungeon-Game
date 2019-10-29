@@ -52,11 +52,11 @@ public class TestTreasure {
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "        \n"
+			+ "      _ \n"
 			+ "    P   \n"
 			+ "        \n"
-			+ "        \n"
-			+ "        \n"
+			+ "    _   \n"
+			+ " _      \n"
 			, g.getBoardString()
 		);
 	}
@@ -94,9 +94,9 @@ public class TestTreasure {
 		assertFalse(g2.getHasWon());
 			
 		assertEquals(""
-				+ "   T \n"
+				+ "     \n"
 				+ " TP  \n"
-				+ "  T  \n"
+				+ "     \n"
 				, g2.getBoardString()
 		);
 			
