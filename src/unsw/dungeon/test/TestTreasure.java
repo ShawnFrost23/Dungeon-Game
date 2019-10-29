@@ -12,6 +12,56 @@ import unsw.dungeon.spoof.ImpossibleGoal;
 public class TestTreasure {
 	
 	/**
+	 * Treasures are loaded in from the map file and rendered in their
+	 * correct position."
+	 */
+	@Test
+	public void AC1() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "      T \n"
+			+ "        \n"
+			+ "  P     \n"
+			+ "        \n"
+			+ " T      \n"
+		);
+		
+		assertEquals(""
+			+ "      T \n"
+			+ "        \n"
+			+ "  P     \n"
+			+ "        \n"
+			+ " T      \n"
+			, g.getBoardString()
+		);
+	}
+	
+	/**
+	 * "If a player walks over a treasure
+	 *  the treasure should no longer be on the map"
+	 */
+	@Test
+	public void AC2() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "      _ \n"
+			+ "  P T   \n"
+			+ "        \n"
+			+ "    _   \n"
+			+ " _      \n"
+		);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "        \n"
+			+ "    P   \n"
+			+ "        \n"
+			+ "        \n"
+			+ "        \n"
+			, g.getBoardString()
+		);
+	}
+	
+	/**
 	 * "If a player walks over every treasure when a puzzle-goal is
 	 * specified, they win the game (win = the map is reloaded)."
 	 */
@@ -53,4 +103,5 @@ public class TestTreasure {
 		g2.movePlayer(Direction.LEFT);
 			
 		assertTrue(g2.getHasWon());
+	}
 }
