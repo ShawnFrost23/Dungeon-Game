@@ -29,7 +29,7 @@ public class Treasure implements Entity, Observer, Subject {
 	
 	@Override
 	public int getZ() {
-		return 0;
+		return 996;
 	}
 
 	@Override
