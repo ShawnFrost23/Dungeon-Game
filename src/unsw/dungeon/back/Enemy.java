@@ -2,10 +2,15 @@ package unsw.dungeon.back;
 
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.Subject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 
-public class Enemy implements Moveable, Collidable, Observer {
+public class Enemy implements Moveable, Collidable, Observer, Subject {
 	/** 
 	 * Classes that implement this interface can be used to decide which move
 	 * an {@link Enemy} will make.
@@ -24,10 +29,12 @@ public class Enemy implements Moveable, Collidable, Observer {
 	
 	private Cell location;
 	private MovementStrategy movementStrategy;
+	private List<Observer> observers;
 
 	public Enemy(Cell cell, MovementStrategy movementStrategy) {
 		this.location = cell;
 		this.movementStrategy = movementStrategy;
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	/**
@@ -103,5 +110,23 @@ public class Enemy implements Moveable, Collidable, Observer {
 	
 	private void onHitWithSword(CellHitWithSwordEvent event) {
 		this.kill();
+	}
+	
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : this.observers) {
+			observer.notifyOf(event);
+		}
 	}
 }
