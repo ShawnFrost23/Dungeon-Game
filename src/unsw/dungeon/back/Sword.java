@@ -1,6 +1,16 @@
 package unsw.dungeon.back;
 
-public class Sword implements Entity {
+import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.Observer;
+
+public class Sword implements Entity, Observer {
+	private Cell location;
+
+	public Sword(Cell location) {
+		this.location = location;
+	}
+
 	@Override
 	public int getZ() {
 		return 250;
@@ -9,5 +19,19 @@ public class Sword implements Entity {
 	@Override
 	public char getTexture() {
 		return 'S';
+	}
+	
+	@Override
+	public void notifyOf(Event event) {
+		if (event instanceof CellEnteredEvent) {
+			this.onEnter((CellEnteredEvent) event);
+		}
+	}
+	
+	private void onEnter(CellEnteredEvent event) {
+		Moveable who = event.getWhoEntered();
+		if (who instanceof Player) {
+			this.location.removeEntity(this);
+		}
 	}
 }

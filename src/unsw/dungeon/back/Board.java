@@ -122,7 +122,7 @@ public class Board {
 				} else if (c == 'T' ) {
 					e = new Treasure(cell);
 				} else if (c == 'S' ) {
-					e = new Sword();
+					e = new Sword(cell);
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
