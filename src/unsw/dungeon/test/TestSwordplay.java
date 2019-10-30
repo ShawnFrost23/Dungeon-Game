@@ -106,8 +106,8 @@ public class TestSwordplay {
 	public void AC5() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "    \n"
-			+ "EEP \n"
-			+ " E  \n"
+			+ "!!P \n"
+			+ " !  \n"
 			, ""
 			+ "    \n"
 			+ "  S \n"
@@ -118,8 +118,8 @@ public class TestSwordplay {
 		
 		assertEquals(""
 			+ "    \n"
-			+ "E P \n"
-			+ " E  \n"
+			+ "! P \n"
+			+ " !  \n"
 			, g.getBoardString()
 		);
 		
@@ -132,7 +132,7 @@ public class TestSwordplay {
 		assertEquals(""
 			+ "    \n"
 			+ " P  \n"
-			+ " E  \n"
+			+ " !  \n"
 			, g.getBoardString()
 		);		
 		
@@ -159,8 +159,8 @@ public class TestSwordplay {
 	@Test
 	public void AC6() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ " E \n"
-			+ "SPE\n"
+			+ " ! \n"
+			+ "SP!\n"
 			+ " W \n"
 			, ""
 			+ "   \n"
@@ -175,7 +175,7 @@ public class TestSwordplay {
 		g.swingSword(Direction.RIGHT);
 	
 		assertEquals(""
-			+ " E \n"
+			+ " ! \n"
 			+ "SP \n"
 			+ "   \n"
 			, g.getBoardString()
@@ -184,7 +184,7 @@ public class TestSwordplay {
 		g.swingSword(Direction.UP);
 		
 		assertEquals(""
-			+ " E \n"
+			+ " ! \n"
 			+ "SP \n"
 			+ "   \n"
 			, g.getBoardString()
@@ -209,7 +209,7 @@ public class TestSwordplay {
 	@Test
 	public void AC7() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ " EEEPE\n"
+			+ " !!!P!\n"
 			, ""
 			+ "    S \n"
 			+ "    S \n"
@@ -220,21 +220,21 @@ public class TestSwordplay {
 		}
 
 		assertEquals(""
-			+ " EEEP \n"
+			+ " !!!P \n"
 			, g.getBoardString()
 		);
 		
 		g.swingSword(Direction.LEFT);
 		
 		assertEquals(""
-			+ " EE P \n"
+			+ " !! P \n"
 			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.LEFT);
 		
 		assertEquals(""
-			+ " EEP  \n"
+			+ " !!P  \n"
 			, g.getBoardString()
 		);
 		
@@ -246,7 +246,7 @@ public class TestSwordplay {
 		g.swingSword(Direction.LEFT);
 		
 		assertEquals(""
-			+ " EP   \n"
+			+ " !P   \n"
 			, g.getBoardString()
 		);
 	}
@@ -258,7 +258,7 @@ public class TestSwordplay {
 	@Test
 	public void AC8() {
 		Game g = Game.createGame(new EnemiesGoal(), ""
-			+ "   EP E\n"
+			+ "   !P !\n"
 			, ""
 			+ "     S \n"
 		);
@@ -277,7 +277,7 @@ public class TestSwordplay {
 		g.movePlayer(Direction.LEFT);
 		
 		assertEquals(""
-			+ "   EP  \n"
+			+ "   !P  \n"
 			, g.getBoardString()
 		);
 		
