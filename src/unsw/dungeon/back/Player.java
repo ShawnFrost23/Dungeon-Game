@@ -36,6 +36,19 @@ public class Player implements Moveable, Subject, Observer {
 	}
 
 	/**
+	 * Signal that the player is trying to swing a sword from their current
+	 * location in a given direction. Note: they may or may not have a sword to
+	 * swing, this function will be called nonetheless.
+	 * @param d direction sword swing is attempted in
+	 */
+	public void swingSword(Direction d) {
+		if (this.isHoldingSword()) {
+			this.location.adjacent(d).hitWithSword();
+			this.swordDurability -= 1;
+		}
+	}
+	
+	/**
 	 * Signal that this player has touched an enemy. This will result in either
 	 * the death of the enemy, or the death of the player.
 	 */

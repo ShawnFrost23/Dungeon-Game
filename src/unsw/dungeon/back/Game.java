@@ -128,8 +128,8 @@ public class Game implements Observer {
 		}
 	}
 	
-	public void swingSword(Direction left) {
-		// TODO Auto-generated method stub
+	public void swingSword(Direction d) {
+		this.player.swingSword(d);
 	}
 	
 	/**
