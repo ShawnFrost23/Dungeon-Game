@@ -222,46 +222,62 @@ public class TestSwordplay {
 	@Test
 	public void AC7() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ " !!!S!\n"
+			+ " !!!SS!\n"
+			+ "    !! \n"
 			, ""
-			+ "    S \n"
-			+ "    P \n"
+			+ "    P  \n"
+			+ "       \n"
 		);
 		
-		for (int i = 0; i < 5; ++i) {
-			g.swingSword(Direction.RIGHT);
+		
+		for (int i = 0; i < 4; ++i) {
+			g.swingSword(Direction.DOWN);
 		}
 
 		assertEquals(""
-			+ " !!!P \n"
+			+ " !!!PS!\n"
+			+ "     ! \n"
 			, g.getBoardString()
 		);
 		
-		g.swingSword(Direction.LEFT);
+		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ " !! P \n"
+			+ " !!! P!\n"
+			+ "     ! \n"
+			, g.getBoardString()
+		);
+		
+		g.swingSword(Direction.DOWN);
+		g.swingSword(Direction.RIGHT);
+
+		assertEquals(""
+			+ " !!! P \n"
+			+ "       \n"
 			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.LEFT);
+		g.swingSword(Direction.LEFT);
 		
 		assertEquals(""
-			+ " !!P  \n"
+			+ " !! P  \n"
+			+ "       \n"
 			, g.getBoardString()
 		);
-		
-		for (int i = 0; i < 4; ++i) {
-			g.swingSword(Direction.LEFT);
-		}
+
+		g.swingSword(Direction.LEFT);
+		g.swingSword(Direction.LEFT);
 		
 		g.movePlayer(Direction.LEFT);
 		g.swingSword(Direction.LEFT);
 		
 		assertEquals(""
-			+ " !P   \n"
+			+ " !!P   \n"
+			+ "       \n"
 			, g.getBoardString()
 		);
+		
 	}
 
 	/**
