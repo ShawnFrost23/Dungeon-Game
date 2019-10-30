@@ -42,7 +42,7 @@ public class Player implements Moveable, Subject, Observer {
 	public void touchEnemy(Enemy e) {
 		this.notifyAllOf(new PlayerKilledEvent());
 	}
-
+	
 	@Override
 	public boolean canMove(Direction d) {
 		return !this.location.adjacent(d).isCollidable();
@@ -94,5 +94,17 @@ public class Player implements Moveable, Subject, Observer {
 		if (who instanceof Enemy) {
 			this.touchEnemy((Enemy) who);
 		}
+	}
+	
+	/// TODO{Nick} this is poor code, built because I don't want to implement
+	// something "nice" that goes against Arth's key-pickup system. I WILL FIX
+	// IT LATER, but it ought to be functionally fine as is.
+	private int swordDurability = 0;
+	public void pickupSword(Sword s) {
+		this.swordDurability = 5;
+		this.location.removeEntity(s);
+	}
+	public boolean isHoldingSword() {
+		return this.swordDurability != 0;
 	}
 }
