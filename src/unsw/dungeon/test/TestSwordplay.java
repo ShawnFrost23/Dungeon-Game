@@ -190,7 +190,7 @@ public class TestSwordplay {
 		assertEquals(""
 			+ " ! \n"
 			+ "SP \n"
-			+ "   \n"
+			+ " W \n"
 			, g.getBoardString()
 		);
 		
@@ -199,7 +199,7 @@ public class TestSwordplay {
 		assertEquals(""
 			+ " ! \n"
 			+ "SP \n"
-			+ "   \n"
+			+ " W \n"
 			, g.getBoardString()
 		);
 		
@@ -210,7 +210,7 @@ public class TestSwordplay {
 		assertEquals(""
 			+ "   \n"
 			+ " P \n"
-			+ "   \n"
+			+ " W \n"
 			, g.getBoardString()
 		);
 	}
