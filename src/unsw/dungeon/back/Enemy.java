@@ -9,6 +9,7 @@ import java.util.List;
 
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
+import unsw.dungeon.back.event.EnemyKilledEvent;
 
 public class Enemy implements Moveable, Collidable, Observer, Subject {
 	/** 
@@ -69,6 +70,7 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	 */
 	public void kill() {
 		this.location.removeEntity(this);
+		this.notifyAllOf(new EnemyKilledEvent(this));
 	}
 	
 	@Override
