@@ -75,9 +75,9 @@ public class TestSwordplay {
 		);
 		
 		Game g2 = Game.createGame(new ImpossibleGoal(), ""
-			+ " P \n"
-			, ""
 			+ " S \n"
+			, ""
+			+ " P \n"
 		);
 		
 		g2.movePlayer(Direction.RIGHT);
@@ -98,11 +98,11 @@ public class TestSwordplay {
 	public void AC4() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "   \n"
-			+ " P \n"
+			+ " S \n"
 			+ "   \n"
 			, ""
 			+ "   \n"
-			+ " S \n"
+			+ " P \n"
 			+ "   \n"
 		);
 		g.swingSword(Direction.UP);
@@ -119,11 +119,11 @@ public class TestSwordplay {
 	public void AC5() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "    \n"
-			+ "!!P \n"
+			+ "!!S \n"
 			+ " !  \n"
 			, ""
 			+ "    \n"
-			+ "  S \n"
+			+ "  P \n"
 			+ "    \n"
 		);
 		
@@ -173,11 +173,11 @@ public class TestSwordplay {
 	public void AC6() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ " ! \n"
-			+ "SP!\n"
+			+ "SS!\n"
 			+ " W \n"
 			, ""
 			+ "   \n"
-			+ " S \n"
+			+ " P \n"
 			+ "   \n"
 		);
 		
@@ -222,10 +222,10 @@ public class TestSwordplay {
 	@Test
 	public void AC7() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ " !!!P!\n"
+			+ " !!!S!\n"
 			, ""
 			+ "    S \n"
-			+ "    S \n"
+			+ "    P \n"
 		);
 		
 		for (int i = 0; i < 5; ++i) {
