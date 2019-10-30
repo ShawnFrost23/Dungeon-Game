@@ -31,7 +31,10 @@ public class Sword implements Entity, Observer {
 	private void onEnter(CellEnteredEvent event) {
 		Moveable who = event.getWhoEntered();
 		if (who instanceof Player) {
-			this.location.removeEntity(this);
+			Player p = (Player) who;
+			if (!p.isHoldingSword()) {
+				p.pickupSword(this);
+			}
 		}
 	}
 }
