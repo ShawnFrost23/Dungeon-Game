@@ -45,6 +45,10 @@ public class Player implements Moveable, Subject, Observer {
 		if (this.isHoldingSword()) {
 			this.location.adjacent(d).hitWithSword();
 			this.swordDurability -= 1;
+			if (this.swordDurability == 0) {
+				this.location.exit(this); // TODO: YA, hack! new CellSwordBroke event ...
+				this.location.enter(this);
+			}
 		}
 	}
 	
