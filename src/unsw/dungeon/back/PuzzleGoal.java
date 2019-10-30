@@ -7,7 +7,6 @@ import unsw.dungeon.back.event.Observer;
 
 public class PuzzleGoal implements Goal, Observer {
 	private int numUnpressedFloorSwitches;
-	Game game;
 
 	@Override
 	public boolean isSatisfied() {
