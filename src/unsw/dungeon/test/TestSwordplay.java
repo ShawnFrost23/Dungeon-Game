@@ -268,6 +268,7 @@ public class TestSwordplay {
 
 		g.swingSword(Direction.LEFT);
 		g.swingSword(Direction.LEFT);
+		g.swingSword(Direction.LEFT);
 		
 		g.movePlayer(Direction.LEFT);
 		g.swingSword(Direction.LEFT);
