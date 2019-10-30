@@ -128,6 +128,10 @@ public class Game implements Observer {
 		}
 	}
 	
+	public void swingSword(Direction left) {
+		// TODO Auto-generated method stub
+	}
+	
 	/**
 	 * Permit all enemies to make a single valid movement (or stay still).
 	 */
