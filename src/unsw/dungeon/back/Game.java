@@ -194,8 +194,6 @@ public class Game implements Observer {
 	private void onEnemyKilled(EnemyKilledEvent event) {
 		Enemy who = event.getWhoDied();
 		this.enemies.remove(who);
-		// who.detachListener(this); -- We can't, the enemy may still be
-		// notifying all of its observers, so we can't modify the list while
-		// it's in use.
+		who.detachListener(this);
 	}
 }

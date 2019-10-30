@@ -127,7 +127,7 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 
 	@Override
 	public void notifyAllOf(Event event) {
-		for (Observer observer : this.observers) {
+		for (Observer observer : new ArrayList<Observer>(this.observers)) {
 			observer.notifyOf(event);
 		}
 	}
