@@ -26,19 +26,19 @@ public class Board {
 	private Cell[][] cells;
 	private int height;
 	private int width;
-	
+
 	private Board(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.cells = new Cell[width][height];
-		
+
 		for (int y = 0; y < this.height; ++y) {
 			for (int x = 0; x < this.width; ++x) {
 				this.cells[x][y] = new Cell(this, x, y);
 			}
 		}
 	}
-	
+
 	public static Board createBoard(Game game, Goal goal, String ...boardStrings) {
 		Board board = null;
 		for (String boardString : boardStrings) {
@@ -46,13 +46,13 @@ public class Board {
 				String[] lines = boardString.split("\n");
 				board = new Board(lines[0].length(), lines.length);
 			}
-			
+
 			board.addEntities(boardString, game, goal);
 		}
-		
+
 		return board;
 	}
-	
+
 	/**
 	 * Get the Cell that is effectively adjacent to <b>c</b> in direction
 	 * <b>d</b>.
@@ -61,7 +61,7 @@ public class Board {
 	 * @return cell that is adjacent to the given cell in the given direction
 	 */
 	// Note: this doc will have to be updated when Portals are implemented.
-	public Cell adjacent(Cell c, Direction d) { 
+	public Cell adjacent(Cell c, Direction d) {
 		Cell adj = null;
 		if (d == Direction.UP) {
 			adj = this.cells[c.getX()][c.getY() - 1];
@@ -74,7 +74,7 @@ public class Board {
 		}
 		return adj;
 	}
-	
+
 	/**
 	 * Get a string representation of this Board.
 	 * @return string representation of this Board
@@ -89,7 +89,7 @@ public class Board {
 		}
 		return s;
 	}
-	
+
 	public WorldState createWorldState(Cell playerLocation, Cell enemyLocation) {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
@@ -97,16 +97,17 @@ public class Board {
 	private void addEntities(String boardString, Game game, Goal goal) {
 		String[] lines = boardString.split("\n");
 
+		Portals firstPortal = null;
 		for (int y = 0; y < this.height; ++y) {
 			String line = lines[y];
 			for (int x = 0; x < this.width; ++x) {
 				Cell cell = this.cells[x][y];
-				
+
 				char c = line.charAt(x);
 				Entity e = null;
-				
+
 				if (c == ' ') {
-					
+
 				} else if (c == 'W') {
 					e = new Wall();
 				} else if (c == 'P') {
@@ -119,13 +120,23 @@ public class Board {
 					game.trackEnemy((Enemy) e);
 				} else if (c == '_') {
 					e = new FloorSwitch();
+				} else if (c == 'O') {
+					e = new Portals (cell);
+					if (firstPortal == null) {
+						firstPortal = ((Portals) e);
+					} else {
+						// If we've already added a portal this round, then pair
+						// it with the one we're adding just now.
+						((Portals) e).setPairPortal(firstPortal);
+						firstPortal.setPairPortal((Portals) e);
+					}
 				}
-				
+
 				// If the item is a "spoof item" for testing, load it in.
 				if (c == '?') {
 					e = new SpoofCrushableItem(cell);
 				}
-				
+
 				if (e != null) {
 					if (e instanceof Moveable) {
 						// Trigger events when we add!
