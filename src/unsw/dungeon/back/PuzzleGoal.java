@@ -8,6 +8,10 @@ import unsw.dungeon.back.event.Observer;
 public class PuzzleGoal implements Goal, Observer {
 	private int numUnpressedFloorSwitches;
 
+	public PuzzleGoal() {
+		this.numUnpressedFloorSwitches = 0;
+	}
+	
 	@Override
 	public boolean isSatisfied() {
 		return this.numUnpressedFloorSwitches == 0;

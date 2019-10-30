@@ -8,6 +8,10 @@ import unsw.dungeon.back.event.TreasurePickedUpEvent;
 public class TreasureGoal implements Goal, Observer {
 	private int numTreasureRemaining;
 	
+	public TreasureGoal() {
+		this.numTreasureRemaining = 0;
+	}
+	
 	@Override
 	public boolean isSatisfied() {
 		return this.numTreasureRemaining == 0;
