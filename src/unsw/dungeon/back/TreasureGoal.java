@@ -5,9 +5,8 @@ import unsw.dungeon.back.event.Event;
 
 import unsw.dungeon.back.event.TreasurePickedUpEvent;
 
-public class TreasureGoal implements Goal, Observer{
+public class TreasureGoal implements Goal, Observer {
 	private int numTreasureRemaining;
-	Game game;
 	
 	@Override
 	public boolean isSatisfied() {
