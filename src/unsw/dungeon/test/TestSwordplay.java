@@ -59,19 +59,32 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
 			+ " P S S \n"
 		);
 		
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
+		g1.movePlayer(Direction.RIGHT);
+		g1.movePlayer(Direction.RIGHT);
+		g1.movePlayer(Direction.RIGHT);
+		g1.movePlayer(Direction.RIGHT);
+		g1.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
 			+ "     SP\n"
-			, g.getBoardString()
+			, g1.getBoardString()
+		);
+		
+		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+			+ " P \n"
+			, ""
+			+ " S \n"
+		);
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  P\n"
+			, g2.getBoardString()
 		);
 	}
 	
