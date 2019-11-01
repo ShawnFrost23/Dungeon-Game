@@ -50,22 +50,35 @@ public class TestPortals {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
 			+ "P OWO !\n"
 		);
 		
-		g.moveEnemies();
+		g1.moveEnemies();
 		
 		assertEquals(""
 			+ "P OWO! \n"
-			, g.getBoardString()
+			, g1.getBoardString()
 		);
 		
-		g.moveEnemies();
+		g1.moveEnemies();
 		
 		assertEquals(""
 			+ "P OWO! \n"
-			, g.getBoardString()
+			, g1.getBoardString()
+		);
+		
+		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+			+ "P OW!  \n"
+			+ "   W  O\n"
+		);
+		
+		g2.moveEnemies();
+		
+		assertEquals(""
+			+ "P OW!  \n"
+			+ "   W  O\n"
+			, g2.getBoardString()
 		);
 	}
 	
