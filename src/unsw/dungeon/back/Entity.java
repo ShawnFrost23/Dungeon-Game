@@ -17,4 +17,5 @@ public interface Entity {
 	 * @see {@link Cell#getTexture()}
 	 */
 	public char getTexture();
+
 }

@@ -5,7 +5,8 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
 public class Door implements Observer, Entity, Collidable {
-    Cell location;
+    private Cell location;
+    private int ID;
 
     public Door(Cell location) {
         this.location = location;
@@ -32,8 +33,10 @@ public class Door implements Observer, Entity, Collidable {
         Direction d = event.getDirectionPushed();
         Player p = event.getWhoPushed();
         if (p.hasKey()) {
-            this.location.removeEntity(this);
-            this.location.addEntity(new OpenDoor());
+            if (p.getPlayerkey().getID() == this.ID) {
+                this.location.removeEntity(this);
+                this.location.addEntity(new OpenDoor());
+            }
         }
     }
 }
