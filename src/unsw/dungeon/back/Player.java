@@ -37,6 +37,14 @@ public class Player implements Moveable, Subject, Observer {
 	public void setinvincibleDuration(int time) {
 		this.invincibleDuration = time;
 	}
+	
+	public boolean getisInvincible() {
+		return this.isInvincible;
+	}
+	
+	public int getinvincibleDuration() {
+		return this.invincibleDuration;
+	}
 	/**
 	 * Signal that the player is trying to "push" from their current location
 	 * in the given direction.
