@@ -142,6 +142,11 @@ public class Game implements Observer {
 			}
 		}
 	}
+	public void declareInvincibilityTimeOver() {
+
+		this.player.setisInvincible(false);
+		this.player.setinvincibleDuration(0);
+	}
 
 	/**
 	 * Track a player that is on the board. The tracked player will be the one

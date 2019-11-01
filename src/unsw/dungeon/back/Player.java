@@ -12,13 +12,13 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
-	public boolean isInvincible;
-	public integer invincibleDuration;
+	private boolean isInvincible;
+	private int invincibleDuration;
 	
 	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
 		this.location = c;
-		this.isInvincible = false
+		this.isInvincible = false;
 		this.invincibleDuration = 0;
 	}
 	
@@ -30,6 +30,13 @@ public class Player implements Moveable, Subject, Observer {
 		return this.location;
 	}
 	
+	public void setisInvincible(boolean status) {
+		this.isInvincible = true;
+	}
+	
+	public void setinvincibleDuration(int time) {
+		this.invincibleDuration = time;
+	}
 	/**
 	 * Signal that the player is trying to "push" from their current location
 	 * in the given direction.
@@ -46,6 +53,11 @@ public class Player implements Moveable, Subject, Observer {
 	public void touchEnemy(Enemy e) {
 		
 		this.notifyAllOf(new PlayerKilledEvent());
+	}
+	
+	public void invincibilityOn() {
+		this.isInvincible = true;
+		this.invincibleDuration = 15;
 	}
 
 	@Override
