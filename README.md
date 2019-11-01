@@ -76,7 +76,7 @@ To be specific, the layout of each dungeon is defined by a grid of squares, each
 | Player               | ![Player][player] | Can be moved up, down, left, and right into adjacent squares, provided another entity doesn't stop them (e.g. a wall). |
 | Wall                 | ![Wall][wall] | Blocks the movement of the player, enemies and boulders. |
 | Exit                 | ![Exit][exit] | If the player goes through it the puzzle is complete.  |
-| Treasure             | ![Treasure][treasure] | Can be collected by the player. |
+| unsw.dungeon.back.WorldState.Treasure             | ![unsw.dungeon.back.WorldState.Treasure][treasure] | Can be collected by the player. |
 | Door                 | ![Door][door_open] ![Door][door_closed] | Exists in conjunction with a single key that can open it. If the player holds the key, they can open the door by moving through it. Once open it remains so. The client will be satisfied if dungeons can be made with up to 3 doors. |
 | Key                  | ![Key][key] | Can be picked up by the player when they move into the square containing it. The player can carry only one key at a time, and only one door has a lock that fits the key. It disappears once it is used to open its corresponding door. |
 | Boulder              | ![Boulder][boulder] | Acts like a wall in most cases. The only difference being that it can be pushed by the player into adjacent squares. The player is only strong enough to push **one** boulder at a time. |

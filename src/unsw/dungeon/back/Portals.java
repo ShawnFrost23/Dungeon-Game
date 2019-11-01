@@ -11,12 +11,6 @@ public class Portals implements Entity {
 
     }
 
-
-    public boolean checkValidMove(Direction d) {
-        Cell cellToMoveTo = this.pairPortal.getLocation();
-        return !cellToMoveTo.adjacent(d).isCollidable();
-    }
-
     // Getters and Setters
     //===============================================
     public Cell getLocation() {

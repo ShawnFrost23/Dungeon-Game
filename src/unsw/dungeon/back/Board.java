@@ -130,7 +130,11 @@ public class Board {
 						((Portals) e).setPairPortal(firstPortal);
 						firstPortal.setPairPortal((Portals) e);
 					}
-				}
+				} else if (c == '#') {
+				    e = new Door(cell);
+                } else if (c == '~') {
+				    e = new Key();
+                }
 
 				// If the item is a "spoof item" for testing, load it in.
 				if (c == '?') {

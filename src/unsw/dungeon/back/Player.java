@@ -12,10 +12,11 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
-	
+	private boolean hasKey;
 	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
 		this.location = c;
+		this.hasKey = false;
 	}
 	
 	/**
@@ -94,5 +95,14 @@ public class Player implements Moveable, Subject, Observer {
 		if (who instanceof Enemy) {
 			this.touchEnemy((Enemy) who);
 		}
+	}
+
+	public boolean hasKey() {
+		return this.hasKey;
+	}
+
+	public void pickUp(Key key) {
+		this.location.removeEntity(key);
+		this.hasKey = true;
 	}
 }
