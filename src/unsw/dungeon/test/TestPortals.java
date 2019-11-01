@@ -50,7 +50,23 @@ public class TestPortals {
 	 */
 	@Test
 	public void AC3() {
-		fail("Test not implemented");
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "P OWO !\n"
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ "P OWO! \n"
+			, g.getBoardString()
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ "P OWO! \n"
+			, g.getBoardString()
+		);
 	}
 	
 	/**
