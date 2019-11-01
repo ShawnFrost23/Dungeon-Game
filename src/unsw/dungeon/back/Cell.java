@@ -108,10 +108,10 @@ public class Cell implements Subject {
 		Cell adjacent = board.adjacent(this, d);
 
 		for (Entity entity : adjacent.entities) {
-			if (entity instanceof Portals) {
+			if (entity instanceof Portal) {
 				// TODO: demeter's law ... can give Portal a method "getAdjacentInto(d)"
 				// or something ...
-				return ((Portals) entity).getPairPortal().getLocation().adjacent(d);
+				return ((Portal) entity).getPairPortal().getLocation().adjacent(d);
 			}
 		}
 		return adjacent;

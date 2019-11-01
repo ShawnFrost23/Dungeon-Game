@@ -97,7 +97,7 @@ public class Board {
 	private void addEntities(String boardString, Game game, Goal goal) {
 		String[] lines = boardString.split("\n");
 
-		Portals firstPortal = null;
+		Portal firstPortal = null;
 		for (int y = 0; y < this.height; ++y) {
 			String line = lines[y];
 			for (int x = 0; x < this.width; ++x) {
@@ -121,14 +121,14 @@ public class Board {
 				} else if (c == '_') {
 					e = new FloorSwitch();
 				} else if (c == 'O') {
-					e = new Portals (cell);
+					e = new Portal (cell);
 					if (firstPortal == null) {
-						firstPortal = ((Portals) e);
+						firstPortal = ((Portal) e);
 					} else {
 						// If we've already added a portal this round, then pair
 						// it with the one we're adding just now.
-						((Portals) e).setPairPortal(firstPortal);
-						firstPortal.setPairPortal((Portals) e);
+						((Portal) e).setPairPortal(firstPortal);
+						firstPortal.setPairPortal((Portal) e);
 					}
 				} else if (c == '#') {
 				    e = new Door(cell);

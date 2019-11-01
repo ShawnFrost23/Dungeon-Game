@@ -1,12 +1,12 @@
 package unsw.dungeon.back;
 
-public class Portals implements Entity, Collidable {
+public class Portal implements Entity, Collidable {
 
     private Cell location;
-    private Portals pairPortal;
+    private Portal pairPortal;
 
     // Constructor for Portal class.
-    public Portals(Cell location) {
+    public Portal(Cell location) {
         this.location = location;
 
     }
@@ -21,11 +21,11 @@ public class Portals implements Entity, Collidable {
         this.location = location;
     }
 
-    public Portals getPairPortal() {
+    public Portal getPairPortal() {
         return pairPortal;
     }
 
-    public void setPairPortal(Portals pairPortal) {
+    public void setPairPortal(Portal pairPortal) {
         this.pairPortal = pairPortal;
     }
     //===============================================
