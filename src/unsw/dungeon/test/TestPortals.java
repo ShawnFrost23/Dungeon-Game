@@ -37,13 +37,95 @@ public class TestPortals {
 	}
 	
 	/**
-	 * "... That is, entering a portal behaves as though the player was
-	 * initially standing on the other portal tile and is moving out of
-	 * it, so long as it is possible to do so. "
+	 * "Entering a portal behaves as though the player was initially standing
+	 * on the other portal tile and is moving out of it, so long as it is
+	 * possible to do so ..."
 	 */ 
 	@Test
 	public void AC2() {
-		fail("Test not implemented");
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+			+ "PO O \n"
+		);
+
+		g1.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ " O OP\n"
+			, g1.getBoardString()
+		);
+
+		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+			+ "PO OW\n"
+		);
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "PO OW\n"
+			, g2.getBoardString()
+		);
+		
+		Game g3 = Game.createGame(new ImpossibleGoal(), ""
+			+ "PBO O  \n"
+		);
+		
+		g3.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ " PO OB \n"
+			, g3.getBoardString()
+		);
+		
+		g3.movePlayer(Direction.RIGHT);
+
+		assertEquals(""
+			+ "  O OPB\n"
+			, g3.getBoardString()
+		);
+		
+		Game g4 = Game.createGame(new ImpossibleGoal(), ""
+			+ "PO O!\n"
+		);
+		
+		assertFalse(g4.getHasLost());
+		
+		g4.movePlayer(Direction.RIGHT);
+		
+		assertTrue(g4.getHasLost());
+		
+		Game g5 = Game.createGame(new ImpossibleGoal(), ""
+			+ "SO O!\n"
+			, ""
+			+ "P    \n"
+		);
+		
+		g5.swingSword(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "PO O \n"
+			, g5.getBoardString()
+		);
+
+		Game g6 = Game.createGame(new ImpossibleGoal(), ""
+			+ "~PO O# \n"
+		);
+		
+		g6.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "~PO O# \n"
+			, g6.getBoardString()
+		);
+		
+		g6.movePlayer(Direction.LEFT);
+		g6.movePlayer(Direction.RIGHT);
+		g6.movePlayer(Direction.RIGHT);
+		g6.movePlayer(Direction.RIGHT);
+
+		assertEquals(""
+			+ "  O O|P\n"
+			, g6.getBoardString()
+		);
 	}
 	
 	/**
@@ -84,7 +166,9 @@ public class TestPortals {
 	}
 	
 	/**
-	 * Portals come in pairs and can be used from either end.
+	 * "Portals come in pairs and can be used from either end."
+	 * 
+	 * Furthermore, test verifies that portals can be chained.
 	 */
 	@Test
 	public void AC4() {
