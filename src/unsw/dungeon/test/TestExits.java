@@ -73,11 +73,11 @@ public class TestExits {
 			g1.movePlayer(Direction.RIGHT);
 			
 			
-			assertFalse(g2.getHasWon());
+			assertFalse(g1.getHasWon());
 			assertEquals(""
 					+ "    PB    \n"
 					+ "        B_\n"
-					, g3.getBoardString()
+					, g1.getBoardString()
 			);
 			
 	}
@@ -97,7 +97,7 @@ public class TestExits {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(new TreasureGoal(), ""
+		Game g2 = Game.createGame(new MazeGoal(), ""
 				+ " P   \n"
 				+ " E   \n"
 				+ "     \n"
