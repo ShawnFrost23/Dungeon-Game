@@ -19,10 +19,12 @@ public class Potion implements Entity, Observer, Subject {
 		this.location = c;
 	}
 	
-	public void pickUp() {
+	public void pickUp(Player p) {
 		this.notifyAllOf(new TreasurePickedUpEvent());
 		// Remove from Board cell
 		this.location.removeEntity(this);
+		p.isInvincible = true;
+		p.invincibleDuration = 15;
 	}
 	
 	@Override
@@ -45,7 +47,7 @@ public class Potion implements Entity, Observer, Subject {
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
 			//Calls pickUp
-			this.pickUp();
+			this.pickUp(event.getWhoEntered());
 		}
 	}
 	

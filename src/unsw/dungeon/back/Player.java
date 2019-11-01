@@ -12,10 +12,14 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
+	public boolean isInvincible;
+	public integer invincibleDuration;
 	
 	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
 		this.location = c;
+		this.isInvincible = false
+		this.invincibleDuration = 0;
 	}
 	
 	/**
@@ -40,6 +44,7 @@ public class Player implements Moveable, Subject, Observer {
 	 * the death of the enemy, or the death of the player.
 	 */
 	public void touchEnemy(Enemy e) {
+		
 		this.notifyAllOf(new PlayerKilledEvent());
 	}
 
