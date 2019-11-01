@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Game;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
@@ -87,6 +88,81 @@ public class TestPortals {
 	 */
 	@Test
 	public void AC4() {
-		fail("Test not implemented");
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "P            \n"
+			+ " O         O \n"
+			+ "             \n"
+			+ "             \n"
+			+ "             \n"
+			, ""
+			+ "             \n"
+			+ "        O    \n"
+			+ " O           \n"
+			+ "             \n"
+			+ "             \n"
+			, ""
+			+ "             \n"
+			+ "             \n"
+			+ "             \n"
+			+ "       OO    \n"
+			+ "             \n"
+		);
+		
+		assertEquals(""
+			+ "P            \n"
+			+ " O      O  O \n"
+			+ " O           \n"
+			+ "       OO    \n"
+			+ "             \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.DOWN);
+
+		assertEquals(""
+			+ "             \n"
+			+ " O      O  O \n"
+			+ " O         P \n"
+			+ "       OO    \n"
+			+ "             \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.DOWN);
+
+		assertEquals(""
+			+ "             \n"
+			+ " O      O  O \n"
+			+ " O           \n"
+			+ "       OO    \n"
+			+ "       P     \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(""
+			+ "             \n"
+			+ " O      O  O \n"
+			+ " O      P    \n"
+			+ "       OO    \n"
+			+ "             \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.UP);
+
+		assertEquals(""
+			+ "           P \n"
+			+ " O      O  O \n"
+			+ " O           \n"
+			+ "       OO    \n"
+			+ "             \n"
+			, g.getBoardString()
+		);
 	}
 }
