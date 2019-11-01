@@ -16,23 +16,15 @@ public class FloorSwitch implements Entity, Observer, Subject {
 	private List<Observer> observers;
 
 	public FloorSwitch() {
-		 // TODO: isn't false if it has a boulder on top of it to begin with.
-		this.isPressed = false;
 		this.observers = new ArrayList<Observer>();
 	}
 	
 	public void press() {
-		this.isPressed = true;
 		this.notifyAllOf(new FloorSwitchPressedEvent());
 	}
 	
 	public void unpress() {
-		this.isPressed = false;
 		this.notifyAllOf(new FloorSwitchUnpressedEvent());
-	}
-	
-	private boolean isPressed() {
-		return isPressed;
 	}
 	
 	@Override
