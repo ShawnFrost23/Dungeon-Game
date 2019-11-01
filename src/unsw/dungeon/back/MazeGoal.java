@@ -2,6 +2,7 @@ package unsw.dungeon.back;
 
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.ExitEvent;
 
 public class MazeGoal implements Goal, Observer{
 
@@ -10,7 +11,7 @@ public class MazeGoal implements Goal, Observer{
 	
 	@Override
 	public boolean isSatisfied() {
-		return this.isExit == 0;
+		return this.isExit == 1;
 	}
 	
 	
@@ -25,7 +26,7 @@ public class MazeGoal implements Goal, Observer{
 	@Override
 	public void notifyOf(Event event) {
 		if (event instanceof ExitEvent) {
-			this.isExit = 0;
+			this.isExit = 1;
 		}
 	}
 	
