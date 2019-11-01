@@ -9,12 +9,12 @@ import unsw.dungeon.back.event.PotionPickedUpEvent;
 import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.Player;
 
-public class Potion implements Entity, Observer, Subject {
+public class InvincibilityPotion implements Entity, Observer, Subject {
 
 	private List<Observer> observers;
 	private Cell location;
 	
-	public Potion(Cell c) {
+	public InvincibilityPotion(Cell c) {
 		
 		this.observers = new ArrayList<Observer>(); 
 		//Potion on given cell

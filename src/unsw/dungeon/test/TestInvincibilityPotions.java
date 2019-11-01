@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
-public class TestPotions {
+public class TestInvincibilityPotions {
 
 	/**
 	 * Potions are loaded in from the map file and rendered in their
