@@ -138,7 +138,7 @@ public class Game implements Observer {
 	 */
 	public void moveEnemies() {
 		for (Enemy enemy : this.enemies) {
-			Direction d = enemy.chooseMove(this.board.createWorldState(this.player.getLocation(), enemy.getLocation()));
+				Direction d = enemy.chooseMove(this.board.createWorldState(this.player.getLocation(), enemy.getLocation()));
 			if (d == null) {
 				continue;
 			}
@@ -146,6 +146,11 @@ public class Game implements Observer {
 				enemy.move(d);
 			}
 		}
+	}
+	public void declareInvincibilityTimeOver() {
+
+		this.player.setisInvincible(false);
+		this.player.setinvincibleDuration(0);
 	}
 
 	/**

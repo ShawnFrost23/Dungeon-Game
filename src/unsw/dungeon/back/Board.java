@@ -138,9 +138,10 @@ public class Board {
 					e = new Treasure(cell);
 				} else if (c == 'S' ) {
 					e = new Sword(cell);
-
 				} else if (c == 'E') {
 					e = new Exit(cell); 
+				} else if (c == '*') {
+					e = new Potion(cell);
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
