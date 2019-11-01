@@ -11,7 +11,7 @@ import unsw.dungeon.spoof.ImpossibleGoal;
 public class TestPotions {
 
 	/**
-	 * Treasures are loaded in from the map file and rendered in their
+	 * Potions are loaded in from the map file and rendered in their
 	 * correct position."
 	 */
 	@Test
@@ -80,6 +80,25 @@ public class TestPotions {
 			);
 		
 	}
+	
+//	public void AC4() {
+//		Game g = Game.createGame(new ImpossibleGoal(), ""
+//				+ "!   P*   !   \n"
+//			);
+//		g.movePlayer(Direction.RIGHT);
+//		
+//		g.moveEnemies();
+//		
+//		assertEquals(g.getBoardString(),""
+//				+ "!   P*    !  \n"
+//			);
+//			
+//		g.moveEnemies();
+//		assertEquals(g.getBoardString(),""
+//				+ "!   P*     ! \n"
+//			);
+//		
+//	}
 	
 	
 }
