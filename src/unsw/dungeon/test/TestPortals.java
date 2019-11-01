@@ -6,6 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
+import unsw.dungeon.back.Game;
+import unsw.dungeon.spoof.ImpossibleGoal;
+
 
 public class TestPortals {
 	/**
@@ -13,7 +16,23 @@ public class TestPortals {
 	 */ 
 	@Test
 	public void AC1() {
-		fail("Test not implemented");
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "   O \n"
+			+ " OP  \n"
+			+ "     \n"
+			, ""
+			+ "  O  \n"
+			+ "     \n"
+			+ " O   \n"
+		);
+		
+		assertEquals(""
+			+ "  OO \n"
+			+ " OP  \n"
+			+ " O   \n"
+			, g.getBoardString()
+		);
+		
 	}
 	
 	/**
