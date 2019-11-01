@@ -7,11 +7,11 @@ public class RunConsoleInterface {
 	public static void main(String[] args) {
 		Game g = Game.createGame(new PuzzleGoal(), ""
 			+ "WWWWWWWWWWWWWWWWWW\n"
-			+ "W                W\n"
-			+ "W     W  BWW !   W\n"
-			+ "W          W     W\n"
+			+ "W    T           W\n"
+			+ "W  T  W  BWW !   W\n"
+			+ "W     ~   SW     W\n"
 			+ "W  P  B _        W\n"
-			+ "W            ! _ W\n"
+			+ "W  S       # ! _ W\n"
 			+ "WWWWWWWWWWWWWWWWWW\n"
 		);
 		
@@ -40,7 +40,16 @@ public class RunConsoleInterface {
 				g.movePlayer(Direction.RIGHT);
 			} else if (line.charAt(0) == 'e') {
 				g.moveEnemies();
+			} else if (line.charAt(0) == 'W') {
+				g.swingSword(Direction.UP);
+			} else if (line.charAt(0) == 'A') {
+				g.swingSword(Direction.LEFT);
+			} else if (line.charAt(0) == 'S') {
+				g.swingSword(Direction.DOWN);
+			} else if (line.charAt(0) == 'D') {
+				g.swingSword(Direction.RIGHT);
 			}
+			
 			
 			System.out.println(g.getBoardString());
 			
