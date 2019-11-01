@@ -1,6 +1,6 @@
 package unsw.dungeon.back;
 
-public class Portals implements Entity {
+public class Portals implements Entity, Collidable {
 
     private Cell location;
     private Portals pairPortal;
