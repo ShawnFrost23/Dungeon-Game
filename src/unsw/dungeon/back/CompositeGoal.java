@@ -29,6 +29,7 @@ public class CompositeGoal implements Goal {
 	}
 	
 
+	// TODO: why is this getting no test coverage?
 	@Override
 	public void notifyOf(Event event) {
 		for (Goal goal : this.children) {
