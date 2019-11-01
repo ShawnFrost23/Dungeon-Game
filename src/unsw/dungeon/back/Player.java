@@ -110,4 +110,9 @@ public class Player implements Moveable, Subject, Observer {
 		this.location.removeEntity(key);
 		this.hasKey = key;
 	}
+
+	public void dropKey(Key key) {
+		this.location.addEntity(key);
+		this.hasKey = null;
+	}
 }

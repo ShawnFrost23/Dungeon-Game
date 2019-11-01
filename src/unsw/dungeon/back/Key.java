@@ -6,6 +6,7 @@ import unsw.dungeon.back.event.Observer;
 
 public class Key implements Observer, Entity  {
     private int ID;
+
     @Override
     public int getZ() {
         return 0;
