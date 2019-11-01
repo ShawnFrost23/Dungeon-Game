@@ -121,6 +121,8 @@ public class Board {
 					e = new FloorSwitch();
 				} else if (c == 'T' ) {
 					e = new Treasure(cell);
+				} else if (c == '*') {
+					e = new Potion(cell);
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
