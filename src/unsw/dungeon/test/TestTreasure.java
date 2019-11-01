@@ -43,7 +43,7 @@ public class TestTreasure {
 	public void AC2() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "      _ \n"
-			+ "  P T   \n"
+			+ "  PT    \n"
 			+ "        \n"
 			+ "    _   \n"
 			+ " _      \n"
