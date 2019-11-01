@@ -5,7 +5,7 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
 public class Door implements Observer, Entity, Collidable {
-    Cell location;
+    private Cell location;
 
     public Door(Cell location) {
         this.location = location;
