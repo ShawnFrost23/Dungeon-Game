@@ -3,6 +3,7 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.PlayerKilledEvent;
@@ -128,6 +129,10 @@ public class Game implements Observer {
 		}
 	}
 	
+	public void swingSword(Direction d) {
+		this.player.swingSword(d);
+	}
+	
 	/**
 	 * Permit all enemies to make a single valid movement (or stay still).
 	 */
@@ -160,6 +165,9 @@ public class Game implements Observer {
 	 */
 	public void trackEnemy(Enemy enemy) {
 		this.enemies.add(enemy);
+		// Listen for enemy death so that we know to stop trying to move them
+		// once they die.
+		enemy.attachListener(this);
 	}
 
 	public boolean getHasWon() {
@@ -174,10 +182,18 @@ public class Game implements Observer {
 	public void notifyOf(Event event) {
 		if (event instanceof PlayerKilledEvent) {
 			this.onPlayerKilled((PlayerKilledEvent) event);
+		} else if (event instanceof EnemyKilledEvent) {
+			this.onEnemyKilled((EnemyKilledEvent) event);
 		}
 	}
 	
 	private void onPlayerKilled(PlayerKilledEvent event) {
 		this.lose();
+	}
+	
+	private void onEnemyKilled(EnemyKilledEvent event) {
+		Enemy who = event.getWhoDied();
+		this.enemies.remove(who);
+		who.detachListener(this);
 	}
 }

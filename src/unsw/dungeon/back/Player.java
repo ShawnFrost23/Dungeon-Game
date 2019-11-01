@@ -37,13 +37,30 @@ public class Player implements Moveable, Subject, Observer {
 	}
 
 	/**
+	 * Signal that the player is trying to swing a sword from their current
+	 * location in a given direction. Note: they may or may not have a sword to
+	 * swing, this function will be called nonetheless.
+	 * @param d direction sword swing is attempted in
+	 */
+	public void swingSword(Direction d) {
+		if (this.isHoldingSword()) {
+			this.location.adjacent(d).hitWithSword();
+			this.swordDurability -= 1;
+			if (this.swordDurability == 0) {
+				this.location.exit(this); // TODO: YA, hack! new CellSwordBroke event ...
+				this.location.enter(this);
+			}
+		}
+	}
+	
+	/**
 	 * Signal that this player has touched an enemy. This will result in either
 	 * the death of the enemy, or the death of the player.
 	 */
 	public void touchEnemy(Enemy e) {
 		this.notifyAllOf(new PlayerKilledEvent());
 	}
-
+	
 	@Override
 	public boolean canMove(Direction d) {
 		return !this.location.adjacent(d).isCollidable();
@@ -104,5 +121,17 @@ public class Player implements Moveable, Subject, Observer {
 	public void pickUp(Key key) {
 		this.location.removeEntity(key);
 		this.hasKey = true;
+	}
+	
+	/// TODO{Nick} this is poor code, built because I don't want to implement
+	// something "nice" that goes against Arth's key-pickup system. I WILL FIX
+	// IT LATER, but it ought to be functionally fine as is.
+	private int swordDurability = 0;
+	public void pickupSword(Sword s) {
+		this.swordDurability = 5;
+		this.location.removeEntity(s);
+	}
+	public boolean isHoldingSword() {
+		return this.swordDurability != 0;
 	}
 }

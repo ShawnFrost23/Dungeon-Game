@@ -8,6 +8,7 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.CellExitedEvent;
+import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 
 /**
@@ -161,6 +162,14 @@ public class Cell implements Subject {
 	public void push(Player p, Direction d) {
 		this.notifyAllOf(new CellPushedEvent(p, d));
 	}
+
+	/**
+	 * Declare that a Player has swung their sword in this cell.
+	 * @param d
+	 */
+	public void hitWithSword() {
+		this.notifyAllOf(new CellHitWithSwordEvent());	
+	}
 	
 	@Override
 	public void attachListener(Observer observer) {
@@ -178,5 +187,4 @@ public class Cell implements Subject {
 			observer.notifyOf(event);
 		}
 	}
-	
 }
