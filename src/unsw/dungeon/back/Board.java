@@ -121,8 +121,13 @@ public class Board {
 					e = new FloorSwitch();
 				} else if (c == 'T' ) {
 					e = new Treasure(cell);
+
 				} else if (c == 'S' ) {
 					e = new Sword(cell);
+
+				} else if (c == 'E') {
+					e = new Exit(cell); 
+
 				}
 				
 				// If the item is a "spoof item" for testing, load it in.
