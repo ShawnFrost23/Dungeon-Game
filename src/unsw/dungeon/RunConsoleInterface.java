@@ -6,13 +6,13 @@ import unsw.dungeon.back.*;
 public class RunConsoleInterface {
 	public static void main(String[] args) {
 		Game g = Game.createGame(new PuzzleGoal(), ""
-			+ "WWWWWWWWWWWWWWWWWW\n"
-			+ "W    T           W\n"
-			+ "W  T  W  BWW !   W\n"
-			+ "W     ~   SW     W\n"
-			+ "W  P  B _        W\n"
-			+ "W  S       # ! _ W\n"
-			+ "WWWWWWWWWWWWWWWWWW\n"
+			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
+			+ "W    T                 W  !    T W\n"
+			+ "W  T  W  BWW    ! WWW  W  W B    W\n"
+			+ "W     ~   SW      W_W  W WWO     W\n"
+			+ "W  P  B _              W  W      W\n"
+			+ "W  S       # ! _   O   W    W    W\n"
+			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
 		);
 		
 		for (int i = 0; i < 40; ++i) {
