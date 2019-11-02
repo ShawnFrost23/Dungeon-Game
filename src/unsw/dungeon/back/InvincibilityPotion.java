@@ -13,11 +13,7 @@ public class InvincibilityPotion implements Entity, Observer {
 	public InvincibilityPotion(Cell c) {
 		this.location = c;
 	}
-	
-	public void pickUp() {
-		this.location.removeEntity(this);
-	}
-	
+
 	@Override
 	public int getZ() {
 		return 997;
