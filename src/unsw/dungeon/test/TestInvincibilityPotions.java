@@ -79,6 +79,7 @@ public class TestInvincibilityPotions {
 	 * "Enemies will run away from a player while invincible (try to maximise
 	 * their distance to the player rather than minimise it)."
 	 */
+	@Test
 	public void AC4() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "W!   P*   !  W\n"
