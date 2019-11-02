@@ -55,6 +55,8 @@ public class Player implements Moveable, Subject, Observer {
 			this.location.adjacent(d).hitWithSword();
 			this.swordDurability -= 1;
 			if (this.swordDurability == 0) {
+				// HACK! this if your sword breaks while standing on a dropped
+				// key, this will cause you to pick the key up!
 				this.location.exit(this);
 				this.location.enter(this);
 			}

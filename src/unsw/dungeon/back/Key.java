@@ -36,7 +36,9 @@ public class Key implements Observer, Entity  {
         Moveable who = event.getWhoEntered();
         if (who instanceof Player) {
             Player p = (Player) who;
-            p.take(this);
+            if (!p.isHoldingKey()) {
+            	p.take(this);
+            }
         }
     }
 }
