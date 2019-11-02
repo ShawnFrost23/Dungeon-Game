@@ -6,7 +6,7 @@ import java.util.List;
 import unsw.dungeon.back.event.Event;
 
 public class CompositeGoal implements Goal {
-	private interface CompositionRule {
+	public interface CompositionRule {
 		boolean isSatisfied(List<Goal> subgoals);
 	}
 	public static CompositionRule and = (List<Goal> subgoals) -> {
