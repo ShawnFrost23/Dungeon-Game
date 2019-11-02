@@ -48,6 +48,8 @@ public class RunConsoleInterface {
 				g.swingSword(Direction.DOWN);
 			} else if (line.charAt(0) == 'D') {
 				g.swingSword(Direction.RIGHT);
+			} else if (line.charAt(0) == 'q') {
+				g.dropKey();
 			}
 			
 			

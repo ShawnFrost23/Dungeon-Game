@@ -203,4 +203,10 @@ public class Game implements Observer {
 		this.enemies.remove(who);
 		who.detachListener(this);
 	}
+
+	public void dropKey() {
+		if (this.player.isHoldingKey()) {
+			this.player.dropHeldKey();
+		}
+	}
 }
