@@ -13,13 +13,16 @@ public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
 	
-	private Key hasKey;
 	private Buffs buffs;
+	private Key heldKey;
+	private int swordDurability;
+	
 
 	public Player(Cell c) {
-		this.observers = new ArrayList<Observer>();
 		this.location = c;
-		this.hasKey = null;
+		this.observers = new ArrayList<Observer>();
+		this.heldKey = null;
+		this.swordDurability = 0;
 		this.buffs = new Buffs();
 
 	}
@@ -52,7 +55,8 @@ public class Player implements Moveable, Subject, Observer {
 			this.location.adjacent(d).hitWithSword();
 			this.swordDurability -= 1;
 			if (this.swordDurability == 0) {
-				this.location.exit(this); // TODO: YA, hack! new CellSwordBroke event ...
+				// HACK ...
+				this.location.exit(this);
 				this.location.enter(this);
 			}
 		}
@@ -128,44 +132,56 @@ public class Player implements Moveable, Subject, Observer {
 		}
 	}
 
-	public boolean hasKey() {
-		if (this.hasKey != null) return true;
-		return false;
+	public boolean isHoldingKey() {
+		return this.heldKey != null;
 	}
 
-	public Key getPlayerkey(){
-		return this.hasKey;
-	}
-
-	public void pickUp(Key key) {
-		this.location.removeEntity(key);
-		this.hasKey = key;
-	}
-
-	public void dropKey(Key key) {
-		this.location.addEntity(key);
-		this.hasKey = null;
+	public boolean isHoldingSword() {
+		return this.swordDurability != 0;
 	}
 	
-	public void pickUp(InvincibilityPotion ip) {
+	public boolean hasKey(int ID) {
+		if (!this.isHoldingKey()) {
+			return false;
+		}
+		return this.heldKey.getID() == ID;
+	}
+
+	public void take(Key key) {
+		this.location.removeEntity(key);
+		this.heldKey = key;
+	}
+	
+	public void take(Sword sword) {
+		this.location.removeEntity(sword);
+		this.swordDurability = 5;
+	}
+	
+	public void take(InvincibilityPotion ip) {
 		this.location.removeEntity(ip);
 		this.buffs.addInvincibility();
 	}
-	
-	
+
+	public void swapKey() {
+		Key oldHeldKey = this.heldKey;
+		this.heldKey = null;
+		
+		// HACK ...
+		this.location.exit(this);
+		this.location.enter(this);
+		
+		if (!this.isHoldingKey()) {
+			this.heldKey = oldHeldKey;
+		} else {
+			this.location.addEntity(oldHeldKey);
+		}
+	}
+
 	public void tickBuffs() {
 		this.buffs.tick();
 	}
-	
-	/// TODO{Nick} this is poor code, built because I don't want to implement
-	// something "nice" that goes against Arth's key-pickup system. I WILL FIX
-	// IT LATER, but it ought to be functionally fine as is.
-	private int swordDurability = 0;
-	public void pickupSword(Sword s) {
-		this.swordDurability = 5;
-		this.location.removeEntity(s);
-	}
-	public boolean isHoldingSword() {
-		return this.swordDurability != 0;
+
+	public void consumeHeldKey() {
+		this.heldKey = null;
 	}
 }

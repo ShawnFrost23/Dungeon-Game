@@ -3,7 +3,7 @@ package unsw.dungeon.back;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Event;
 
-import unsw.dungeon.back.event.TreasurePickedUpEvent;
+import unsw.dungeon.back.event.TreasureCollectedEvent;
 
 public class TreasureGoal implements Goal, Observer {
 	private int numTreasureRemaining;
@@ -19,7 +19,7 @@ public class TreasureGoal implements Goal, Observer {
 
 	@Override
 	public void notifyOf(Event event) {
-		if (event instanceof TreasurePickedUpEvent) {
+		if (event instanceof TreasureCollectedEvent) {
 			this.numTreasureRemaining -= 1;
 		}
 	}

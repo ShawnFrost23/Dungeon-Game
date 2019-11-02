@@ -203,4 +203,8 @@ public class Game implements Observer {
 		this.enemies.remove(who);
 		who.detachListener(this);
 	}
+
+	public void swapKey() {
+		this.player.swapKey();
+	}
 }
