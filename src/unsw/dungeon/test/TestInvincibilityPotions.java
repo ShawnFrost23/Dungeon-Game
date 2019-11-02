@@ -35,50 +35,21 @@ public class TestInvincibilityPotions {
 	}
 	
 	/**
-	 * "If a player walks over a treasure
-	 *  the treasure should no longer be on the map"
+	 * "Invincibility potions are automatically picked up when the player walks
+	 * over them."
 	 */
 	@Test
 	public void AC2() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "      _ \n"
-			+ "  P *   \n"
-			+ "        \n"
-			+ "    _   \n"
-			+ " _      \n"
+			+ "   P*   \n"
 		);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "      _ \n"
-			+ "    P   \n"
-			+ "        \n"
-			+ "    _   \n"
-			+ " _      \n"
+			+ "     P  \n"
 			, g.getBoardString()
 		);
-		
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
-				+ "      _ \n"
-				+ "  P *   \n"
-				+ "        \n"
-				+ "    _   \n"
-				+ " _      \n"
-			);
-			g1.movePlayer(Direction.RIGHT);
-			g1.movePlayer(Direction.RIGHT);
-			g1.movePlayer(Direction.RIGHT);
-			
-			assertEquals(""
-				+ "      _ \n"
-				+ "     P  \n"
-				+ "        \n"
-				+ "    _   \n"
-				+ " _      \n"
-				, g1.getBoardString()
-			);
-		
 	}
 	
 //	public void AC4() {
