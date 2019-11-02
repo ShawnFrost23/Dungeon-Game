@@ -58,46 +58,96 @@ public class TestKeysAndDoors {
 	}
 
 	/**
-	 * "Pressing "q" will drop the key where the player is currently standing.
-	 * It will be picked up again only when the player walks off of
-	 * and re-enters the tile."
+	 * "Pressing "q" will swap the key the player is currently holding with the
+	 * one on the ground at the players location. Pressing q will do nothing if
+	 * the player does not have a key, or if they are not standing on a cell
+	 * with a key."
 	 */
+	@Test
 	public void AC3() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "P~    #\n"
+			+ "P~    # \n"
 			, ""
-			+ "  ~  # \n"
+			+ "  ~  #  \n"
+		);
+		
+		g.swapKey();
+		
+		assertEquals(""
+			+ "P~~  ## \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~P ## \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~ P## \n"
+			, g.getBoardString()
+		);
+		
+		g.swapKey();
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~ P## \n"
+			, g.getBoardString()
+		);
+		
 		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.swapKey();
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "P ~  ##\n"
+			+ "  ~ P## \n"
 			, g.getBoardString()
 		);
 		
-		g.dropKey();
 		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~  P# \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "     P# \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "     ||P\n"
+			, g.getBoardString()
+		);
 
-		assertEquals(""
-			+ "~P~  ##\n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-
-		assertEquals(""
-			+ "~  P ##\n"
-			, g.getBoardString()
-		);
-		
 	}
 	
 	/**
 	 * "Keys cannot be dropped on top of other keys, or on top of swords."
 	 */
+	@Test
 	public void AC4() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "P~ S   #\n"
@@ -106,9 +156,9 @@ public class TestKeysAndDoors {
 		);
 		
 		g.movePlayer(Direction.RIGHT);
-		g.dropKey();
+		g.swapKey();
 		g.movePlayer(Direction.RIGHT);
-		g.dropKey();
+		g.swapKey();
 		
 	}
 	/**

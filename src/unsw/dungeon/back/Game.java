@@ -204,9 +204,7 @@ public class Game implements Observer {
 		who.detachListener(this);
 	}
 
-	public void dropKey() {
-		if (this.player.isHoldingKey()) {
-			this.player.dropHeldKey();
-		}
+	public void swapKey() {
+		this.player.swapKey();
 	}
 }

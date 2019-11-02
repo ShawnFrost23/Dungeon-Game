@@ -163,16 +163,23 @@ public class Player implements Moveable, Subject, Observer {
 		this.buffs.addInvincibility();
 	}
 
-	public void dropHeldKey() {
-		this.location.addEntity(this.heldKey); // TODO: check that this location doesn't have a key under it ...
+	public void swapKey() {
+		Key oldHeldKey = this.heldKey;
 		this.heldKey = null;
+		this.location.exit(this);
+		this.location.enter(this);
+		if (!this.isHoldingKey()) {
+			this.heldKey = oldHeldKey;
+		} else {
+			this.location.addEntity(oldHeldKey);
+		}
 	}
-	
-	public void consumeHeldKey() {
-		this.heldKey = null;
-	}
-	
+
 	public void tickBuffs() {
 		this.buffs.tick();
+	}
+
+	public void consumeHeldKey() {
+		this.heldKey = null;
 	}
 }
