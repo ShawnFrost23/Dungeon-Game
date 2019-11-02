@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.PlayerSteppedOffExit;
+import unsw.dungeon.back.event.PlayerSteppedOnExit;
 import unsw.dungeon.back.event.Subject;
-import unsw.dungeon.back.event.ExitEvent;
 
 public class Exit implements Entity, Observer, Subject{
 	private List<Observer> observers;
@@ -17,10 +19,6 @@ public class Exit implements Entity, Observer, Subject{
 	 */
 	public Exit() {
 		this.observers = new ArrayList<Observer>(); 
-	}
-	
-	public void exit() {
-		this.notifyAllOf(new ExitEvent());
 	}
 	
 	@Override
@@ -55,13 +53,21 @@ public class Exit implements Entity, Observer, Subject{
 	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);
-		} 
+		} else if (event instanceof CellExitedEvent) {
+			this.onExit((CellExitedEvent) event);
+		}
 		
+	}
+	
+	public void onExit(CellExitedEvent event) {
+		if (event.getWhoExited() instanceof Player) {
+			this.notifyAllOf(new PlayerSteppedOffExit());
+		}
 	}
 	
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
-			this.exit();
+			this.notifyAllOf(new PlayerSteppedOnExit());
 		}
 	}
 	

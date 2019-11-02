@@ -27,14 +27,11 @@ public class CompositeGoal implements Goal {
 	public void addChild(Goal g) {
 		this.children.add(g);
 	}
-	
 
-	// TODO: why is this getting no test coverage?
 	@Override
 	public void notifyOf(Event event) {
-		for (Goal goal : this.children) {
-			goal.notifyOf(event);
-		}
+		// Do nothing. The children that are interested in this event will
+		// already be subscribed, we don't have to pass along the message.
 	}
 
 	@Override
