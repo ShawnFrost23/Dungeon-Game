@@ -13,82 +13,39 @@ import unsw.dungeon.spoof.ImpossibleGoal;
 
 public class TestExits {
 	/**
-	 * "Exits are loaded in from the map file and rendered in their
-	 * correct position."
+	 * "Exits (possibly multiple) are loaded from map files and rendered in the
+	 * correct tile."
 	 */
 	@Test
 	public void AC1() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "      E \n"
-			+ "    _   \n"
+			+ "        \n"
 			+ "  P     \n"
-			+ "    _   \n"
+			+ "        \n"
 			+ " E      \n"
 		);
 		
 		assertEquals(""
 			+ "      E \n"
-			+ "    _   \n"
+			+ "        \n"
 			+ "  P     \n"
-			+ "    _   \n"
+			+ "        \n"
 			+ " E      \n"
 			, g.getBoardString()
 		);
 	}
 	
+	
+	
 	/**
-	 * "Exits can be walked over, for a non-Maze Goal"
-	 */
-	@Test
-	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "  PE \n"
-		);
-		
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "   P \n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "   EP\n"
-			, g.getBoardString()
-		);
-		
-		/**
-		 * "Exits can be walked over for all
-		 *  entities, accept player for a Maze Goal"
-		 */
-		
-		Game g1 = Game.createGame(new MazeGoal(), ""
-				+ "  PB E    \n"
-				+ "        B_\n"
-			);
-			
-			g1.movePlayer(Direction.RIGHT);
-			g1.movePlayer(Direction.RIGHT);
-			
-			
-			assertFalse(g1.getHasWon());
-			assertEquals(""
-					+ "    PB    \n"
-					+ "        B_\n"
-					, g1.getBoardString()
-			);
-			
-	}
-		
-	/**
-	 * "Exits can be walked over, for a non-Maze Goal"
+	 * "Walking over an exit when a maze-goal is specified causes the player to
+	 * win the game."
 	 */
 	@Test
 	public void AC2() {
-		Game g1 = Game.createGame(new MazeGoal(), ""
-			+ " PE  \n"
+ 		Game g1 = Game.createGame(new MazeGoal(), ""
+			+ "PE\n"
 		);
 		
 		assertFalse(g1.getHasWon());
@@ -96,34 +53,80 @@ public class TestExits {
 		g1.movePlayer(Direction.RIGHT);
 		
 		assertTrue(g1.getHasWon());
-		
-		Game g2 = Game.createGame(new MazeGoal(), ""
-				+ " P   \n"
-				+ " E   \n"
-				+ "     \n"
-			);
-			
-		assertFalse(g2.getHasWon());
-			
-		g2.movePlayer(Direction.RIGHT);
-			
-		assertFalse(g2.getHasWon());
-			
-		g2.movePlayer(Direction.DOWN);
 
-		assertFalse(g2.getHasWon());
-			
-		assertEquals(""
-				+ "     \n"
-				+ " EP  \n"
-				+ "     \n"
-				, g2.getBoardString()
+		Game g2 = Game.createGame(new MazeGoal(), ""
+			+ "EPE\n"
 		);
-			
-		g2.movePlayer(Direction.LEFT);
-			
-		assertTrue(g2.getHasWon());
-	}
 		
+		assertFalse(g2.getHasWon());
+		
+		g2.movePlayer(Direction.RIGHT);
+		
+		assertTrue(g2.getHasWon());
+		
+		Game g3 = Game.createGame(new MazeGoal(), ""
+			+ "EPE\n"
+		);
+		
+		assertFalse(g3.getHasWon());
+		
+		g3.movePlayer(Direction.LEFT);
+		
+		assertTrue(g3.getHasWon());
+		
+ 		Game g4 = Game.createGame(new ImpossibleGoal(), ""
+			+ "PE\n"
+		);
+ 		
+ 		g4.movePlayer(Direction.RIGHT);
+ 		
+ 		assertFalse(g4.getHasWon());
+	}
+
 	
+	/**
+	 * "Exits are treated like blank spaces, e.g. boulders can be pushed onto
+	 * them, enemies can walk over them."
+	 */
+	@Test
+	public void AC3() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ " PBE   E! \n"
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ " PBE   !  \n"
+			, g.getBoardString()
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ " PBE  !E  \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+
+		assertEquals(""
+			+ "  PB  !E  \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+
+		assertEquals(""
+			+ "   PB !E  \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "   EPB!E  \n"
+			, g.getBoardString()
+		);
+	}	
 }
