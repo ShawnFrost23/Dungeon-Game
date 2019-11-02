@@ -114,4 +114,17 @@ public class TestInvincibilityPotions {
 		);		
 	}
 
+	
+	/**
+	 * "The player avatar blinks when there are less than 2 seconds of
+	 * invincibility remaining."
+	 * 
+	 * Note: nothing is tested for here -- the entirety of this functionality is
+	 * (for now) delegated to the UI. 
+	 */
+	@Test
+	public void AC5() {
+		
+	}
+	
 }
