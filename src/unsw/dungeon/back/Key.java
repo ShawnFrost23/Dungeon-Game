@@ -10,6 +10,10 @@ public class Key implements Observer, Entity  {
     public Key(int ID) {
         this.ID = ID;
     }
+    
+    public int getID() {
+        return this.ID;
+    }
 
     @Override
     public int getZ() {
@@ -28,21 +32,11 @@ public class Key implements Observer, Entity  {
         }
     }
 
-
     private void onEnter(CellEnteredEvent event) {
         Moveable who = event.getWhoEntered();
         if (who instanceof Player) {
             Player p = (Player) who;
-            if (p.hasKey()){
-                return;
-            } else {
-                p.pickUp(this);
-            }
-
+            p.pickUp(this);
         }
-    }
-
-    public int getID() {
-        return this.ID;
     }
 }
