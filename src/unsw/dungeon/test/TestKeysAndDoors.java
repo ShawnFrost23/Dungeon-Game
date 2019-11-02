@@ -58,13 +58,21 @@ public class TestKeysAndDoors {
 	}
 
 	/**
+	 * If a player walks into a door while holding the corresponding key, the
+	 * key disappears and the door permanently enters an "open" state.
+	 */
+	@Test
+	public void AC3() {
+	}
+	
+	/**
 	 * "Pressing "q" will swap the key the player is currently holding with the
 	 * one on the ground at the players location. Pressing q will do nothing if
 	 * the player does not have a key, or if they are not standing on a cell
 	 * with a key."
 	 */
 	@Test
-	public void AC3() {
+	public void AC5() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
 			+ "P~    # \n"
 			, ""
@@ -145,91 +153,91 @@ public class TestKeysAndDoors {
 	}
 	
 	/**
-	 * "Keys cannot be dropped on top of other keys, or on top of swords."
+	 * "A closed door behaves like a wall. An open door behaves like "nothing"
+	 * (boulders can be pushed through it, enemies and players can walk through
+	 * it)."
 	 */
 	@Test
 	public void AC4() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "P~ S   #\n"
-			, ""
-			+ "  ~   # \n"
+			+ " PB#!  \n"
+			+ "    ~  \n"
+		);
+
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ " PB#!  \n"
+			+ "    ~  \n"
+			, g.getBoardString()
+		);
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ " PB#!  \n"
+			+ "    ~  \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.DOWN);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(""
+			+ "  B#!  \n"
+			+ "   P~  \n"
+			, g.getBoardString()
 		);
 		
 		g.movePlayer(Direction.RIGHT);
-		g.swapKey();
-		g.movePlayer(Direction.RIGHT);
-		g.swapKey();
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.UP);
+
+		assertEquals(""
+			+ "  BP!  \n"
+			+ "       \n"
+			, g.getBoardString()
+		);
 		
-	}
-	/**
-	 * "Can Pick up keys by simply walking over them"
-	 */
-	@Test
-	public void ACXXX() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
-				+ " P  W  \n"
-				+ " ~  #  \n"
-				+ "    W  \n"
-		);
-
 		g.movePlayer(Direction.DOWN);
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ " P  #  \n"
-				+ "    W  \n"
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(""
+			+ " PB|!  \n"
+			+ "       \n"
+			, g.getBoardString()
 		);
-
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ "   P#  \n"
-				+ "    W  \n"
+		
+		g.moveEnemies();
+		
+		assertEquals(""
+			+ " PB!   \n"
+			+ "       \n"
+			, g.getBoardString()
 		);
-
-		g.movePlayer(Direction.RIGHT);
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ "    P  \n"
-				+ "    W  \n"
-		);
-
-		g.movePlayer(Direction.RIGHT);
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ "    |P \n"
-				+ "    W  \n"
-		);
-
-	}
-
-	/**
-	 * "Player cannot cross the door without a key"
-	 */
-	@Test
-	public void ACXXXX() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
-				+ " P  W  \n"
-				+ "    #  \n"
-				+ "  ~ W  \n"
-		);
-
+		
 		g.movePlayer(Direction.DOWN);
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ " P  #  \n"
-				+ "  ~ W  \n"
+		g.moveEnemies();
+		g.movePlayer(Direction.UP);
+		
+		assertEquals(""
+			+ " PB|   \n"
+			+ "   !   \n"
+			, g.getBoardString()
 		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
 
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-
-		assertEquals(g.getBoardString(),""
-				+ "    W  \n"
-				+ "   P#  \n"
-				+ "  ~ W  \n"
+		assertEquals(""
+			+ "   |PB \n"
+			+ "   !   \n"
+			, g.getBoardString()
 		);
 	}
 	/**
