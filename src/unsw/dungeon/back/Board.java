@@ -40,6 +40,7 @@ public class Board {
 	}
 
 	public static Board createBoard(Game game, Goal goal, String ...boardStrings) {
+		int subBoardNum = 0;
 		Board board = null;
 		for (String boardString : boardStrings) {
 			if (board == null) {
@@ -47,7 +48,8 @@ public class Board {
 				board = new Board(lines[0].length(), lines.length);
 			}
 
-			board.addEntities(boardString, game, goal);
+			board.addEntities(boardString, game, goal, subBoardNum);
+			subBoardNum += 1;
 		}
 
 		return board;
@@ -57,7 +59,7 @@ public class Board {
 	 * Get the Cell that is effectively adjacent to <b>c</b> in direction
 	 * <b>d</b>.
 	 * @param c cell to check next to
-	 * @param d direction to check in 
+	 * @param d direction to check in
 	 * @return cell that is adjacent to the given cell in the given direction
 	 */
 	// Note: this doc will have to be updated when Portals are implemented.
@@ -94,7 +96,7 @@ public class Board {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
 
-	private void addEntities(String boardString, Game game, Goal goal) {
+	private void addEntities(String boardString, Game game, Goal goal, int subBoardNum) {
 		String[] lines = boardString.split("\n");
 
 		Portal firstPortal = null;
@@ -131,9 +133,9 @@ public class Board {
 						firstPortal.setPairPortal((Portal) e);
 					}
 				} else if (c == '#') {
-				    e = new Door(cell);
-                } else if (c == '~') {
-				    e = new Key();
+					e = new Door(cell, subBoardNum);
+				} else if (c == '~') {
+					e = new Key(subBoardNum);
 				} else if (c == 'T' ) {
 					e = new Treasure(cell);
 				} else if (c == 'S' ) {
@@ -143,7 +145,6 @@ public class Board {
 				} else if (c == '*') {
 					e = new InvincibilityPotion(cell);
 				}
-				
 				// If the item is a "spoof item" for testing, load it in.
 				if (c == '?') {
 					e = new SpoofCrushableItem(cell);

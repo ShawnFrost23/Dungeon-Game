@@ -12,14 +12,16 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
-	private boolean hasKey;
-	private Buffs buffs;
 	
+	private Key hasKey;
+	private Buffs buffs;
+
 	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
 		this.location = c;
-		this.hasKey = false;
+		this.hasKey = null;
 		this.buffs = new Buffs();
+
 	}
 	
 	/**
@@ -127,12 +129,22 @@ public class Player implements Moveable, Subject, Observer {
 	}
 
 	public boolean hasKey() {
+		if (this.hasKey != null) return true;
+		return false;
+	}
+
+	public Key getPlayerkey(){
 		return this.hasKey;
 	}
 
 	public void pickUp(Key key) {
 		this.location.removeEntity(key);
-		this.hasKey = true;
+		this.hasKey = key;
+	}
+
+	public void dropKey(Key key) {
+		this.location.addEntity(key);
+		this.hasKey = null;
 	}
 	
 	public void pickUp(InvincibilityPotion ip) {

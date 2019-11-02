@@ -5,6 +5,12 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
 public class Key implements Observer, Entity  {
+    private int ID;
+
+    public Key(int ID) {
+        this.ID = ID;
+    }
+
     @Override
     public int getZ() {
         return 0;
@@ -22,16 +28,21 @@ public class Key implements Observer, Entity  {
         }
     }
 
+
     private void onEnter(CellEnteredEvent event) {
         Moveable who = event.getWhoEntered();
         if (who instanceof Player) {
             Player p = (Player) who;
-            if (p.hasKey()) {
+            if (p.hasKey()){
                 return;
             } else {
                 p.pickUp(this);
             }
 
         }
+    }
+
+    public int getID() {
+        return this.ID;
     }
 }
