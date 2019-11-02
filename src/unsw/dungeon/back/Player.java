@@ -12,17 +12,14 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
-	private boolean isInvincible;
-	private int invincibleDuration;
 	private boolean hasKey;
+	private Buffs buffs;
 	
 	public Player(Cell c) {
 		this.observers = new ArrayList<Observer>();
 		this.location = c;
-		this.isInvincible = false;
-		this.invincibleDuration = 0;
 		this.hasKey = false;
-
+		this.buffs = new Buffs();
 	}
 	
 	/**
@@ -33,21 +30,6 @@ public class Player implements Moveable, Subject, Observer {
 		return this.location;
 	}
 	
-	public void setisInvincible(boolean status) {
-		this.isInvincible = true;
-	}
-	
-	public void setinvincibleDuration(int time) {
-		this.invincibleDuration = time;
-	}
-	
-	public boolean getisInvincible() {
-		return this.isInvincible;
-	}
-	
-	public int getinvincibleDuration() {
-		return this.invincibleDuration;
-	}
 	/**
 	 * Signal that the player is trying to "push" from their current location
 	 * in the given direction.
@@ -79,17 +61,16 @@ public class Player implements Moveable, Subject, Observer {
 	 * the death of the enemy, or the death of the player.
 	 */
 	public void touchEnemy(Enemy e) {
-		if (this.isInvincible) {
+		if (this.isInvincible()) {
+			//System.
 			e.kill();
-			System.out.println("dfd");
 		} else {
 			this.notifyAllOf(new PlayerKilledEvent());
 		}
 	}
 	
-	public void invincibilityOn() {
-		this.isInvincible = true;
-		this.invincibleDuration = 15;
+	public boolean isInvincible() {
+		return this.buffs.isInvincible();
 	}
 
 	@Override
@@ -152,6 +133,16 @@ public class Player implements Moveable, Subject, Observer {
 	public void pickUp(Key key) {
 		this.location.removeEntity(key);
 		this.hasKey = true;
+	}
+	
+	public void pickUp(InvincibilityPotion ip) {
+		this.location.removeEntity(ip);
+		this.buffs.addInvincibility();
+	}
+	
+	
+	public void tickBuffs() {
+		this.buffs.tick();
 	}
 	
 	/// TODO{Nick} this is poor code, built because I don't want to implement

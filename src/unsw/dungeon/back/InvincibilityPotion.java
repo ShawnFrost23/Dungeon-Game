@@ -39,9 +39,7 @@ public class InvincibilityPotion implements Entity, Observer {
 		Moveable who = event.getWhoEntered();
 		if (who instanceof Player) {
 			Player p = (Player) who;
-			
-			this.pickUp();
-			((Player)event.getWhoEntered()).invincibilityOn();
+			p.pickUp(this);
 		}
 	}
 }
