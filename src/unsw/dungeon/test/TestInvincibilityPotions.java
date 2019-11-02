@@ -75,24 +75,42 @@ public class TestInvincibilityPotions {
 		);
 	}
 	
-//	public void AC4() {
-//		Game g = Game.createGame(new ImpossibleGoal(), ""
-//				+ "!   P*   !   \n"
-//			);
-//		g.movePlayer(Direction.RIGHT);
-//		
-//		g.moveEnemies();
-//		
-//		assertEquals(g.getBoardString(),""
-//				+ "!   P*    !  \n"
-//			);
-//			
-//		g.moveEnemies();
-//		assertEquals(g.getBoardString(),""
-//				+ "!   P*     ! \n"
-//			);
-//		
-//	}
-	
-	
+	/**
+	 * "Enemies will run away from a player while invincible (try to maximise
+	 * their distance to the player rather than minimise it)."
+	 */
+	public void AC4() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "W!   P*   !  W\n"
+		);
+		
+		g.moveEnemies();
+
+		assertEquals(g.getBoardString(),""
+			+ "W !  P*  !   W\n"
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		g.moveEnemies();
+		
+		assertEquals(g.getBoardString(),""
+			+ "W!    P   !  W\n"
+		);
+		
+		g.moveEnemies();
+
+		assertEquals(g.getBoardString(),""
+			+ "W!    P    ! W\n"
+		);
+		
+		g.declareInvincibilityTimeOver();
+		
+		g.moveEnemies();
+		
+		assertEquals(g.getBoardString(),""
+			+ "W!    P   !  W\n"
+		);		
+	}
+
 }
