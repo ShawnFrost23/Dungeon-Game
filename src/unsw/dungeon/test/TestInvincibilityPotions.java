@@ -56,20 +56,18 @@ public class TestInvincibilityPotions {
 	 * "Walking over an invincibility potion will trigger "invincibility" for 15
 	 * seconds. In the invincible state, the player will kill enemies on
 	 * collision."
-	 * 
-	 * Note: this doesn't test the 15 second part.
 	 */
 	@Test
 	public void AC3() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "   P***! \n"
+			+ "   P***!!!\n"
 		);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "      P! \n"
+			+ "      P!!!\n"
 			, g.getBoardString()
 		);
 		
@@ -78,16 +76,28 @@ public class TestInvincibilityPotions {
 		assertFalse(g.getHasLost());
 
 		assertEquals(""
-			+ "       P \n"
+			+ "       P!!\n"
 			, g.getBoardString()
 		);
+		
+		for (int i = 0; i < 14; ++i ) {
+			g.tickBuffs();
+		}
 		
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "        P\n"
+			+ "        P!\n"
 			, g.getBoardString()
 		);
+		
+		assertFalse(g.getHasLost());
+		
+		g.tickBuffs();
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertTrue(g.getHasLost());
 	}
 	
 	/**

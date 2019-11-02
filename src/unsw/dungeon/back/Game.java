@@ -170,6 +170,13 @@ public class Game implements Observer {
 		enemy.attachListener(this);
 	}
 
+	/**
+	 * Pass one second of duration for all potion effects. 
+	 */
+	public void tickBuffs() {
+		this.player.tickBuffs();
+	}
+	
 	public boolean getHasWon() {
 		return this.goal.isSatisfied();
 	}
