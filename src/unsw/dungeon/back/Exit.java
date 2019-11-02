@@ -21,7 +21,7 @@ public class Exit implements Entity, Observer, Subject{
 	
 	@Override
 	public int getZ() {
-		return 996;
+		return 990;
 	}
 
 	@Override
