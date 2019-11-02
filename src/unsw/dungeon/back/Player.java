@@ -135,6 +135,10 @@ public class Player implements Moveable, Subject, Observer {
 		return this.heldKey != null;
 	}
 
+	public boolean isHoldingSword() {
+		return this.swordDurability != 0;
+	}
+	
 	public boolean hasKey(int ID) {
 		if (!this.isHoldingKey()) {
 			return false;
@@ -142,17 +146,17 @@ public class Player implements Moveable, Subject, Observer {
 		return this.heldKey.getID() == ID;
 	}
 
-	public void pickUp(Key key) {
+	public void take(Key key) {
 		this.location.removeEntity(key);
 		this.heldKey = key;
 	}
 	
-	public void pickUp(Sword sword) {
+	public void take(Sword sword) {
 		this.location.removeEntity(sword);
 		this.swordDurability = 5;
 	}
 	
-	public void pickUp(InvincibilityPotion ip) {
+	public void take(InvincibilityPotion ip) {
 		this.location.removeEntity(ip);
 		this.buffs.addInvincibility();
 	}
@@ -166,20 +170,7 @@ public class Player implements Moveable, Subject, Observer {
 		this.heldKey = null;
 	}
 	
-
-	
 	public void tickBuffs() {
 		this.buffs.tick();
-	}
-	
-	/// TODO{Nick} this is poor code, built because I don't want to implement
-	// something "nice" that goes against Arth's key-pickup system. I WILL FIX
-	// IT LATER, but it ought to be functionally fine as is.
-	public void pickupSword(Sword s) {
-		this.swordDurability = 5;
-		this.location.removeEntity(s);
-	}
-	public boolean isHoldingSword() {
-		return this.swordDurability != 0;
 	}
 }

@@ -33,7 +33,7 @@ public class Sword implements Entity, Observer {
 		if (who instanceof Player) {
 			Player p = (Player) who;
 			if (!p.isHoldingSword()) {
-				p.pickUp(this);
+				p.take(this);
 			}
 		}
 	}
