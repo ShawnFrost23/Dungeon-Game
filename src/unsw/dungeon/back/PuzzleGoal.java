@@ -5,6 +5,10 @@ import unsw.dungeon.back.event.FloorSwitchPressedEvent;
 import unsw.dungeon.back.event.FloorSwitchUnpressedEvent;
 import unsw.dungeon.back.event.Observer;
 
+/**
+ * A goal that is satisfied so long as all {@link FloorSwitches} are covered by
+ * {@link Boulders}.
+ */
 public class PuzzleGoal implements Goal, Observer {
 	private int numUnpressedFloorSwitches;
 

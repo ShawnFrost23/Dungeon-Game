@@ -12,17 +12,22 @@ import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Subject;
 
 public class FloorSwitch implements Entity, Observer, Subject {
-	private boolean isPressed;
 	private List<Observer> observers;
 
 	public FloorSwitch() {
 		this.observers = new ArrayList<Observer>();
 	}
 	
+	/**
+	 * Generate a {@link FloorSwitchPressedEvent} and notify all observers.
+	 */
 	public void press() {
 		this.notifyAllOf(new FloorSwitchPressedEvent());
 	}
 	
+	/**
+	 * Generate a {@link FloorSwitchUnpressedEvent} and notify all observers.
+	 */
 	public void unpress() {
 		this.notifyAllOf(new FloorSwitchUnpressedEvent());
 	}

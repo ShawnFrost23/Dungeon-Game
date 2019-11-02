@@ -5,6 +5,9 @@ import unsw.dungeon.back.event.Event;
 
 import unsw.dungeon.back.event.TreasureCollectedEvent;
 
+/**
+ * A goal that is satisfied so long as all {@link Treasure} has been collected.
+ */
 public class TreasureGoal implements Goal, Observer {
 	private int numTreasureRemaining;
 	

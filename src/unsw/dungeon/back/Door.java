@@ -8,11 +8,21 @@ public class Door implements Observer, Entity, Collidable {
 	private Cell location;
 	private int ID;
 
+	/**
+	 * Construct a new Door.
+	 * @param location the cell this door is located in
+	 * @param ID ID of the door. This door will open be opened by {@link Keys}s
+	 * that share this value.
+	 */
 	public Door(Cell location, int ID) {
 		this.location = location;
 		this.ID = ID;
 	}
 	
+	/**
+	 * Open the door -- replace the Door entity with an OpenDoor one at the same
+	 * location.
+	 */
 	private void open() {
 		this.location.removeEntity(this);
 		this.location.addEntity(new OpenDoor());

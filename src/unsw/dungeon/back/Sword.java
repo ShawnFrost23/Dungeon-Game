@@ -7,6 +7,10 @@ import unsw.dungeon.back.event.Observer;
 public class Sword implements Entity, Observer {
 	private Cell location;
 
+	/**
+	 * Construct a new Sword instance.
+	 * @param location Cell the Sword is located at
+	 */
 	public Sword(Cell location) {
 		this.location = location;
 	}

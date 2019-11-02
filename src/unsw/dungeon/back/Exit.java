@@ -10,13 +10,17 @@ import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.ExitEvent;
 
 public class Exit implements Entity, Observer, Subject{
-	private Cell location;
 	private List<Observer> observers;
 
-	public Exit(Cell c) {
+	/**
+	 * Create a new Exit.
+	 */
+	public Exit() {
 		this.observers = new ArrayList<Observer>(); 
-		// treasure on given cell
-		this.location = c;
+	}
+	
+	public void exit() {
+		this.notifyAllOf(new ExitEvent());
 	}
 	
 	@Override
@@ -55,13 +59,8 @@ public class Exit implements Entity, Observer, Subject{
 		
 	}
 	
-	public void exit() {
-		this.notifyAllOf(new ExitEvent());
-	}
-	
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
-			//Calls pickUp
 			this.exit();
 		}
 	}

@@ -32,6 +32,12 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	private MovementStrategy movementStrategy;
 	private List<Observer> observers;
 
+	/**
+	 * Consruct a new Enemy instance.
+	 * @param cell cell in which the Enemy is located 
+	 * @param movementStrategy {@link MovementStrategy} that the enemy will use
+	 * to choose its moves
+	 */
 	public Enemy(Cell cell, MovementStrategy movementStrategy) {
 		this.location = cell;
 		this.movementStrategy = movementStrategy;
@@ -41,7 +47,7 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	/**
 	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
 	 * would like to make.
-	 * @param world WorldState instance representing the current world state
+	 * @param world {@link WorldState} instance representing the current world state
 	 * @return direction to move in or <code>null</code> if the Enemy does not
 	 * wish to move 
 	 */
@@ -59,18 +65,37 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	
 	/**
 	 * Set the strategy that this Enemy will use to choose its moves.
-	 * @param movementStrategy strategy to use
+	 * @param movementStrategy {@link MovementStrategy} to set
 	 */
 	public void setMovementStrategy(NaiveMovementStrategy movementStrategy) {
 		this.movementStrategy = movementStrategy;
 	}
 	
 	/**
-	 * Kill this enemy
+	 * Kill this enemy -- remove it from the map and generate an
+	 * {@link unsw.dungeon.back.event.EnemyKilledEvent EnemyKilledEvent}.
 	 */
 	public void kill() {
 		this.location.removeEntity(this);
 		this.notifyAllOf(new EnemyKilledEvent(this));
+	}
+
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : new ArrayList<Observer>(this.observers)) {
+			observer.notifyOf(event);
+		}
 	}
 	
 	@Override
@@ -112,23 +137,5 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	
 	private void onHitWithSword(CellHitWithSwordEvent event) {
 		this.kill();
-	}
-	
-	@Override
-	public void attachListener(Observer observer) {
-		this.observers.add(observer);
-	}
-
-	@Override
-	public void detachListener(Observer observer) {
-		this.observers.remove(observer);
-		
-	}
-
-	@Override
-	public void notifyAllOf(Event event) {
-		for (Observer observer : new ArrayList<Observer>(this.observers)) {
-			observer.notifyOf(event);
-		}
 	}
 }

@@ -17,7 +17,10 @@ public class Player implements Moveable, Subject, Observer {
 	private Key heldKey;
 	private int swordDurability;
 	
-
+	/**
+	 * Create a new Player instance.
+	 * @param c the cell the player is located on
+	 */
 	public Player(Cell c) {
 		this.location = c;
 		this.observers = new ArrayList<Observer>();
@@ -45,10 +48,12 @@ public class Player implements Moveable, Subject, Observer {
 	}
 
 	/**
-	 * Signal that the player is trying to swing a sword from their current
-	 * location in a given direction. Note: they may or may not have a sword to
-	 * swing, this function will be called nonetheless.
-	 * @param d direction sword swing is attempted in
+	 * Signal that the player is trying to swing their sword from their current
+	 * location in a particular direction. If the player has a sword, this will
+	 * spend one point of its durability to
+	 * {@link Cell#hitWithSword() hitWithSword} the targeted {@link Cell} (the
+	 * cell that is in direction <b>d</b> from the player's current location.)
+	 * @param d direction sword swing is to be swung in
 	 */
 	public void swingSword(Direction d) {
 		if (this.isHoldingSword()) {
@@ -68,15 +73,112 @@ public class Player implements Moveable, Subject, Observer {
 	 */
 	public void touchEnemy(Enemy e) {
 		if (this.isInvincible()) {
-			//System.
 			e.kill();
 		} else {
 			this.notifyAllOf(new PlayerKilledEvent());
 		}
 	}
 	
+	/**
+	 * Get whether the player is currently invincible.
+	 * @return true if the player is invincible
+	 */
 	public boolean isInvincible() {
 		return this.buffs.isInvincible();
+	}
+
+	/**
+	 * Check if the player is currently holding a sword.
+	 * @return true if the player is holding a sword
+	 */
+	public boolean isHoldingSword() {
+		return this.swordDurability != 0;
+	}
+	
+	/**
+	 * Check if the player is currently holding any key.
+	 * @return true if the player is holding a key
+	 */
+	public boolean isHoldingKey() {
+		return this.heldKey != null;
+	}
+	
+	/**
+	 * Check if the player is holding a key that matches the provided ID.
+	 * @param ID key ID to check against
+	 * @return true if the player is holding the key of matching ID.
+	 */
+	public boolean hasKey(int ID) {
+		if (!this.isHoldingKey()) {
+			return false;
+		}
+		return this.heldKey.getID() == ID;
+	}
+
+	/**
+	 * Take a {@link Key} entity off of the ground, and place it in the player's
+	 * inventory.
+	 * @param key key to pick up and carry. The key must be located in the same
+	 * cell as the player.
+	 */
+	public void take(Key key) {
+		this.location.removeEntity(key);
+		this.heldKey = key;
+	}
+
+	/**
+	 * Take a {@link Sword} entity off of the ground, and place it in the
+	 * player's inventory.
+	 * @param sword sword to pick up and carry. The sword must be located in the
+	 * same cell as the player.
+	 */
+	public void take(Sword sword) {
+		this.location.removeEntity(sword);
+		this.swordDurability = 5;
+	}
+	
+	/**
+	 * Take an {@link InvincibilityPotion} entity off of the ground. Consume it.
+	 * @param potion invincibility potion to pick up and consume. The potion
+	 * must be located in the same cell as the player.
+	 */
+	public void take(InvincibilityPotion potion) {
+		this.location.removeEntity(potion);
+		this.buffs.addInvincibility();
+	}
+
+	/**
+	 * Swap the key currently held by the player with the one in the cell
+	 * they're located in. If the player is not holding a key, or if they are
+	 * not standing on a key, nothing will occur. 
+	 */
+	public void swapKey() {
+		Key oldHeldKey = this.heldKey;
+		this.heldKey = null;
+		
+		// HACK ...
+		this.location.exit(this);
+		this.location.enter(this);
+		
+		if (!this.isHoldingKey()) {
+			this.heldKey = oldHeldKey;
+		} else {
+			this.location.addEntity(oldHeldKey);
+		}
+	}
+
+	/**
+	 * Destroy the key that the player is currently holding.
+	 */
+	public void consumeHeldKey() {
+		this.heldKey = null;
+	}
+	
+	/**
+	 * Pass one second of duration for all of this player's potion effects. 
+	 */
+	public void tickBuffs() {
+		this.buffs.tick();
 	}
 
 	@Override
@@ -130,58 +232,5 @@ public class Player implements Moveable, Subject, Observer {
 		if (who instanceof Enemy) {
 			this.touchEnemy((Enemy) who);
 		}
-	}
-
-	public boolean isHoldingKey() {
-		return this.heldKey != null;
-	}
-
-	public boolean isHoldingSword() {
-		return this.swordDurability != 0;
-	}
-	
-	public boolean hasKey(int ID) {
-		if (!this.isHoldingKey()) {
-			return false;
-		}
-		return this.heldKey.getID() == ID;
-	}
-
-	public void take(Key key) {
-		this.location.removeEntity(key);
-		this.heldKey = key;
-	}
-	
-	public void take(Sword sword) {
-		this.location.removeEntity(sword);
-		this.swordDurability = 5;
-	}
-	
-	public void take(InvincibilityPotion ip) {
-		this.location.removeEntity(ip);
-		this.buffs.addInvincibility();
-	}
-
-	public void swapKey() {
-		Key oldHeldKey = this.heldKey;
-		this.heldKey = null;
-		
-		// HACK ...
-		this.location.exit(this);
-		this.location.enter(this);
-		
-		if (!this.isHoldingKey()) {
-			this.heldKey = oldHeldKey;
-		} else {
-			this.location.addEntity(oldHeldKey);
-		}
-	}
-
-	public void tickBuffs() {
-		this.buffs.tick();
-	}
-
-	public void consumeHeldKey() {
-		this.heldKey = null;
 	}
 }

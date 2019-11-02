@@ -1,6 +1,10 @@
 package unsw.dungeon.back.event;
 
-public class TreasureCollectedEvent implements Event{
+/**
+ * Event that is fired when a Player collects 
+ * {@link unsw.dungeon.back.Treasure Treasure}.
+ */
+public class TreasureCollectedEvent implements Event {
 
 		
 }

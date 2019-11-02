@@ -5,23 +5,10 @@ import java.util.List;
 
 import unsw.dungeon.spoof.*;
 
-// TODO: Board creational methods ...
-// TODO: my source of unease ... `Cell location` -- a cell isn't a location!
-
 /**
- * A collection of cells. Board can tell its user what's effectively to the
- * left, right, above, or below each (non-edge) cell.
- * For the most part, a Board will act like a 2d array of cells.
+ * A collection of cells. Board can tell its user what's to the left, right,
+ * above, or below each (non-edge) cell.
  */
-// "For the most part", "effectively" = portals are static things that affect
-// space itself, so it might make sense to have them interact directly with the
-// board class rather than being an entity. I think this will simplify portals
-// EXTREMELY considering the way we are currently going about things.
-//
-// But, this will mean that just by checking adjacent, enemies will not be able
-// to know whether they're walking into a portal or not. We'll need to add some
-// additional interface functions here, or give Enemies something other than
-// a Board to plan their moves on. Both seem sane.
 public class Board {
 	private Cell[][] cells;
 	private int height;
@@ -39,6 +26,14 @@ public class Board {
 		}
 	}
 
+	/**
+	 * Create a new  {@link Board} from boardString form.
+	 * @param game Game object to which this board will belong
+	 * @param goal the Game's goal
+	 * @param boardStrings a valid string representation of the board, see 
+	 * {@link Game#createGame}
+	 * @return a new {@link Board} instance
+	 */
 	public static Board createBoard(Game game, Goal goal, String ...boardStrings) {
 		int subBoardNum = 0;
 		Board board = null;
@@ -56,13 +51,11 @@ public class Board {
 	}
 
 	/**
-	 * Get the Cell that is effectively adjacent to <b>c</b> in direction
-	 * <b>d</b>.
+	 * Get the Cell that is adjacent in coordinates to the provided cell.
 	 * @param c cell to check next to
 	 * @param d direction to check in
 	 * @return cell that is adjacent to the given cell in the given direction
 	 */
-	// Note: this doc will have to be updated when Portals are implemented.
 	public Cell adjacent(Cell c, Direction d) {
 		Cell adj = null;
 		if (d == Direction.UP) {
@@ -78,7 +71,7 @@ public class Board {
 	}
 
 	/**
-	 * Get a string representation of this Board.
+	 * Get a displayable string representation of this Board.
 	 * @return string representation of this Board
 	 */
 	public String getBoardString() {
@@ -92,11 +85,18 @@ public class Board {
 		return s;
 	}
 
+	/**
+	 * Create a {@link WorldState} object corresponding to this Board. 
+	 * @param playerLocation cell the player is located in
+	 * @param enemyLocation cell the enemy who's using this function to make
+	 * plans is located in
+	 * @return a new {@link WorldState} object corresponding to this Board 
+	 */
 	public WorldState createWorldState(Cell playerLocation, Cell enemyLocation) {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
 
-	private void addEntities(String boardString, Game game, Goal goal, int subBoardNum) {
+	private void addEntities(String boardString, Game game, Goal goal, int boardNum) {
 		String[] lines = boardString.split("\n");
 
 		Portal firstPortal = null;
@@ -129,30 +129,29 @@ public class Board {
 					} else {
 						// If we've already added a portal this round, then pair
 						// it with the one we're adding just now.
-						((Portal) e).setPairPortal(firstPortal);
-						firstPortal.setPairPortal((Portal) e);
+						((Portal) e).setPairedPortal(firstPortal);
+						firstPortal.setPairedPortal((Portal) e);
 					}
 				} else if (c == '#') {
-					e = new Door(cell, subBoardNum);
+					e = new Door(cell, boardNum);
 				} else if (c == '~') {
-					e = new Key(subBoardNum);
+					e = new Key(boardNum);
 				} else if (c == 'T' ) {
 					e = new Treasure(cell);
 				} else if (c == 'S' ) {
 					e = new Sword(cell);
 				} else if (c == 'E') {
-					e = new Exit(cell); 
+					e = new Exit(); 
 				} else if (c == '*') {
-					e = new InvincibilityPotion(cell);
-				}
-				// If the item is a "spoof item" for testing, load it in.
-				if (c == '?') {
+					e = new InvincibilityPotion();
+				} else if (c == '?') {
 					e = new SpoofCrushableItem(cell);
+				} else {
+					throw new Error("Unrecognised entity texture '" + c + "'");
 				}
 
 				if (e != null) {
 					if (e instanceof Moveable) {
-						// Trigger events when we add!
 						cell.enter((Moveable) e);
 					} else {
 						cell.addEntity(e);

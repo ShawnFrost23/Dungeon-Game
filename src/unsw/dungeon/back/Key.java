@@ -7,10 +7,19 @@ import unsw.dungeon.back.event.Observer;
 public class Key implements Observer, Entity  {
     private int ID;
 
+    /**
+     * Construct a new Key.
+     * @param ID ID of the key. This key will open {@link Door}s that share
+     * this value.
+     */
     public Key(int ID) {
         this.ID = ID;
     }
     
+    /**
+     * Get this key's ID.
+     * @return the key's ID
+     */
     public int getID() {
         return this.ID;
     }

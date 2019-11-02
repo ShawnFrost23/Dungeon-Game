@@ -4,6 +4,9 @@ import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
+/**
+ * A goal that is satisfied when all {@link Enemies} have been killed.
+ */
 public class EnemiesGoal implements Goal, Observer {
 	private int numEnemiesRemaining;
 	

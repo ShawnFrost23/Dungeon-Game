@@ -8,11 +8,6 @@ import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.Player;
 
 public class InvincibilityPotion implements Entity, Observer {
-	private Cell location;
-	
-	public InvincibilityPotion(Cell c) {
-		this.location = c;
-	}
 
 	@Override
 	public int getZ() {

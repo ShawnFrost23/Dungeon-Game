@@ -1,38 +1,35 @@
 package unsw.dungeon.back;
 
 public class Portal implements Entity, Collidable {
-
     private Cell location;
-    private Portal pairPortal;
+    private Portal pairedPortal;
 
-    // Constructor for Portal class.
+    /**
+     * Create a new Portal at a given location.
+     * @param location cell that the portal is located at
+     */
     public Portal(Cell location) {
         this.location = location;
-
     }
 
-    // Getters and Setters
-    //===============================================
-    public Cell getLocation() {
-        return location;
+    /**
+     * Get the cell that is adjacent in direction <b>d</b> to this portal's
+     * other end.
+     * @param d direction to check adjacency in
+     * @return the cell that is adjacent to this portal's other end 
+     */
+    public Cell getPairedAdjacent(Direction d) {
+    	return this.pairedPortal.location.adjacent(d);
     }
 
-    public void setLocation(Cell location) {
-        this.location = location;
+    /**
+     * Link this portal to another one.
+     * @param pairedPortal portal to link to
+     */
+    public void setPairedPortal(Portal pairedPortal) {
+        this.pairedPortal = pairedPortal;
     }
 
-    public Portal getPairPortal() {
-        return pairPortal;
-    }
-
-    public void setPairPortal(Portal pairPortal) {
-        this.pairPortal = pairPortal;
-    }
-    //===============================================
-
-
-    //Over ridden funtions of entity Interface.
-    //===============================================
     @Override
     public int getZ() {
         return 0;
@@ -42,5 +39,4 @@ public class Portal implements Entity, Collidable {
     public char getTexture() {
         return 'O';
     }
-    //===============================================
 }

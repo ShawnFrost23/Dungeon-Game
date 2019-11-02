@@ -13,14 +13,40 @@ public class Treasure implements Entity, Observer, Subject {
 	private List<Observer> observers;
 	private Cell location;
 	
+	/**
+	 * Construct a new Treasure object.
+	 * @param c cell the treasure is located at
+	 */
 	public Treasure(Cell c) {
 		this.observers = new ArrayList<Observer>(); 
 		this.location = c;
 	}
 	
+	/**
+	 * Removes this treasure from its location on the board. Notify all
+	 * listeners of a new {@link unsw.dungeon.back.event.TreasureCollectedEvent}.
+	 */
 	public void collect() {
 		this.notifyAllOf(new TreasureCollectedEvent());
 		this.location.removeEntity(this);
+	}
+	
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : this.observers) {
+			observer.notifyOf(event);
+		}
 	}
 	
 	@Override
@@ -43,24 +69,6 @@ public class Treasure implements Entity, Observer, Subject {
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
 			this.collect();
-		}
-	}
-
-	@Override
-	public void attachListener(Observer observer) {
-		this.observers.add(observer);
-	}
-
-	@Override
-	public void detachListener(Observer observer) {
-		this.observers.remove(observer);
-		
-	}
-
-	@Override
-	public void notifyAllOf(Event event) {
-		for (Observer observer : this.observers) {
-			observer.notifyOf(event);
 		}
 	}
 }
