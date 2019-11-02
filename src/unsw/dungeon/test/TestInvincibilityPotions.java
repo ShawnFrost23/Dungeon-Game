@@ -62,14 +62,14 @@ public class TestInvincibilityPotions {
 	@Test
 	public void AC3() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "   P***E \n"
+			+ "   P***! \n"
 		);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "      PE \n"
+			+ "      P! \n"
 			, g.getBoardString()
 		);
 		
