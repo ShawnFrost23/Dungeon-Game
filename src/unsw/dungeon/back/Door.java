@@ -8,8 +8,9 @@ public class Door implements Observer, Entity, Collidable {
     private Cell location;
     private int ID;
 
-    public Door(Cell location) {
+    public Door(Cell location, int ID) {
         this.location = location;
+        this.ID = ID;
     }
 
     @Override
