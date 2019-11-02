@@ -58,98 +58,39 @@ public class TestKeysAndDoors {
 	}
 
 	/**
-	 * If a player walks into a door while holding the corresponding key, the
-	 * key disappears and the door permanently enters an "open" state.
+	 * "If a player walks into a door while holding the corresponding key, the
+	 * key disappears and the door permanently enters an "open" state."
+	 * 
+	 * Note: the "corresponding" part isn't tested here. It is behaviour that
+	 * is necessarily demonstrated in AC5.
 	 */
 	@Test
 	public void AC3() {
-	}
-	
-	/**
-	 * "Pressing "q" will swap the key the player is currently holding with the
-	 * one on the ground at the players location. Pressing q will do nothing if
-	 * the player does not have a key, or if they are not standing on a cell
-	 * with a key."
-	 */
-	@Test
-	public void AC5() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "P~    # \n"
+			+ "P~#      \n"
 			, ""
-			+ "  ~  #  \n"
+			+ "   ~#    \n"
+			, ""
+			+ "     ~#  \n"
 		);
 		
-		g.swapKey();
+		for (int i = 0; i < 7; ++i) {
+			g.movePlayer(Direction.RIGHT);
+		}
 		
 		assertEquals(""
-			+ "P~~  ## \n"
+			+ "  | | |P \n"
 			, g.getBoardString()
 		);
 		
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
+		for (int i = 0; i < 7; ++i) {
+			g.movePlayer(Direction.LEFT);
+		}
 		
 		assertEquals(""
-			+ "  ~P ## \n"
+			+ "P | | |  \n"
 			, g.getBoardString()
 		);
-		
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "  ~ P## \n"
-			, g.getBoardString()
-		);
-		
-		g.swapKey();
-		
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "  ~ P## \n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.LEFT);
-		g.movePlayer(Direction.LEFT);
-		g.swapKey();
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "  ~ P## \n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "  ~  P# \n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.LEFT);
-		g.movePlayer(Direction.LEFT);
-		g.movePlayer(Direction.LEFT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "     P# \n"
-			, g.getBoardString()
-		);
-		
-		g.movePlayer(Direction.RIGHT);
-		g.movePlayer(Direction.RIGHT);
-		
-		assertEquals(""
-			+ "     ||P\n"
-			, g.getBoardString()
-		);
-
 	}
 	
 	/**
@@ -240,30 +181,119 @@ public class TestKeysAndDoors {
 			, g.getBoardString()
 		);
 	}
+	
+	
 	/**
-	 * "Enemies will treat closed doors as walls and will not
-	 * pick up the keys"
+	 * "Pressing "q" will swap the key the player is currently holding with the
+	 * one on the ground at the players location. Pressing q will do nothing if
+	 * the player does not have a key, or if they are not standing on a cell
+	 * with a key."
 	 */
 	@Test
-	public void ACXXXXXX() {
+	public void AC5() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-				+"P   #  ~!\n"
+			+ "P~    # \n"
+			, ""
+			+ "  ~  #  \n"
 		);
-		g.moveEnemies();
-		assertEquals(g.getBoardString(),""
-				+"P   #  ! \n"
+		
+		g.swapKey();
+		
+		assertEquals(""
+			+ "P~~  ## \n"
+			, g.getBoardString()
 		);
-		g.moveEnemies();
-		assertEquals(g.getBoardString(),""
-				+"P   # !~ \n"
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~P ## \n"
+			, g.getBoardString()
 		);
-		g.moveEnemies();
-		g.moveEnemies();
-		g.moveEnemies();
-		assertEquals(g.getBoardString(),""
-				+"P   #! ~ \n"
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~ P## \n"
+			, g.getBoardString()
+		);
+		
+		g.swapKey();
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~ P## \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.swapKey();
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~ P## \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "  ~  P# \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.LEFT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "     P# \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "     ||P\n"
+			, g.getBoardString()
 		);
 
 	}
-
+	
+	/**
+	 * "Enemies will treat closed doors as walls and will not pick up the keys."
+	 */
+	@Test
+	public void EnemiesDontPickUpKeys() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "P   #  ~!\n"
+		);
+		g.moveEnemies();
+		assertEquals(""
+			+ "P   #  ! \n"
+			, g.getBoardString()
+		);
+		g.moveEnemies();
+		assertEquals(""
+			+ "P   # !~ \n"
+			, g.getBoardString()
+		);
+		g.moveEnemies();
+		g.moveEnemies();
+		g.moveEnemies();
+		assertEquals(""
+			+ "P   #! ~ \n"
+			, g.getBoardString()
+		);
+	}
 }
