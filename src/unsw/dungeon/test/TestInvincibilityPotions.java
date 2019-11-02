@@ -52,6 +52,29 @@ public class TestInvincibilityPotions {
 		);
 	}
 	
+	/**
+	 * "Walking over an invincibility potion will trigger "invincibility" for
+	 * 15 seconds (non-stackable -- overrides the current cooldown)."
+	 * 
+	 * Note: this test only really checks that Potions can be picked up in
+	 * succession.
+	 */
+	@Test
+	public void AC3() {
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ "   P*** \n"
+		);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "       P\n"
+			, g.getBoardString()
+		);
+	}
+	
 //	public void AC4() {
 //		Game g = Game.createGame(new ImpossibleGoal(), ""
 //				+ "!   P*   !   \n"
