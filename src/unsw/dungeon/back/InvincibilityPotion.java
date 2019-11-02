@@ -36,8 +36,10 @@ public class InvincibilityPotion implements Entity, Observer {
 		
 	}
 	private void onEnter(CellEnteredEvent event) {
-		if (event.getWhoEntered() instanceof Player) {
-			//Calls pickUp
+		Moveable who = event.getWhoEntered();
+		if (who instanceof Player) {
+			Player p = (Player) who;
+			
 			this.pickUp();
 			((Player)event.getWhoEntered()).invincibilityOn();
 		}

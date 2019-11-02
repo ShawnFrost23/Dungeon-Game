@@ -69,6 +69,7 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	 * Kill this enemy
 	 */
 	public void kill() {
+		System.out.println("killed");
 		this.location.removeEntity(this);
 		this.notifyAllOf(new EnemyKilledEvent(this));
 	}

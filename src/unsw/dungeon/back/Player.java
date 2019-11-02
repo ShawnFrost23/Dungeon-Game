@@ -79,8 +79,12 @@ public class Player implements Moveable, Subject, Observer {
 	 * the death of the enemy, or the death of the player.
 	 */
 	public void touchEnemy(Enemy e) {
-		
-		this.notifyAllOf(new PlayerKilledEvent());
+		if (this.isInvincible) {
+			e.kill();
+			System.out.println("dfd");
+		} else {
+			this.notifyAllOf(new PlayerKilledEvent());
+		}
 	}
 	
 	public void invincibilityOn() {
