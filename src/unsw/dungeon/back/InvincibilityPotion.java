@@ -5,25 +5,16 @@ import java.util.List;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
-import unsw.dungeon.back.event.PotionPickedUpEvent;
-import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.Player;
 
-public class InvincibilityPotion implements Entity, Observer, Subject {
-
-	private List<Observer> observers;
+public class InvincibilityPotion implements Entity, Observer {
 	private Cell location;
 	
 	public InvincibilityPotion(Cell c) {
-		
-		this.observers = new ArrayList<Observer>(); 
-		//Potion on given cell
 		this.location = c;
 	}
 	
 	public void pickUp() {
-		this.notifyAllOf(new PotionPickedUpEvent());
-		// Remove from Board cell
 		this.location.removeEntity(this);
 	}
 	
@@ -49,24 +40,6 @@ public class InvincibilityPotion implements Entity, Observer, Subject {
 			//Calls pickUp
 			this.pickUp();
 			((Player)event.getWhoEntered()).invincibilityOn();
-		}
-	}
-	
-	@Override
-	public void attachListener(Observer observer) {
-		this.observers.add(observer);
-	}
-
-	@Override
-	public void detachListener(Observer observer) {
-		this.observers.remove(observer);
-		
-	}
-
-	@Override
-	public void notifyAllOf(Event event) {
-		for (Observer observer : this.observers) {
-			observer.notifyOf(event);
 		}
 	}
 }
