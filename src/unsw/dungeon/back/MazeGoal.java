@@ -4,7 +4,10 @@ import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.PlayerSteppedOffExit;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.PlayerSteppedOnExit;
-
+/**
+ * A goal that is satisfied so long as the {@link Player} is standing on top
+ * of an {@link Exit}.
+ */
 public class MazeGoal implements Goal, Observer{
 	boolean isPlayerStoodOnExit;
 	Game game;

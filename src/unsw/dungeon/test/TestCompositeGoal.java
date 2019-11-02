@@ -14,6 +14,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
+/**
+ * Tests for the Composite Goal user story.
+ */
 public class TestCompositeGoal {
 	private static Goal createTreasureAndPuzzleGoal() {
 		CompositeGoal treasureAndPuzzle = new CompositeGoal(CompositeGoal.and);

@@ -10,7 +10,9 @@ import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Game;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
-
+/**
+ * Tests for the Portals user story.
+ */
 public class TestPortals {
 	/**
 	 * "Portals are loaded from the map file and rendered correctly."

@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
+/**
+ * Tests for the Treasure user story.
+ */
 public class TestTreasure {
 	
 	/**

@@ -13,7 +13,7 @@ import unsw.dungeon.spoof.ImpossibleGoal;
  * Tests for the Enemies user story.
  * @note Many of these tests tests are rendered obsolete by the Smart Enemies
  * user story. The old behaviour should still be kept and tested with a spoof
- * DumbEnemy entity.
+ * DumbEnemy strategy.
  */
 public class TestEnemies {
 	/**

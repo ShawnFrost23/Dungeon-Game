@@ -8,8 +8,11 @@ import org.junit.jupiter.api.Test;
 import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
-public class TestInvincibilityPotions {
 
+/**
+ * Tests for the Invinncibility Potions user story.
+ */
+public class TestInvincibilityPotions {
 	/**
 	 * Potions are loaded in from the map file and rendered in their
 	 * correct position."

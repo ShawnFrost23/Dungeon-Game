@@ -8,7 +8,7 @@ import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
- * Tests for the Keys and Doors user story
+ * Tests for the Keys and Doors user story.
  */
 public class TestKeysAndDoors {
 	/**

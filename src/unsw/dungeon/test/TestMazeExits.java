@@ -10,8 +10,10 @@ import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
 
-
-public class TestExits {
+/**
+ * Tests for the Maze Exits user story.
+ */
+public class TestMazeExits {
 	/**
 	 * "Exits (possibly multiple) are loaded from map files and rendered in the
 	 * correct tile."

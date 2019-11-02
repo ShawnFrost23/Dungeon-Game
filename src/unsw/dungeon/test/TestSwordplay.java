@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
+/**
+ * Tests for the Swordplay user story.
+ */
 public class TestSwordplay {
 	/**
 	 * "Sword items are loaded from map and rendered in correct position."
