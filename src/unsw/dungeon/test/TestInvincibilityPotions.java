@@ -53,24 +53,39 @@ public class TestInvincibilityPotions {
 	}
 	
 	/**
-	 * "Walking over an invincibility potion will trigger "invincibility" for
-	 * 15 seconds (non-stackable -- overrides the current cooldown)."
+	 * "Walking over an invincibility potion will trigger "invincibility" for 15
+	 * seconds. In the invincible state, the player will kill enemies on
+	 * collision."
 	 * 
-	 * Note: this test only really checks that Potions can be picked up in
-	 * succession.
+	 * Note: this doesn't test the 15 second part.
 	 */
 	@Test
 	public void AC3() {
 		Game g = Game.createGame(new ImpossibleGoal(), ""
-			+ "   P*** \n"
+			+ "   P***E \n"
 		);
-		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		g.movePlayer(Direction.RIGHT);
 		
 		assertEquals(""
-			+ "       P\n"
+			+ "      PE \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertFalse(g.getHasLost());
+
+		assertEquals(""
+			+ "       P \n"
+			, g.getBoardString()
+		);
+		
+		g.movePlayer(Direction.RIGHT);
+		
+		assertEquals(""
+			+ "        P\n"
 			, g.getBoardString()
 		);
 	}
