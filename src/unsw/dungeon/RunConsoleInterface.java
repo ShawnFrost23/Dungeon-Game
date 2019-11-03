@@ -11,7 +11,7 @@ public class RunConsoleInterface {
 			+ "W  T  W  BWW    ! WWW  W  W B    W\n"
 			+ "W     ~   SW      W_W  W WWO     W\n"
 			+ "W  P  B _              W  W      W\n"
-			+ "W  S       # ! _   O   W    W    W\n"
+			+ "W  S  *    # ! _   O   W    W    W\n"
 			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
 		);
 		

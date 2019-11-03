@@ -20,12 +20,15 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	public interface MovementStrategy {
 		/**
 		 * Decide which move the enemy would like to make.
-		 * @param world
+		 * @param world {@link WorldState} representation of the Board that the
+		 * enemy can query to make plans 
+		 * @param seek true if the enemy should try to seek their goal, false
+		 * if the enemy should try to avoid it (the player is invincible)
 		 * @return direction to move in or <code>null</code> if the Enemy does
 		 * not wish to move
-		 * @see {@link Enemy#chooseMove(WorldState)}
+		 * @see {@link Enemy#chooseMove(WorldState, boolean)}
 		 */
-		public Direction chooseMove(WorldState world);
+		public Direction chooseMove(WorldState world, boolean seek);
 	}
 	
 	private Cell location;
@@ -47,12 +50,15 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	/**
 	 * Consult this enemy's {@link MovementStrategy} for what move the Enemy
 	 * would like to make.
-	 * @param world {@link WorldState} instance representing the current world state
+	 * @param world {@link WorldState} instance representing the current world
+	 * state
+	 * @param seek true if the enemy should try to seek their goal, false if
+	 * the enemy should try to avoid it (the player is invincible)
 	 * @return direction to move in or <code>null</code> if the Enemy does not
 	 * wish to move 
 	 */
-	public Direction chooseMove(WorldState world) {
-		return this.movementStrategy.chooseMove(world);
+	public Direction chooseMove(WorldState world, boolean seek) {
+		return this.movementStrategy.chooseMove(world, seek);
 	}
 	
 	/**

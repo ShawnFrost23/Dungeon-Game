@@ -151,7 +151,10 @@ public class Game implements Observer {
 	 */
 	public void moveEnemies() {
 		for (Enemy enemy : this.enemies) {
-			Direction d = enemy.chooseMove(this.board.createWorldState(this.player.getLocation(), enemy.getLocation()));
+			Direction d = enemy.chooseMove(
+				this.board.createWorldState(this.player.getLocation(), enemy.getLocation()),
+				!player.isInvincible()
+			);
 			if (d == null) {
 				continue;
 			}
