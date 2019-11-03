@@ -113,6 +113,8 @@ public class TestInvincibilityPotions {
 			+ "W!   P*   !  W\n"
 		);
 		
+		g.tickBuffs();
+		
 		g.moveEnemies();
 
 		assertEquals(g.getBoardString(),""
