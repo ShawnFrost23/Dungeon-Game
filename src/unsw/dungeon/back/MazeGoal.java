@@ -1,9 +1,9 @@
 package unsw.dungeon.back;
 
 import unsw.dungeon.back.event.Observer;
-import unsw.dungeon.back.event.PlayerSteppedOffExitEvent;
+import unsw.dungeon.back.event.ExitSteppedOffEvent;
 import unsw.dungeon.back.event.Event;
-import unsw.dungeon.back.event.PlayerSteppedOnExitEvent;
+import unsw.dungeon.back.event.ExitSteppedOnEvent;
 /**
  * A goal that is satisfied so long as the {@link Player} is standing on top
  * of an {@link Exit}.
@@ -31,9 +31,9 @@ public class MazeGoal implements Goal, Observer{
 	
 	@Override
 	public void notifyOf(Event event) {
-		if (event instanceof PlayerSteppedOnExitEvent) {
+		if (event instanceof ExitSteppedOnEvent) {
 			this.isPlayerStoodOnExit = true;
-		} else if (event instanceof PlayerSteppedOffExitEvent) {
+		} else if (event instanceof ExitSteppedOffEvent) {
 			this.isPlayerStoodOnExit = false;
 		}
 	}
