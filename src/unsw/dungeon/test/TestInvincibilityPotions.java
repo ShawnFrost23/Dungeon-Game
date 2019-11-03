@@ -10,7 +10,7 @@ import unsw.dungeon.spoof.ImpossibleGoal;
 
 
 /**
- * Tests for the Invinncibility Potions user story.
+ * Tests for the Invincibility Potions user story.
  */
 public class TestInvincibilityPotions {
 	/**
