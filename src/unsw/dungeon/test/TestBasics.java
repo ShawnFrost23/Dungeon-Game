@@ -1,9 +1,6 @@
 package unsw.dungeon.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
-
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 

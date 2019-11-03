@@ -1,9 +1,6 @@
 package unsw.dungeon.back;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import unsw.dungeon.spoof.*;
+import unsw.dungeon.spoof.SpoofCrushableItem;
 
 /**
  * A collection of cells. Board can tell its user what's to the left, right,

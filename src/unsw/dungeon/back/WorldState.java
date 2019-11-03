@@ -1,9 +1,5 @@
 package unsw.dungeon.back;
 
-import unsw.dungeon.back.event.CellEnteredEvent;
-import unsw.dungeon.back.event.Event;
-import unsw.dungeon.back.event.Observer;
-
 /**
  * A world that {@link Enemy.MovementStrategy} can query to decide what move to
  * make.

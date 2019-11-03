@@ -1,8 +1,5 @@
 package unsw.dungeon.back;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * The Buffs object encodes a counter that represents the duration of the
  * invincibility effect. 

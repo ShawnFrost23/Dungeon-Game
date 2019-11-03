@@ -1,6 +1,4 @@
 package unsw.dungeon.back;
-import java.util.ArrayList;
-import java.util.List;
 
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
