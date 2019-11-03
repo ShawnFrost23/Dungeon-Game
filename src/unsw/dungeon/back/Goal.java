@@ -7,7 +7,7 @@ import unsw.dungeon.back.event.Observer;
  * {@link Game#createGame(Goal, String...)}. If the Goal at root level becomes
  * satisfied, the game is won.
  */
-public interface Goal extends Observer {
+public interface Goal {
 	/**
 	 * Returns true if this goal is satisfied, false otherwise.
 	 * @return true if this goal is satisfied

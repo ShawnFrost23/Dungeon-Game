@@ -56,12 +56,6 @@ public class CompositeGoal implements Goal {
 	}
 
 	@Override
-	public void notifyOf(Event event) {
-		// Do nothing. The children that are interested in this event will
-		// already be subscribed, we don't have to pass along the message.
-	}
-
-	@Override
 	public boolean isSatisfied() {
 		 return this.compositionRule.isSatisfied(this.children);
 	}
