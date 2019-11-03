@@ -5,7 +5,14 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
 public class Door implements Observer, Entity {
-	private Cell location;
+	public interface State {
+		public int getZ();
+		public char getTexture();
+		public boolean isCollidable();
+		public void onPush(CellPushedEvent event);
+	}
+
+	private State state;
 	private int ID;
 
 	/**
@@ -14,33 +21,41 @@ public class Door implements Observer, Entity {
 	 * @param ID ID of the door. This door will open be opened by {@link Keys}s
 	 * that share this value.
 	 */
-	public Door(Cell location, int ID) {
-		this.location = location;
+	public Door(int ID) {
 		this.ID = ID;
+		this.state = new LockedDoor(this);
+	}
+	
+
+	/**
+	 * Get this door's ID.
+	 * @return the door's ID
+	 */
+	public int getID() {
+		return this.ID;
 	}
 	
 	/**
 	 * Open the door -- replace the Door entity with an OpenDoor one at the same
 	 * location.
 	 */
-	private void open() {
-		this.location.removeEntity(this);
-		this.location.addEntity(new OpenDoor());
+	public void setState(State state) {
+		this.state = state;
 	}
-	
+
 	@Override
 	public int getZ() {
-		return 0;
+		return this.state.getZ();
 	}
 
 	@Override
 	public char getTexture() {
-		return '#';
+		return this.state.getTexture();
 	}
 	
 	@Override
 	public boolean isCollidable() {
-		return true;
+		return this.state.isCollidable();
 	}
 
 	@Override
@@ -51,10 +66,6 @@ public class Door implements Observer, Entity {
 	}
 
 	private void onPush(CellPushedEvent event) {
-		Player p = event.getWhoPushed();
-		if (p.hasKey(this.ID)) {
-			p.consumeHeldKey();
-			this.open();
-		}
+		this.state.onPush(event);
 	}
 }

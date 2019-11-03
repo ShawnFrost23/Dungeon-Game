@@ -133,7 +133,7 @@ public class Board {
 						firstPortal.setPairedPortal((Portal) e);
 					}
 				} else if (c == '#') {
-					e = new Door(cell, boardNum);
+					e = new Door(boardNum);
 				} else if (c == '~') {
 					e = new Key(boardNum);
 				} else if (c == 'T' ) {
