@@ -7,8 +7,8 @@ import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
-import unsw.dungeon.back.event.PlayerSteppedOffExit;
-import unsw.dungeon.back.event.PlayerSteppedOnExit;
+import unsw.dungeon.back.event.PlayerSteppedOffExitEvent;
+import unsw.dungeon.back.event.PlayerSteppedOnExitEvent;
 import unsw.dungeon.back.event.Subject;
 
 public class Exit implements Entity, Observer, Subject {
@@ -66,13 +66,13 @@ public class Exit implements Entity, Observer, Subject {
 	
 	public void onExit(CellExitedEvent event) {
 		if (event.getWhoExited() instanceof Player) {
-			this.notifyAllOf(new PlayerSteppedOffExit());
+			this.notifyAllOf(new PlayerSteppedOffExitEvent());
 		}
 	}
 	
 	private void onEnter(CellEnteredEvent event) {
 		if (event.getWhoEntered() instanceof Player) {
-			this.notifyAllOf(new PlayerSteppedOnExit());
+			this.notifyAllOf(new PlayerSteppedOnExitEvent());
 		}
 	}
 }
