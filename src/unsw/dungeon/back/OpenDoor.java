@@ -10,4 +10,9 @@ public class OpenDoor implements Entity {
     public char getTexture() {
         return '|';
     }
+    
+	@Override
+	public boolean isCollidable() {
+		return false;
+	}
 }

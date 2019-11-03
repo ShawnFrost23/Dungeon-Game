@@ -1,6 +1,6 @@
 package unsw.dungeon.back;
 
-public class Portal implements Entity, Collidable {
+public class Portal implements Entity {
     private Cell location;
     private Portal pairedPortal;
 
@@ -39,4 +39,9 @@ public class Portal implements Entity, Collidable {
     public char getTexture() {
         return 'O';
     }
+    
+	@Override
+	public boolean isCollidable() {
+		return true;
+	}
 }

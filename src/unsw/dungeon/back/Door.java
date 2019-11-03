@@ -4,7 +4,7 @@ import unsw.dungeon.back.event.CellPushedEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 
-public class Door implements Observer, Entity, Collidable {
+public class Door implements Observer, Entity {
 	private Cell location;
 	private int ID;
 
@@ -36,6 +36,11 @@ public class Door implements Observer, Entity, Collidable {
 	@Override
 	public char getTexture() {
 		return '#';
+	}
+	
+	@Override
+	public boolean isCollidable() {
+		return true;
 	}
 
 	@Override

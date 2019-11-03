@@ -11,7 +11,7 @@ import unsw.dungeon.back.event.PlayerSteppedOffExit;
 import unsw.dungeon.back.event.PlayerSteppedOnExit;
 import unsw.dungeon.back.event.Subject;
 
-public class Exit implements Entity, Observer, Subject{
+public class Exit implements Entity, Observer, Subject {
 	private List<Observer> observers;
 
 	/**
@@ -29,6 +29,11 @@ public class Exit implements Entity, Observer, Subject{
 	@Override
 	public char getTexture() {
 		return 'E';
+	}
+	
+	@Override
+	public boolean isCollidable() {
+		return false;
 	}
 	
 	@Override
@@ -70,5 +75,4 @@ public class Exit implements Entity, Observer, Subject{
 			this.notifyAllOf(new PlayerSteppedOnExit());
 		}
 	}
-	
 }

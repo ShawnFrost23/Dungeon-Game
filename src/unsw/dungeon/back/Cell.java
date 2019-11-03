@@ -123,7 +123,7 @@ public class Cell implements Subject {
 	 */
 	public boolean isCollidable() {
 		for (Entity e : this.entities) {
-			if (e instanceof Collidable) {
+			if (e.isCollidable()) {
 				return true;
 			}
 		}

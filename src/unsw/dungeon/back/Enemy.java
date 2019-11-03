@@ -11,7 +11,7 @@ import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 import unsw.dungeon.back.event.EnemyKilledEvent;
 
-public class Enemy implements Moveable, Collidable, Observer, Subject {
+public class Enemy implements Moveable, Observer, Subject {
 	/** 
 	 * Classes that implement this interface can be used to decide which move
 	 * an {@link Enemy} will make.
@@ -112,6 +112,11 @@ public class Enemy implements Moveable, Collidable, Observer, Subject {
 	@Override
 	public char getTexture() {
 		return '!';
+	}
+	
+	@Override
+	public boolean isCollidable() {
+		return true;
 	}
 
 	@Override

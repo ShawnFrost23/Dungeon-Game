@@ -33,6 +33,11 @@ public class Key implements Observer, Entity  {
     public char getTexture() {
         return '~';
     }
+    
+	@Override
+	public boolean isCollidable() {
+		return false;
+	}
 
     @Override
     public void notifyOf(Event event) {

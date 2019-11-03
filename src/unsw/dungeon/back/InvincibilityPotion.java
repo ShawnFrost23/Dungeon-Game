@@ -20,6 +20,11 @@ public class InvincibilityPotion implements Entity, Observer {
 	}
 	
 	@Override
+	public boolean isCollidable() {
+		return false;
+	}
+	
+	@Override
 	public void notifyOf(Event event) {
 		if (event instanceof CellEnteredEvent) {
 			this.onEnter((CellEnteredEvent) event);

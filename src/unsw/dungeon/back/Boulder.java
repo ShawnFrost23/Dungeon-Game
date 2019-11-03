@@ -4,7 +4,7 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.CellPushedEvent;
 
-public class Boulder implements Moveable, Collidable, Observer {
+public class Boulder implements Moveable, Observer {
 	private Cell location;
 	
 	/**
@@ -25,6 +25,11 @@ public class Boulder implements Moveable, Collidable, Observer {
 		return 'B';
 	}
 
+	@Override
+	public boolean isCollidable() {
+		return true;
+	}	
+	
 	@Override
 	public boolean canMove(Direction d) {
 		return !this.location.adjacent(d).isCollidable();

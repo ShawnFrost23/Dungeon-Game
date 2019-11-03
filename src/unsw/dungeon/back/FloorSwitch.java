@@ -43,6 +43,11 @@ public class FloorSwitch implements Entity, Observer, Subject {
 	}
 
 	@Override
+	public boolean isCollidable() {
+		return false;
+	}
+	
+	@Override
 	public void attachListener(Observer observer) {
 		this.observers.add(observer);
 	}
