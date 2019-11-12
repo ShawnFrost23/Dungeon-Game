@@ -83,6 +83,18 @@ public class Game implements Observer {
 		game.board = Board.createBoard(game, goal, boardStrings);
 		return game;
 	}
+	
+	
+	/**
+	 * Create a game from a json file.
+	 * @param jsonPath path to the json file to load the game from
+	 * @return a Game object as described by the json file.
+	 */
+	public static Game createGame(String jsonPath) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 		
 	/**
 	 * Get a displayable string representation for this game's board. e.g.
