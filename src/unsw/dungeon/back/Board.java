@@ -1,7 +1,9 @@
 package unsw.dungeon.back;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -188,6 +190,8 @@ public class Board {
 	}
 
 	private void addEntities(JSONArray jsonEntities, Game game, Goal goal) {
+		Map<Integer, Portal> portals = new HashMap<Integer, Portal>();
+		
 		for (int i = 0; i < jsonEntities.length(); ++i) {
 			JSONObject jsonEntity = jsonEntities.getJSONObject(i);
 			String type = jsonEntity.getString("type");
@@ -195,6 +199,7 @@ public class Board {
 			int y = jsonEntity.getInt("y");
 			Cell cell = this.cells[x][y];
 			Entity e = null;
+			int id;
 			switch (type) {
 			case "wall":
 				e = new Wall();
@@ -214,25 +219,23 @@ public class Board {
 				e = new FloorSwitch();
 				break;
 			case "portal":
-				throw new Error("Portal loader not implemented!");
-//				e = new Portal (cell);
-//				if (firstPortal == null) {
-//					firstPortal = ((Portal) e);
-//				} else {
-//					// If we've already added a portal this round, then pair
-//					// it with the one we're adding just now.
-//					((Portal) e).setPairedPortal(firstPortal);
-//					firstPortal.setPairedPortal((Portal) e);
-//				}
-//				break;
+				id = jsonEntity.getInt("id");
+				e = new Portal (cell);
+				if (portals.get(id) == null) {
+					portals.put(id, (Portal) e);
+				} else {
+					((Portal) e).setPairedPortal(portals.get(id));
+					portals.get(id).setPairedPortal((Portal) e);
+				}
+				break;
 			case "door":
-				throw new Error("Door loader not implemented!");
-//				e = new Door(boardNum);
-//				break;
+				id = jsonEntity.getInt("id");
+				e = new Door(id);
+				break;
 			case "key":
-				throw new Error("Key loader not implemented!");
-//				e = new Key(boardNum);
-//				break;
+				id = jsonEntity.getInt("id");
+				e = new Key(id);
+				break;
 			case "treasure":
 				e = new Treasure(cell);
 				break;
@@ -249,7 +252,7 @@ public class Board {
 				throw new Error("Unrecognised entity type \"" + type + "\".");
 			}
 			
-			// make two passes -- one for non-moveables, one for moveables.
+			// TODO make two passes -- one for non-moveables, one for moveables.
 			if (e instanceof Moveable) {
 				cell.enter((Moveable) e);
 			} else {
