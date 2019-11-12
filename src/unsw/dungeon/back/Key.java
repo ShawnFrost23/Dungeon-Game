@@ -30,8 +30,8 @@ public class Key implements Observer, Entity  {
     }
 
     @Override
-    public char getTexture() {
-        return '~';
+    public Texture getTexture() {
+		return new Texture('~', "key.png");
     }
     
 	@Override

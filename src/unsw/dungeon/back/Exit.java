@@ -27,8 +27,8 @@ public class Exit implements Entity, Observer, Subject {
 	}
 
 	@Override
-	public char getTexture() {
-		return 'E';
+	public Texture getTexture() {
+		return new Texture('E', "exit.png");
 	}
 	
 	@Override

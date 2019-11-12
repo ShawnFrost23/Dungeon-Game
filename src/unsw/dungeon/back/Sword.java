@@ -21,8 +21,8 @@ public class Sword implements Entity, Observer {
 	}
 
 	@Override
-	public char getTexture() {
-		return 'S';
+	public Texture getTexture() {
+		return new Texture('S', "greatsword_1_new.png");
 	}
 	
 	@Override

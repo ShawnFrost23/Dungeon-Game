@@ -7,8 +7,8 @@ public class Wall implements Entity {
 	}
 	
 	@Override
-	public char getTexture() {
-		return 'W';
+	public Texture getTexture() {
+		return new Texture('W', "brick_brown_0.png");
 	}
 	
 	@Override

@@ -83,14 +83,16 @@ public class Board {
 	}
 
 	/**
-	 * Get a displayable string representation of this Board.
+	 * Get a displayable string representation of this Board. In each cell, only
+	 * the entity with the largest {@link Entity#getZ()} will be displayed.
 	 * @return string representation of this Board
 	 */
 	public String getBoardString() {
 		String s = "";
 		for (int j = 0; j < this.height; ++j) {
 			for (int i = 0; i < this.width; ++i) {
-				s += cells[i][j].getTexture();
+				List<Texture> textures = cells[i][j].getTextures();
+				s += textures.get(textures.size() - 1).getChar();
 			}
 			s += "\n";
 		}

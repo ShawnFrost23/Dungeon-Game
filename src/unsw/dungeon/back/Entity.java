@@ -1,5 +1,7 @@
 package unsw.dungeon.back;
 
+import javafx.scene.image.Image;
+
 /**
  * Something that can be put into a Cell.
  */
@@ -16,12 +18,12 @@ public interface Entity {
 	 * @return texture to display this Entity with
 	 * @see {@link Cell#getTexture()}
 	 */
-	public char getTexture();
+	public Texture getTexture();
 
 	/**
 	 * Get whether this Entity should be collidable -- whether it should prevent
 	 * the entry of {@link Moveables} into its cell.
-	 * @return true if the tentity is collidable
+	 * @return true if the entity is collidable
 	 * @see {@link Cell#isCollidable()}
 	 */
 	public boolean isCollidable();

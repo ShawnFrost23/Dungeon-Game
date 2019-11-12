@@ -26,8 +26,8 @@ public class SpoofCrushableItem implements Entity, Observer {
 	}
 
 	@Override
-	public char getTexture() {
-		return '?';
+	public Texture getTexture() {
+		return new Texture('?', "gnome.png");
 	}
 
 	@Override

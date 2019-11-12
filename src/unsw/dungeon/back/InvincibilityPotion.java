@@ -13,8 +13,8 @@ public class InvincibilityPotion implements Entity, Observer {
 	}
 
 	@Override
-	public char getTexture() {
-		return '*';
+	public Texture getTexture() {
+		return new Texture('*', "brilliant_blue_new.png");
 	}
 	
 	@Override

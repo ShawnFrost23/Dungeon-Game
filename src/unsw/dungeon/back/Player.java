@@ -199,8 +199,8 @@ public class Player implements Moveable, Subject, Observer {
 	}
 
 	@Override
-	public char getTexture() {
-		return 'P';
+	public Texture getTexture() {
+		return new Texture('P', "human_new.png");
 	}
 
 	@Override

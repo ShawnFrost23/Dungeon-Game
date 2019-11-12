@@ -55,8 +55,8 @@ public class Treasure implements Entity, Observer, Subject {
 	}
 
 	@Override
-	public char getTexture() {
-		return 'T';
+	public Texture getTexture() {
+		return new Texture('T', "gold_pile.png");
 	}
 	
 	@Override

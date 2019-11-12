@@ -18,8 +18,8 @@ public class LockedDoor implements Door.State {
 	}
 
 	@Override
-	public char getTexture() {
-		return '#';
+	public Texture getTexture() {
+		return new Texture('#', "closed_door.png");
 	}
 
 	@Override

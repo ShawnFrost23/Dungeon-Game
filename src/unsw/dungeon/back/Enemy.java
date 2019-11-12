@@ -110,8 +110,8 @@ public class Enemy implements Moveable, Observer, Subject {
 	}
 
 	@Override
-	public char getTexture() {
-		return '!';
+	public Texture getTexture() {
+		return new Texture('!', "deep_elf_master_archer.png");
 	}
 	
 	@Override

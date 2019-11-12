@@ -21,8 +21,8 @@ public class Boulder implements Moveable, Observer {
 	}
 
 	@Override
-	public char getTexture() {
-		return 'B';
+	public Texture getTexture() {
+		return new Texture('B', "boulder.png");
 	}
 
 	@Override

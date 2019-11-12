@@ -36,8 +36,8 @@ public class Portal implements Entity {
     }
 
     @Override
-    public char getTexture() {
-        return 'O';
+    public Texture getTexture() {
+		return new Texture('O', "portal.png");
     }
     
 	@Override

@@ -3,6 +3,7 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.scene.image.Image;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -81,25 +82,15 @@ public class Cell implements Subject {
 	}
 	
 	/**
-	 * Get the highest-z texture for this cell, or ' ' if no entities are
-	 * present.
-	 * @return this cell's most pertinent texture
-	 * @see {@link #getTextures()}
-	 */
-	public char getTexture() {
-		List<Character> textures = this.getTextures();
-		return textures.get(textures.size() - 1);
-	}
-	/**
 	 * Get the all of the entity textures in this cell, sorted in increasing
-	 * z. The ' ' texture will be prefixed to the list.
-	 * @return list of the textures (characters) in this cell
+	 * z. A dirt texture will be prefixed to the list.
+	 * @return list of the textures in this cell
 	 * @see {@link Entity#getTexture()}
 	 * @see {@link Entity#getZ()}	
 	 */
-	public List<Character> getTextures() {
-		List<Character> textures = new ArrayList<Character>();
-		textures.add(' ');
+	public List<Texture> getTextures() {
+		List<Texture> textures = new ArrayList<Texture>();
+		textures.add(new Texture(' ', "dirt_0_new.png"));
 		List<Entity> zSortedEntities = new ArrayList<Entity>(this.entities);
 		zSortedEntities.sort(
 			(Entity a, Entity b) -> a.getZ() < b.getZ() ? -1 : 1

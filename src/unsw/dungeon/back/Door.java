@@ -7,7 +7,7 @@ import unsw.dungeon.back.event.Observer;
 public class Door implements Observer, Entity {
 	public interface State {
 		public int getZ();
-		public char getTexture();
+		public Texture getTexture();
 		public boolean isCollidable();
 		public void onPush(CellPushedEvent event);
 	}
@@ -48,7 +48,7 @@ public class Door implements Observer, Entity {
 	}
 
 	@Override
-	public char getTexture() {
+	public Texture getTexture() {
 		return this.state.getTexture();
 	}
 	

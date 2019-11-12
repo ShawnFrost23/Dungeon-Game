@@ -20,6 +20,7 @@ import unsw.dungeon.back.Board;
 import unsw.dungeon.back.Cell;
 import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Game;
+import unsw.dungeon.back.Texture;
 import unsw.dungeon.back.event.CellRedrawEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -64,33 +65,14 @@ public class DungeonController implements Observer {
 		this.buffTimeline = new Timeline();
 		this.buffTimeline.getKeyFrames().add(kfBuffs);
 		this.buffTimeline.setCycleCount(Timeline.INDEFINITE);
-		
-		
-		this.images = new HashMap<Character, Image>();
-		images.put('B', new Image("boulder.png"));
-		images.put('W', new Image("brick_brown_0.png"));
-		images.put('*', new Image("brilliant_blue_new.png"));
-		// images.put(' ', new Image("bubbly.png"));
-		images.put('#', new Image("closed_door.png"));
-		images.put('!', new Image("deep_elf_master_archer.png"));
-		images.put(' ', new Image("dirt_0_new.png"));
-		images.put('E', new Image("exit.png"));
-		// images.put(' ', new Image("gnome.png");
-		images.put('T', new Image("gold_pile.png"));
-		images.put('S', new Image("greatsword_1_new.png"));
-		// images.put(' ', new Image("hound.png");
-		images.put('P', new Image("human_new.png"));
-		images.put('~', new Image("key.png"));
-		images.put('|', new Image("open_door.png"));
-		images.put('O', new Image("portal.png"));
-		images.put('_', new Image("pressure_plate.png"));
+
+
 	}
 
 	@FXML
 	public void initialize() {
 		this.startEnemyTimeline();
 		this.startBuffTimeline();
-
 		this.entityGroup = new ArrayList<ArrayList<Group>>();
 		for (int x = 0; x < this.game.getWidth(); ++x) {
 			this.entityGroup.add(new ArrayList<Group>());
@@ -100,12 +82,11 @@ public class DungeonController implements Observer {
 				squares.add(group, x, y);
 			}
 		}
-		
+				
 		for (Cell cell : this.game.getCells()) {
 			cell.attachListener(this);
 			this.redraw(cell);
 		}
-		
 	}
 	
 	private void redraw(Cell cell) {
@@ -113,10 +94,11 @@ public class DungeonController implements Observer {
 		int y = cell.getY();
 
 		this.entityGroup.get(x).get(y).getChildren().clear();
+
 		
-		for (Character c : cell.getTextures()) {
-			ImageView view = new ImageView(this.images.get(c));
-			this.entityGroup.get(x).get(y).getChildren().add(view);
+		
+		for (Texture texture : cell.getTextures()) {
+			ImageView view = new ImageView(texture.getImageSrc()); // TODO cache.			this.entityGroup.get(x).get(y).getChildren().add(view);
 		}
 	}
 

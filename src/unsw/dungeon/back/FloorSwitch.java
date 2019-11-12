@@ -38,8 +38,8 @@ public class FloorSwitch implements Entity, Observer, Subject {
 	}
 
 	@Override
-	public char getTexture() {
-		return '_';
+	public Texture getTexture() {
+		return new Texture('_', "pressure_plate.png");
 	}
 
 	@Override
