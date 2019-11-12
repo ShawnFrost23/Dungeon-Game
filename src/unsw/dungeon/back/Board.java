@@ -40,21 +40,10 @@ public class Board {
 	 * @return a new {@link Board} instance
 	 */
 	public static Board createBoard(Game game, Goal goal, String ...boardStrings) {
-		int subBoardNum = 0;
-		Board board = null;
-		for (String boardString : boardStrings) {
-			if (board == null) {
-				String[] lines = boardString.split("\n");
-				board = new Board(lines[0].length(), lines.length);
-			}
-
-			board.addEntities(boardString, game, goal, subBoardNum);
-			subBoardNum += 1;
-		}
-
-		return board;
+		JSONObject json = Board.boardStringsToJSON(boardStrings);
+		return Board.createBoard(game, goal, json);
 	}
-	
+		
 	/**
 	 * Create a new {@link Board} from a json form
 	 * @param game Game object to which this board will belong
@@ -69,7 +58,6 @@ public class Board {
 		Board board = new Board(width, height);
 		JSONArray jsonEntities = json.getJSONArray("entities");
 		board.addEntities(jsonEntities, game, goal);
-		
 
 		return board;
 	}
@@ -118,75 +106,6 @@ public class Board {
 	 */
 	public WorldState createWorldState(Cell playerLocation, Cell enemyLocation) {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
-	}
-
-	// TODO: If we can convert boardString[] into json, then we can remove the
-	// duplication here just by creating an adaptor to its namesake
-	// addEntities(JSONArray jsonEntities)
-	private void addEntities(String boardString, Game game, Goal goal, int boardNum) {
-		String[] lines = boardString.split("\n");
-
-		Portal firstPortal = null;
-		for (int y = 0; y < this.height; ++y) {
-			String line = lines[y];
-			for (int x = 0; x < this.width; ++x) {
-				Cell cell = this.cells[x][y];
-
-				char c = line.charAt(x);
-				Entity e = null;
-
-				if (c == ' ') {
-
-				} else if (c == 'W') {
-					e = new Wall();
-				} else if (c == 'P') {
-					e = new Player(cell);
-					game.trackPlayer((Player) e);
-				} else if (c == 'B') {
-					e = new Boulder(cell);
-				} else if (c == '!') {
-					e = new Enemy(cell, new NaiveMovementStrategy());
-					game.trackEnemy((Enemy) e);
-				} else if (c == '_') {
-					e = new FloorSwitch();
-				} else if (c == 'O') {
-					e = new Portal (cell);
-					if (firstPortal == null) {
-						firstPortal = ((Portal) e);
-					} else {
-						// If we've already added a portal this round, then pair
-						// it with the one we're adding just now.
-						((Portal) e).setPairedPortal(firstPortal);
-						firstPortal.setPairedPortal((Portal) e);
-					}
-				} else if (c == '#') {
-					e = new Door(boardNum);
-				} else if (c == '~') {
-					e = new Key(boardNum);
-				} else if (c == 'T' ) {
-					e = new Treasure(cell);
-				} else if (c == 'S' ) {
-					e = new Sword(cell);
-				} else if (c == 'E') {
-					e = new Exit(); 
-				} else if (c == '*') {
-					e = new InvincibilityPotion();
-				} else if (c == '?') {
-					e = new SpoofCrushableItem(cell);
-				} else {
-					throw new Error("Unrecognised entity texture '" + c + "'");
-				}
-
-				if (e != null) {
-					if (e instanceof Moveable) {
-						cell.enter((Moveable) e);
-					} else {
-						cell.addEntity(e);
-					}
-					goal.trackEntity(e);
-				}
-			}
-		}
 	}
 
 	private void addEntities(JSONArray jsonEntities, Game game, Goal goal) {
@@ -261,6 +180,9 @@ public class Board {
 			case "invincibility":
 				e = new InvincibilityPotion();
 				break;
+			case "spoof-crushable-item":
+				e = new SpoofCrushableItem(cell);
+				break;
 			default:
 				throw new Error("Unrecognised entity type \"" + type + "\".");
 			}
@@ -272,6 +194,82 @@ public class Board {
 			goal.trackEntity(e);
 		}
 	}
+	
+	private static JSONObject boardStringsToJSON(String ...boardStrings) {
+		JSONObject json = new JSONObject();
+
+		String[] lines = boardStrings[0].split("\n");
+		int width = lines[0].length();
+		int height = lines.length;
+
+		json.put("width", width);
+		json.put("height", height);
+		
+		JSONArray jsonEntities = new JSONArray();
+		
+		int id = 0;
+		
+		for (String boardString : boardStrings) {
+			lines = boardString.split("\n");
+			for (int y = 0; y < height; ++y) {
+				String line = lines[y];
+				for (int x = 0; x < width; ++x) {
+					char c = line.charAt(x);
+					if (c == ' ') {
+						continue;
+					}
+
+					JSONObject jsonEntity = new JSONObject();
+					jsonEntity.put("x", x);
+					jsonEntity.put("y", y);
+					
+					String type;
+					if (c == 'W') {
+						type = "wall";
+					} else if (c == 'P') {
+						type = "player";
+					} else if (c == 'B') {
+						type = "boulder";
+					} else if (c == '!') {
+						type = "enemy";
+					} else if (c == '_') {
+						type = "switch";
+					} else if (c == 'O') {
+						type = "portal";
+						jsonEntity.put("id", id);
+					} else if (c == '#') {
+						type = "door";
+						jsonEntity.put("id", id);
+					} else if (c == '~') {
+						type = "key";
+						jsonEntity.put("id", id);
+					} else if (c == 'T') {
+						type = "treasure";
+					} else if (c == 'S') {
+						type = "sword";
+					} else if (c == 'E') {
+						type = "exit";
+					} else if (c == '*') {
+						type = "invincibility";
+					} else if (c == '?') {
+						type = "spoof-crushable-item";
+					} else {
+						throw new Error("Unrecognised entity texture \"" + c + "\".");
+					}
+					jsonEntity.put("type", type);
+
+					jsonEntities.put(jsonEntity);
+				}
+			}
+			id += 1;
+		}
+		json.put("entities", jsonEntities);
+		
+		return json;
+	}
+	
+	
+	
 	
 	public List<Cell> getCells() {
 		List<Cell> cells = new ArrayList<Cell>();

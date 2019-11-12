@@ -75,13 +75,6 @@ public class Game implements Observer {
 	 * a Player attempts to swing a sword out of bounds.
 	 * <br />
 	 * <br />
-	 * Note: Proceeding from the first string in <b>boardStrings</b> last, when
-	 * {@link Moveable} entities are spawned, only entities that have already 
-	 * been loaded will be sent
-	 * {@link unsw.dungeon.back.event.CellEnteredEvent CellEnteredEvents}. For
-	 * this reason, Boulders must be placed on top of FloorSwitches to press
-	 * them down, and the Player must be placed on top of Keys, Swords,
-	 * InvincibilityPotions and Treasure in order to pick them up automatically.
 	 * @param goal Goal object representing the Game's win conditions
 	 * @param boardStrings valid string representation of Entities on the board
 	 * @return a Game object with entities as specified in <b>boardStrings</b>
