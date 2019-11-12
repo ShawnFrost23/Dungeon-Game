@@ -2,11 +2,14 @@ package unsw.dungeon.test;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
@@ -61,20 +64,48 @@ public class TestJSONLoader {
 	 */
 	@Test
 	public void TestGoalLoading() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createGame(new ImpossibleGoal(), ""
 			+ " PT  \n"
 		);
-		JSONObject json = Board.boardStringsToJSON(g.getBoardString());
+		JSONObject json = Board.boardStringsToJSON(g1.getBoardString());
 		JSONObject jsonGoal = new JSONObject();
 		jsonGoal.put("goal", "treasure");
 		json.put("goal-condition", jsonGoal);
 
-		g = Game.createGame(json);
+		g1 = Game.createGame(json);
 		
-		assertFalse(g.getHasWon());
-		g.movePlayer(Direction.RIGHT);
-		assertTrue(g.getHasWon());
+		assertFalse(g1.getHasWon());
+		g1.movePlayer(Direction.RIGHT);
+		assertTrue(g1.getHasWon());
 		
+		List<Direction> winningDirections = new ArrayList<Direction>();
+		winningDirections.add(Direction.LEFT);
+		winningDirections.add(Direction.RIGHT);
+		for (Direction d : winningDirections) {
+			Game g2 = Game.createGame(new ImpossibleGoal(), ""
+				+ "_BPT  \n"
+			);
+			json = Board.boardStringsToJSON(g2.getBoardString());
+			jsonGoal = new JSONObject();
+			jsonGoal.put("goal", "OR");
+			
+			JSONArray jsonSubGoals = new JSONArray();
+			JSONObject treasureGoal = new JSONObject();
+			treasureGoal.put("goal", "treasure");
+			JSONObject puzzleGoal = new JSONObject();
+			puzzleGoal.put("goal", "boulders");
+			jsonSubGoals.put(treasureGoal);
+			jsonSubGoals.put(puzzleGoal);
+			jsonGoal.put("subgoals", jsonSubGoals);
+			
+			json.put("goal-condition", jsonGoal);
+			
+			g2 = Game.createGame(json);
+			
+			assertFalse(g2.getHasWon());
+			g2.movePlayer(d);
+			assertTrue(g2.getHasWon());
+		}
 	}
 	
 }

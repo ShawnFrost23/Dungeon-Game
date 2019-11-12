@@ -2,6 +2,9 @@ package unsw.dungeon.test;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -71,7 +74,26 @@ public class TestCompositeGoal {
 		rootGoal2.addChild(new ImpossibleGoal());
 		rootGoal2.addChild(subGoal2);
 
-		return new Goal[]{ rootGoal1, rootGoal2 };
+		
+		String goalString = ""
+			+ " { \"goal\": \"AND\", \"subgoals\":\n"
+			+ "    [ { \"goal\": \"exit\" },\n"
+			+ "      { \"goal\": \"AND\", \"subgoals\":\n"
+			+ "        [ {\"goal\": \"treasure\" },\n"
+			+ "          { \"goal\": \"AND\", \"subgoals\":\n"
+			+ "            [ {\"goal\": \"enemies\" },\n"
+			+ "              {\"goal\": \"boulders\" }\n"
+			+ "            ]\n"
+			+ "          }\n"
+			+ "        ]\n"
+			+ "      }\n"
+			+ "    ]\n"
+			+ " }\n";
+		
+		JSONObject json = new JSONObject(new JSONTokener(goalString));
+		Goal goal3 = Goal.createGoal(json);
+		
+		return new Goal[]{ rootGoal1, rootGoal2, goal3 };
 	}
 	
 	/**
