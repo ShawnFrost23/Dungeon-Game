@@ -10,6 +10,7 @@ import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
+import unsw.dungeon.back.event.CellRedrawEvent;
 
 /**
  * A collection of Entities at one discrete location.
@@ -62,6 +63,8 @@ public class Cell implements Subject {
 		if (e instanceof Observer) {
 			this.attachListener((Observer) e);
 		}
+		
+		this.notifyAllOf(new CellRedrawEvent(this));
 	}
 
 	/**
@@ -73,6 +76,8 @@ public class Cell implements Subject {
 		if (e instanceof Observer) {
 			this.detachListener((Observer) e);
 		}
+		
+		this.notifyAllOf(new CellRedrawEvent(this));
 	}
 	
 	/**
