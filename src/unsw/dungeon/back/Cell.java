@@ -76,27 +76,34 @@ public class Cell implements Subject {
 	}
 	
 	/**
-	 * Get the texture for this cell. This will be the texture of the entity on
-	 * this cell with the largest z-index, or ' ' if none are present.
-	 * @return this cell's texture
-	 * @see {@link Entity#getTexture()}
-	 * @see {@link Entity#getZ()}
+	 * Get the highest-z texture for this cell, or ' ' if no entities are
+	 * present.
+	 * @return this cell's most pertinent texture
+	 * @see {@link #getTextures()}
 	 */
 	public char getTexture() {
-		if (this.entities.size() == 0) {
-			return ' ';
-		}
-
-		int maxZ = this.entities.get(0).getZ();
-		char texture = this.entities.get(0).getTexture();
-		for (Entity entity : this.entities) {
-			if (entity.getZ() > maxZ) {
-				maxZ = entity.getZ(); 
-				texture = entity.getTexture();
-			}
-		}
+		List<Character> textures = this.getTextures();
+		return textures.get(textures.size() - 1);
+	}
+	/**
+	 * Get the all of the entity textures in this cell, sorted in increasing
+	 * z. The ' ' texture will be prefixed to the list.
+	 * @return list of the textures (characters) in this cell
+	 * @see {@link Entity#getTexture()}
+	 * @see {@link Entity#getZ()}	
+	 */
+	public List<Character> getTextures() {
+		List<Character> textures = new ArrayList<Character>();
+		textures.add(' ');
+		List<Entity> zSortedEntities = new ArrayList<Entity>(this.entities);
+		zSortedEntities.sort(
+			(Entity a, Entity b) -> a.getZ() < b.getZ() ? -1 : 1
+		);
 		
-		return texture;
+		for (Entity e : zSortedEntities) {
+			textures.add(e.getTexture());
+		}
+		return textures;
 	}
 	
 	/**
