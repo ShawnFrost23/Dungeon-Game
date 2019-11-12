@@ -237,4 +237,8 @@ public class Game implements Observer {
 		this.enemies.remove(who);
 		who.detachListener(this);
 	}
+
+	public List<Cell> getCells() {
+		return this.board.getCells();
+	}
 }

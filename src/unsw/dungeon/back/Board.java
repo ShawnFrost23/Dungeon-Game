@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.dungeon.spoof.SpoofCrushableItem;
 
 /**
@@ -158,4 +161,15 @@ public class Board {
 			}
 		}
 	}
+
+	public List<Cell> getCells() {
+		List<Cell> cells = new ArrayList<Cell>();
+		for (int y = 0; y < this.height; ++y) {
+			for (int x = 0; x < this.width; ++x) {
+				cells.add(this.cells[x][y]);
+			}
+		}
+		return cells;
+	}
+
 }
