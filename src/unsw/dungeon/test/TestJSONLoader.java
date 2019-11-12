@@ -1,5 +1,8 @@
 package unsw.dungeon.test;
 import static org.junit.jupiter.api.Assertions.fail;
+
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -19,27 +22,34 @@ public class TestJSONLoader {
 	 */
 	@Test
 	public void TestSimpleWalledDungeon() {
-		Game g = Game.createGame("/dungeons/maze.json");
+		Game g;
+		try {
+			g = Game.createGame("dungeons/maze.json");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			fail("Test raised a FileNotFoundException");
+			return;
+		}
 		
 		assertEquals(""
-			+ "WWWWWWWWWWWWWWWWWWWW"
-			+ "WPW            WWWWW"
-			+ "W W WWWWWWWWWW     W"
-			+ "W      W     WWWWW W"
-			+ "WW W W  WW W W     W"
-			+ "WW W WW  W W WWWWWWW"
-			+ "WW W WWW W W W     W"
-			+ "WW W WWW W WWW WWW W"
-			+ "W  W   W W   W W W W"
-			+ "W WW W W W   W W W W"
-			+ "W W  W W WWW W W W W"
-			+ "W W  W W   W W W W W"
-			+ "W WW W WWW W W W W W"
-			+ "W  W W   W W W W W W"
-			+ "WW W  WWWW W W W W W"
-			+ "WW WW    W W W   W W"
-			+ "WW    WWW      WWWEW"
-			+ "WWWWWWWWWWWWWWWWWWWW"
+			+ "WWWWWWWWWWWWWWWWWWWW\n"
+			+ "WPW            WWWWW\n"
+			+ "W W WWWWWWWWWW     W\n"
+			+ "W      W     WWWWW W\n"
+			+ "WW W W  WW W W     W\n"
+			+ "WW W WW  W W WWWWWWW\n"
+			+ "WW W WWW W W W     W\n"
+			+ "WW W WWW W WWW WWW W\n"
+			+ "W  W   W W   W W W W\n"
+			+ "W WW W W W   W W W W\n"
+			+ "W W  W W WWW W W W W\n"
+			+ "W W  W W   W W W W W\n"
+			+ "W WW W WWW W W W W W\n"
+			+ "W  W W   W W W W W W\n"
+			+ "WW W  WWWW W W W W W\n"
+			+ "WW WW    W W W   W W\n"
+			+ "WW    WWW      WWWEW\n"
+			+ "WWWWWWWWWWWWWWWWWWWW\n"
 			, g.getBoardString()
 		);
 	}
