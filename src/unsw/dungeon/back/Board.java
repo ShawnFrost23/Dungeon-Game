@@ -195,7 +195,7 @@ public class Board {
 		}
 	}
 	
-	private static JSONObject boardStringsToJSON(String ...boardStrings) {
+	public static JSONObject boardStringsToJSON(String ...boardStrings) {
 		JSONObject json = new JSONObject();
 
 		String[] lines = boardStrings[0].split("\n");
@@ -267,9 +267,6 @@ public class Board {
 		
 		return json;
 	}
-	
-	
-	
 	
 	public List<Cell> getCells() {
 		List<Cell> cells = new ArrayList<Cell>();

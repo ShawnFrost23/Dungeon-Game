@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
 import unsw.dungeon.back.*;
@@ -59,7 +61,20 @@ public class TestJSONLoader {
 	 */
 	@Test
 	public void TestGoalLoading() {
-		fail("Test not implemented");
+		Game g = Game.createGame(new ImpossibleGoal(), ""
+			+ " PT  \n"
+		);
+		JSONObject json = Board.boardStringsToJSON(g.getBoardString());
+		JSONObject jsonGoal = new JSONObject();
+		jsonGoal.put("goal", "treasure");
+		json.put("goal-condition", jsonGoal);
+
+		g = Game.createGame(json);
+		
+		assertFalse(g.getHasWon());
+		g.movePlayer(Direction.RIGHT);
+		assertTrue(g.getHasWon());
+		
 	}
 	
 }

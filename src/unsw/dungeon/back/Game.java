@@ -104,9 +104,9 @@ public class Game implements Observer {
 	 * @return a Game instance as described by the json object
 	 */
 	public static Game createGame(JSONObject json) {
+		JSONObject jsonGoal = json.getJSONObject("goal-condition");
 		
-		// json.getJSONObject("goal-condition")
-		Goal goal = new ImpossibleGoal();
+		Goal goal = Goal.createGoal(jsonGoal);
 		Game game = new Game(goal);
 		game.board = Board.createBoard(game, goal, json);
 		
