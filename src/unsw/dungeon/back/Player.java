@@ -200,7 +200,12 @@ public class Player implements Moveable, Subject, Observer {
 
 	@Override
 	public Texture getTexture() {
-		return new Texture('P', "human_new.png");
+		if (this.isHoldingSword()) {
+			return new Texture('P', "human_new_with_sword.png");
+		} else {
+			return new Texture('P', "human_new.png");			
+		}
+		
 	}
 
 	@Override
