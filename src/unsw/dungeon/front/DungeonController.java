@@ -94,15 +94,14 @@ public class DungeonController implements Observer {
 	}
 	
 	private void redraw(Cell cell) {
+		int x = cell.getX();
+		int y = cell.getY();
+		
 		for (Node child : new ArrayList<Node>(squares.getChildren())) {
-			if (GridPane.getColumnIndex(child) == cell.getX() && GridPane.getRowIndex(child) == cell.getY()) {
-				System.out.println("Freed up an image");
+			if (GridPane.getColumnIndex(child) == x && GridPane.getRowIndex(child) == y) {
 				squares.getChildren().remove(child);
 			}
 		}
-
-		int x = cell.getX();
-		int y = cell.getY();
 		
 		for (Character c : cell.getTextures()) {
 			ImageView view = new ImageView(this.images.get(c));
