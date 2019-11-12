@@ -192,8 +192,21 @@ public class Board {
 	private void addEntities(JSONArray jsonEntities, Game game, Goal goal) {
 		Map<Integer, Portal> portals = new HashMap<Integer, Portal>();
 		
+		// Sort entities so that moveables will be placed after immovables.
+		// This will mean that e.g. Boulders that are loaded on top of floor
+		// switches will correctly trigger them.
+		List<JSONObject> jsonEntityList = new ArrayList<JSONObject>();
 		for (int i = 0; i < jsonEntities.length(); ++i) {
 			JSONObject jsonEntity = jsonEntities.getJSONObject(i);
+			String type = jsonEntity.getString("type");
+			if (type.equals("player") || type.equals("boulder") || type.equals("enemy")) {
+				jsonEntityList.add(jsonEntity);
+			} else {
+				jsonEntityList.add(0, jsonEntity);
+			}
+			
+		}
+		for (JSONObject jsonEntity : jsonEntityList) {
 			String type = jsonEntity.getString("type");
 			int x = jsonEntity.getInt("x");
 			int y = jsonEntity.getInt("y");
@@ -251,8 +264,6 @@ public class Board {
 			default:
 				throw new Error("Unrecognised entity type \"" + type + "\".");
 			}
-			
-			// TODO make two passes -- one for non-moveables, one for moveables.
 			if (e instanceof Moveable) {
 				cell.enter((Moveable) e);
 			} else {
