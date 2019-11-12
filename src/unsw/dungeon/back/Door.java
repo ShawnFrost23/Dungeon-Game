@@ -17,7 +17,6 @@ public class Door implements Observer, Entity {
 
 	/**
 	 * Construct a new Door.
-	 * @param location the cell this door is located in
 	 * @param ID ID of the door. This door will open be opened by {@link Keys}s
 	 * that share this value.
 	 */

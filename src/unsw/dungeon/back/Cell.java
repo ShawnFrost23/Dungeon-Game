@@ -113,7 +113,7 @@ public class Cell implements Subject {
 	
 	/**
 	 * Get the cell that is adjacent to this one.
-	 * @param d direction to get adjacent inc
+	 * @param d direction to get adjacent in
 	 * @return the cell that is adjacent to this one in direction <b>d</b>
 	 */
 	public Cell adjacent(Direction d) {
