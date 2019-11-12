@@ -26,7 +26,7 @@ public class Key implements Observer, Entity  {
 
     @Override
     public int getZ() {
-        return 0;
+        return 251;
     }
 
     @Override
