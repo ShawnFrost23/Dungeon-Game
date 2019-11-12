@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.Group;
 import javafx.util.Duration;
 import unsw.dungeon.back.Board;
 import unsw.dungeon.back.Cell;
@@ -28,13 +29,13 @@ public class DungeonController implements Observer {
 	private GridPane squares;
 	
 	/**
-	 *  renderedImages[x][y] is the list of ImageViews displayed in the (x, y)
+	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
 	 *  node of the GridPane.
 	 *  We keep track of this because the GridPane only supports a
 	 *  get-image-by-coordinates function that is linear in the number of images
 	 *  drawn.
 	 */
-	private ArrayList<ArrayList<ArrayList<ImageView>>> renderedImages;
+	private ArrayList<ArrayList<Group>> entityGroup;
 
 	private Game game;
 
@@ -83,20 +84,22 @@ public class DungeonController implements Observer {
 		images.put('|', new Image("open_door.png"));
 		images.put('O', new Image("portal.png"));
 		images.put('_', new Image("pressure_plate.png"));
-
-		this.renderedImages = new ArrayList<ArrayList<ArrayList<ImageView>>>();
-		for (int x = 0; x < this.game.getWidth(); ++x) {
-			this.renderedImages.add(new ArrayList<ArrayList<ImageView>>());
-			for (int y = 0; y < this.game.getHeight(); ++y) {
-				this.renderedImages.get(x).add(new ArrayList<ImageView>());
-			}
-		}
 	}
 
 	@FXML
 	public void initialize() {
 		this.startEnemyTimeline();
 		this.startBuffTimeline();
+
+		this.entityGroup = new ArrayList<ArrayList<Group>>();
+		for (int x = 0; x < this.game.getWidth(); ++x) {
+			this.entityGroup.add(new ArrayList<Group>());
+			for (int y = 0; y < this.game.getHeight(); ++y) {
+				Group group = new Group();
+				this.entityGroup.get(x).add(group);
+				squares.add(group, x, y);
+			}
+		}
 		
 		for (Cell cell : this.game.getCells()) {
 			cell.attachListener(this);
@@ -109,14 +112,11 @@ public class DungeonController implements Observer {
 		int x = cell.getX();
 		int y = cell.getY();
 
-		ArrayList<ImageView> oldImageViews = this.renderedImages.get(x).get(y);
-		squares.getChildren().removeAll(oldImageViews);
-		this.renderedImages.get(x).get(y).clear();
+		this.entityGroup.get(x).get(y).getChildren().clear();
 		
 		for (Character c : cell.getTextures()) {
 			ImageView view = new ImageView(this.images.get(c));
-			squares.add(view, x, y);
-			this.renderedImages.get(x).get(y).add(view);
+			this.entityGroup.get(x).get(y).getChildren().add(view);
 		}
 	}
 
