@@ -14,7 +14,7 @@ import unsw.dungeon.back.*;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
- * Tests that the JSON board creation mechanism works.
+ * Tests that the basic JSON board creation mechanism works.
  */
 public class TestJSONLoader {
 	
@@ -57,7 +57,7 @@ public class TestJSONLoader {
 	}
 	
 	/**
-	 * Test that goals are loaded and attached properly.
+	 * Test that goals are loaded seem to be loaded and attached properly.
 	 */
 	@Test
 	public void TestGoalLoading() {
