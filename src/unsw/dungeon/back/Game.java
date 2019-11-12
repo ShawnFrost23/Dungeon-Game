@@ -241,4 +241,12 @@ public class Game implements Observer {
 	public List<Cell> getCells() {
 		return this.board.getCells();
 	}
+
+	public int getHeight() {
+		return this.board.getHeight();
+	}
+	
+	public int getWidth() {
+		return this.board.getWidth();
+	}
 }

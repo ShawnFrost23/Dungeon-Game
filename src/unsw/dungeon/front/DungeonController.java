@@ -27,9 +27,14 @@ public class DungeonController implements Observer {
 	@FXML
 	private GridPane squares;
 	
-	// Because the view doesn't keep track of what's actually drawn to it, we
-	// have to do so ... if we want any drachm of efficiency.
-	// private List<List<List<ImageView>>> images;
+	/**
+	 *  renderedImages[x][y] is the list of ImageViews displayed in the (x, y)
+	 *  node of the GridPane.
+	 *  We keep track of this because the GridPane only supports a
+	 *  get-image-by-coordinates function that is linear in the number of images
+	 *  drawn.
+	 */
+	private ArrayList<ArrayList<ArrayList<ImageView>>> renderedImages;
 
 	private Game game;
 
@@ -79,6 +84,13 @@ public class DungeonController implements Observer {
 		images.put('O', new Image("portal.png"));
 		images.put('_', new Image("pressure_plate.png"));
 
+		this.renderedImages = new ArrayList<ArrayList<ArrayList<ImageView>>>();
+		for (int x = 0; x < this.game.getWidth(); ++x) {
+			this.renderedImages.add(new ArrayList<ArrayList<ImageView>>());
+			for (int y = 0; y < this.game.getHeight(); ++y) {
+				this.renderedImages.get(x).add(new ArrayList<ImageView>());
+			}
+		}
 	}
 
 	@FXML
@@ -96,16 +108,15 @@ public class DungeonController implements Observer {
 	private void redraw(Cell cell) {
 		int x = cell.getX();
 		int y = cell.getY();
-		
-		for (Node child : new ArrayList<Node>(squares.getChildren())) {
-			if (GridPane.getColumnIndex(child) == x && GridPane.getRowIndex(child) == y) {
-				squares.getChildren().remove(child);
-			}
-		}
+
+		ArrayList<ImageView> oldImageViews = this.renderedImages.get(x).get(y);
+		squares.getChildren().removeAll(oldImageViews);
+		this.renderedImages.get(x).get(y).clear();
 		
 		for (Character c : cell.getTextures()) {
 			ImageView view = new ImageView(this.images.get(c));
 			squares.add(view, x, y);
+			this.renderedImages.get(x).get(y).add(view);
 		}
 	}
 
