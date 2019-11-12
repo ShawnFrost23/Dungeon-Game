@@ -3,6 +3,9 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import unsw.dungeon.spoof.SpoofCrushableItem;
 
 /**
@@ -46,6 +49,25 @@ public class Board {
 			board.addEntities(boardString, game, goal, subBoardNum);
 			subBoardNum += 1;
 		}
+
+		return board;
+	}
+	
+	/**
+	 * Create a new {@link Board} from a json form
+	 * @param game Game object to which this board will belong
+	 * @param goal the Game's goal
+	 * @param json the json object representing the board
+	 * @return a new {@link Board instance}
+	 */
+	public static Board createBoard(Game game, Goal goal, JSONObject json) {
+		int width = json.getInt("width");
+		int height = json.getInt("height");
+		
+		Board board = new Board(width, height);
+		JSONArray jsonEntities = json.getJSONArray("entities");
+		board.addEntities(jsonEntities, game, goal);
+		
 
 		return board;
 	}
@@ -96,6 +118,9 @@ public class Board {
 		return new WorldState(this.cells, this.height, this.width, enemyLocation, playerLocation);
 	}
 
+	// TODO: If we can convert boardString[] into json, then we can remove the
+	// duplication here just by creating an adaptor to its namesake
+	// addEntities(JSONArray jsonEntities)
 	private void addEntities(String boardString, Game game, Goal goal, int boardNum) {
 		String[] lines = boardString.split("\n");
 
@@ -162,6 +187,78 @@ public class Board {
 		}
 	}
 
+	private void addEntities(JSONArray jsonEntities, Game game, Goal goal) {
+		for (int i = 0; i < jsonEntities.length(); ++i) {
+			JSONObject jsonEntity = jsonEntities.getJSONObject(i);
+			String type = jsonEntity.getString("type");
+			int x = jsonEntity.getInt("x");
+			int y = jsonEntity.getInt("y");
+			Cell cell = this.cells[x][y];
+			Entity e = null;
+			switch (type) {
+			case "wall":
+				e = new Wall();
+				break;
+			case "player":
+				e = new Player(cell);
+				game.trackPlayer((Player) e);
+				break;
+			case "boulder":
+				e = new Boulder(cell);
+				break;
+			case "enemy":
+				e = new Enemy(cell, new NaiveMovementStrategy());
+				game.trackEnemy((Enemy) e);
+				break;
+			case "switch":
+				e = new FloorSwitch();
+				break;
+			case "portal":
+				throw new Error("Portal loader not implemented!");
+//				e = new Portal (cell);
+//				if (firstPortal == null) {
+//					firstPortal = ((Portal) e);
+//				} else {
+//					// If we've already added a portal this round, then pair
+//					// it with the one we're adding just now.
+//					((Portal) e).setPairedPortal(firstPortal);
+//					firstPortal.setPairedPortal((Portal) e);
+//				}
+//				break;
+			case "door":
+				throw new Error("Door loader not implemented!");
+//				e = new Door(boardNum);
+//				break;
+			case "key":
+				throw new Error("Key loader not implemented!");
+//				e = new Key(boardNum);
+//				break;
+			case "treasure":
+				e = new Treasure(cell);
+				break;
+			case "sword":
+				e = new Sword(cell);
+				break;
+			case "exit":
+				e = new Exit(); 
+				break;
+			case "invincibility":
+				e = new InvincibilityPotion();
+				break;
+			default:
+				throw new Error("Unrecognised entity type \"" + type + "\".");
+			}
+			
+			// make two passes -- one for non-moveables, one for moveables.
+			if (e instanceof Moveable) {
+				cell.enter((Moveable) e);
+			} else {
+				cell.addEntity(e);
+			}
+			goal.trackEntity(e);
+		}
+	}
+	
 	public List<Cell> getCells() {
 		List<Cell> cells = new ArrayList<Cell>();
 		for (int y = 0; y < this.height; ++y) {
@@ -179,5 +276,4 @@ public class Board {
 	public int getWidth() {
 		return this.width;
 	}
-
 }

@@ -1,12 +1,20 @@
 package unsw.dungeon.back;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.PlayerKilledEvent;
+import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
  * The interface through which a Game can be played.
@@ -89,10 +97,27 @@ public class Game implements Observer {
 	 * Create a game from a json file.
 	 * @param jsonPath path to the json file to load the game from
 	 * @return a Game object as described by the json file.
+	 * @throws FileNotFoundException 
+	 * @throws JSONException 
 	 */
-	public static Game createGame(String jsonPath) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Game createGame(String jsonPath) throws FileNotFoundException  {
+		JSONObject json = new JSONObject(new JSONTokener(new FileReader(jsonPath)));
+		return Game.createGame(json);
+	}
+	
+	/**
+	 * Create a game from a json object.
+	 * @param json json object to load the game from
+	 * @return a Game instance as described by the json object
+	 */
+	public static Game createGame(JSONObject json) {
+		
+		// json.getJSONObject("goal-condition")
+		Goal goal = new ImpossibleGoal();
+		Game game = new Game(goal);
+		game.board = Board.createBoard(game, goal, json);
+		
+		return game;
 	}
 	
 		
