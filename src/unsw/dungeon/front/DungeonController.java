@@ -32,15 +32,15 @@ public class DungeonController implements Observer {
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
 	 *  node of the GridPane.
-	 *  We keep track of this because the GridPane only supports a
-	 *  get-image-by-coordinates function that is linear in the number of images
-	 *  drawn.
 	 */
 	private ArrayList<ArrayList<Group>> entityGroup;
 
 	private Game game;
 
-	private Map<Character, Image> images;
+	/**
+	 * Used to cache images by their URL.
+	 */
+	private Map<String, Image> imageCache;
 	
 	private Timeline enemyTimeline;
 	private Timeline buffTimeline;
@@ -66,7 +66,7 @@ public class DungeonController implements Observer {
 		this.buffTimeline.getKeyFrames().add(kfBuffs);
 		this.buffTimeline.setCycleCount(Timeline.INDEFINITE);
 
-
+		this.imageCache = new HashMap<String, Image>();
 	}
 
 	@FXML
@@ -98,10 +98,19 @@ public class DungeonController implements Observer {
 		
 		
 		for (Texture texture : cell.getTextures()) {
-			ImageView view = new ImageView(texture.getImageSrc()); // TODO cache.			this.entityGroup.get(x).get(y).getChildren().add(view);
+			ImageView view = new ImageView(this.getImage(texture));			this.entityGroup.get(x).get(y).getChildren().add(view);
 		}
 	}
 
+	private Image getImage(Texture texture) {
+		String src = texture.getImageSrc();
+		if (this.imageCache.get(src) == null) {
+			this.imageCache.put(src, new Image(src));
+		}
+		return this.imageCache.get(src); 
+		
+	}
+	
 	private void startEnemyTimeline() {
 		this.enemyTimeline.play();
 	}
