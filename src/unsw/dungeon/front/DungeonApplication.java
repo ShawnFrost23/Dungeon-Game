@@ -42,6 +42,7 @@ public class DungeonApplication extends Application {
 		Parent root = loader.load();
 		Scene scene = new Scene(root);
 		root.requestFocus();
+		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 
