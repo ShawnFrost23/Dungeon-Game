@@ -3,15 +3,36 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
 
-<GridPane fx:id="squares" onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
-   <columnConstraints>
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-   </rowConstraints>
-   <children>
+<!-- TODO, give dungeons a min-width at least of the size of the status bar? -->
 
-   </children>
-</GridPane>
+<Pane id="dungeonPlayer" onKeyPressed="#handleKeyPress" xmlns:fx="http://javafx.com/fxml/1">
+	<VBox>
+		<HBox id="statusBar" style="-fx-background-color: black">
+			<HBox styleClass="statusElement" style="-fx-padding: 0 10 0 10;">
+				<ImageView fitWidth="16" fitHeight="16">
+					<Image url="greatsword_1_new.png" />
+				</ImageView>
+				<Label id="swordDurability" fx:id="statusSwordDurability" text="0" textFill="#FFF" />
+			</HBox>
+			<HBox styleClass="statusElement" style="-fx-padding: 0 10 0 0;">
+				<ImageView fitWidth="16" fitHeight="16">
+					<Image url="brilliant_blue_new.png" />
+				</ImageView>
+				<Label id="potionDuration" fx:id="statusPotionDuration" text="0" textFill="#FFF" />
+			</HBox>
+			<HBox styleClass="statusElement" style="-fx-padding: 0 10 0 0;">
+				<ImageView fx:id="statusKeyIcon" fitWidth="16" fitHeight="16">
+					<Image url="key.png" />
+				</ImageView>
+			</HBox>
+		</HBox>
+		<GridPane id="dungeonArea" fx:id="squares" />
+	</VBox>
+</Pane>

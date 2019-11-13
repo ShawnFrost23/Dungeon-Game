@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -28,6 +29,16 @@ import unsw.dungeon.back.event.Observer;
 public class DungeonController implements Observer {
 	@FXML
 	private GridPane squares;
+	
+    @FXML
+    private Label statusPotionDuration;
+    
+    @FXML
+    private Label statusSwordDurability;
+	
+    @FXML
+    private ImageView statusKeyIcon;
+    
 	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)

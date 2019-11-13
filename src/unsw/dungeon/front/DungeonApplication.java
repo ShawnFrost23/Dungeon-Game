@@ -45,6 +45,7 @@ public class DungeonApplication extends Application {
 		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
 
 	}
 
