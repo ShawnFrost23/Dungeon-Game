@@ -60,7 +60,7 @@ public class TestJSONLoader {
 	}
 	
 	/**
-	 * Test that goals are loaded seem to be loaded and attached properly.
+	 * Test that goals seem to be loaded and attached properly.
 	 */
 	@Test
 	public void TestGoalLoading() {
