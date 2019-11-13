@@ -57,7 +57,7 @@ public class Player implements Moveable, Subject, Observer {
 	 */
 	public void swingSword(Direction d) {
 		if (this.isHoldingSword()) {
-			this.location.adjacent(d).hitWithSword();
+			this.location.adjacent(d).hitWithSword(d);
 			this.swordDurability -= 1;
 			if (this.swordDurability == 0) {
 				// HACK ...

@@ -1,5 +1,8 @@
 package unsw.dungeon.back.event;
 
+import unsw.dungeon.back.Cell;
+import unsw.dungeon.back.Direction;
+
 /**
  * An event that is fired whenever a Player swings a sword in a particular
  * {@link unsw.dungeon.back.Cell Cell}.
@@ -7,5 +10,19 @@ package unsw.dungeon.back.event;
  * the cell the player was in when they swung the sword.
  */
 public class CellHitWithSwordEvent implements Event {
+	private Cell whichCell;
+	private Direction direction;
 
+	public CellHitWithSwordEvent(Cell cell, Direction direction) {
+		this.whichCell = cell;
+		this.direction = direction;
+	}
+	
+	public Cell getCell() {
+		return this.whichCell;
+	}
+	
+	public Direction getDirection() {
+		return this.direction;
+	}
 }

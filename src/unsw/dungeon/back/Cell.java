@@ -169,10 +169,10 @@ public class Cell implements Subject {
 
 	/**
 	 * Declare that a Player has swung their sword in this cell.
-	 * @param d
+	 * @param d direction the sword was swung in
 	 */
-	public void hitWithSword() {
-		this.notifyAllOf(new CellHitWithSwordEvent());	
+	public void hitWithSword(Direction d) {
+		this.notifyAllOf(new CellHitWithSwordEvent(this, d));	
 	}
 	
 	@Override

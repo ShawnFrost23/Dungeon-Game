@@ -22,6 +22,7 @@ import unsw.dungeon.back.Cell;
 import unsw.dungeon.back.Direction;
 import unsw.dungeon.back.Game;
 import unsw.dungeon.back.Texture;
+import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellRedrawEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -45,6 +46,7 @@ public class DungeonController implements Observer {
 	 *  node of the GridPane.
 	 */
 	private ArrayList<ArrayList<Group>> entityGroup;
+	private ArrayList<ArrayList<Group>> effectGroup;
 
 	private Game game;
 
@@ -84,13 +86,21 @@ public class DungeonController implements Observer {
 	public void initialize() {
 		this.startEnemyTimeline();
 		this.startBuffTimeline();
+		
+		
 		this.entityGroup = new ArrayList<ArrayList<Group>>();
+		this.effectGroup = new ArrayList<ArrayList<Group>>();
 		for (int x = 0; x < this.game.getWidth(); ++x) {
 			this.entityGroup.add(new ArrayList<Group>());
+			this.effectGroup.add(new ArrayList<Group>());
 			for (int y = 0; y < this.game.getHeight(); ++y) {
-				Group group = new Group();
-				this.entityGroup.get(x).add(group);
-				squares.add(group, x, y);
+				Group entityGroup = new Group();
+				this.entityGroup.get(x).add(entityGroup);
+				squares.add(entityGroup, x, y);
+				
+				Group effectGroup = new Group();
+				this.effectGroup.get(x).add(effectGroup);
+				squares.add(effectGroup, x, y);
 			}
 		}
 				
@@ -105,14 +115,18 @@ public class DungeonController implements Observer {
 		int y = cell.getY();
 
 		this.entityGroup.get(x).get(y).getChildren().clear();
-
-		
 		
 		for (Texture texture : cell.getTextures()) {
 			ImageView view = new ImageView(this.getImage(texture));			this.entityGroup.get(x).get(y).getChildren().add(view);
 		}
 	}
 
+	private void playSwordAnimation(Cell cell) {
+		int x = cell.getX();
+		int y = cell.getY();
+		this.effectGroup.get(x).get(y).getChildren().add(new ImageView("hound.png"));
+	}
+	
 	private Image getImage(Texture texture) {
 		String src = texture.getImageSrc();
 		if (this.imageCache.get(src) == null) {
@@ -170,6 +184,9 @@ public class DungeonController implements Observer {
 		if (event instanceof CellRedrawEvent) {
 			Cell cell = ((CellRedrawEvent) event).getCell();
 			this.redraw(cell);
+		} else if (event instanceof CellHitWithSwordEvent) {
+			Cell cell = ((CellHitWithSwordEvent) event).getCell();
+			this.playSwordAnimation(cell);
 		}
 	}
 }
