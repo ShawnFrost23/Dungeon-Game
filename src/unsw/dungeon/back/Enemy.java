@@ -34,6 +34,7 @@ public class Enemy implements Moveable, Observer, Subject {
 	private Cell location;
 	private MovementStrategy movementStrategy;
 	private List<Observer> observers;
+	private boolean hasDied;
 
 	/**
 	 * Consruct a new Enemy instance.
@@ -45,6 +46,7 @@ public class Enemy implements Moveable, Observer, Subject {
 		this.location = cell;
 		this.movementStrategy = movementStrategy;
 		this.observers = new ArrayList<Observer>();
+		this.hasDied = false;
 	}
 	
 	/**
@@ -82,6 +84,7 @@ public class Enemy implements Moveable, Observer, Subject {
 	 * {@link unsw.dungeon.back.event.EnemyKilledEvent EnemyKilledEvent}.
 	 */
 	public void kill() {
+		this.hasDied = true;
 		this.location.removeEntity(this);
 		this.notifyAllOf(new EnemyKilledEvent(this));
 	}
@@ -148,5 +151,9 @@ public class Enemy implements Moveable, Observer, Subject {
 	
 	private void onHitWithSword(CellHitWithSwordEvent event) {
 		this.kill();
+	}
+
+	public boolean hasDied() {
+		return this.hasDied;
 	}
 }

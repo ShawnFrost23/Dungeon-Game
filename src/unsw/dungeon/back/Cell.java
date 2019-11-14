@@ -173,7 +173,7 @@ public class Cell implements Subject {
 	 * @param d direction the sword was swung in
 	 */
 	public void hitWithSword(Direction d) {
-		this.notifyAllOf(new CellHitWithSwordEvent(this, d));	
+		this.notifyAllOf(new CellHitWithSwordEvent(this, d));
 	}
 	
 	@Override

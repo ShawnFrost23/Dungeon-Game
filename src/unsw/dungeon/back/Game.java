@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +30,20 @@ public class Game implements Observer {
 	private boolean hasWon;
 	private boolean hasLost;
 	
+	/**
+	 * Enemies will try to make moves every 500ms ... if the player kills them
+	 * between the time they decide their move and when they make it, there's
+	 * an issue. We use this lock to restrict that only one player / enemy can
+	 * move at once. 
+	 */
+	private Lock conurrentMovementLock;
+	
 	private Game(Goal goal) {
 		this.hasWon = false;
 		this.hasLost = false;
 		this.enemies = new ArrayList<Enemy>();
 		this.goal = goal;
+		this.conurrentMovementLock = new ReentrantLock();
 	}
 	
 	/**
@@ -164,9 +175,14 @@ public class Game implements Observer {
 	 * @param d direction to move the player in.
 	 */
 	public void movePlayer(Direction d) {
-		this.player.push(d);
-		if (this.player.canMove(d)) {
-			this.player.move(d);
+		this.conurrentMovementLock.lock();
+		try {
+			this.player.push(d);
+			if (this.player.canMove(d)) {
+				this.player.move(d);
+			}
+		} finally {
+			this.conurrentMovementLock.unlock();
 		}
 	}
 	
@@ -192,16 +208,23 @@ public class Game implements Observer {
 	 * Permit all enemies to make a single valid movement (or stay still).
 	 */
 	public void moveEnemies() {
-		for (Enemy enemy : this.enemies) {
+		for (Enemy enemy : new ArrayList<Enemy>(this.enemies)) {
 			Direction d = enemy.chooseMove(
 				this.board.createWorldState(this.player.getLocation(), enemy.getLocation()),
 				!player.isInvincible()
 			);
+
 			if (d == null) {
 				continue;
 			}
-			if (enemy.canMove(d)) {
-				enemy.move(d);
+			
+			this.conurrentMovementLock.lock();
+			try {
+				if (!enemy.hasDied() && enemy.canMove(d)) { 
+					enemy.move(d);
+				}
+			} finally {
+				this.conurrentMovementLock.unlock();
 			}
 		}
 	}
