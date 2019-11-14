@@ -31,15 +31,15 @@ public class DungeonController implements Observer {
 	@FXML
 	private GridPane squares;
 	
-    @FXML
-    private Label statusPotionDuration;
-    
-    @FXML
-    private Label statusSwordDurability;
+	@FXML
+	private Label statusPotionDuration;
 	
-    @FXML
-    private ImageView statusKeyIcon;
-    
+	@FXML
+	private Label statusSwordDurability;
+	
+	@FXML
+	private ImageView statusKeyIcon;
+	
 	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
