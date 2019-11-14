@@ -214,9 +214,11 @@ public class Game implements Observer {
 	 */
 	public void moveEnemies() {
 		for (Enemy enemy : new ArrayList<Enemy>(this.enemies)) {
+			boolean isPlayerInvincible = player.isInvincible();
+			
 			Direction d = enemy.chooseMove(
 				this.board.createWorldState(this.player.getLocation(), enemy.getLocation()),
-				!player.isInvincible()
+				!isPlayerInvincible
 			);
 
 			if (d == null) {
@@ -225,7 +227,14 @@ public class Game implements Observer {
 			
 			this.conurrentMovementLock.lock();
 			try {
-				if (!enemy.hasDied() && enemy.canMove(d)) { 
+				if (player.isInvincible() != isPlayerInvincible ) {
+					// The enemy planned a move possibly assuming the player
+					// wasn't invincible ... but during its deliberation, the
+					// player picked up a potion. The enemy may now intend on
+					// walking directly into the invincible player, which would
+					// result in their death and further complications. It is
+					// better to stay still.
+				} else if (!enemy.hasDied() && enemy.canMove(d)) { 
 					enemy.move(d);
 				}
 			} finally {
