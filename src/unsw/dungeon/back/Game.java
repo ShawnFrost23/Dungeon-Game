@@ -227,13 +227,8 @@ public class Game implements Observer {
 			
 			this.conurrentMovementLock.lock();
 			try {
-				if (player.isInvincible() != isPlayerInvincible ) {
-					// The enemy planned a move possibly assuming the player
-					// wasn't invincible ... but during its deliberation, the
-					// player picked up a potion. The enemy may now intend on
-					// walking directly into the invincible player, which would
-					// result in their death and further complications. It is
-					// better to stay still.
+				if (player.isInvincible() && player.getLocation() == enemy.getLocation().adjacent(d)) {
+					// Don't walk into the player.
 				} else if (!enemy.hasDied() && enemy.canMove(d)) { 
 					enemy.move(d);
 				}

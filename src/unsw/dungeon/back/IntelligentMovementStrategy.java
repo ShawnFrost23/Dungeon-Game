@@ -1,32 +1,23 @@
 package unsw.dungeon.back;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.PriorityQueue;
 
 public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
-	private static Integer heuristicPlusDepth(WorldState world) {
-		return heuristic(world) + world.getDepth(); 
-	}
-	private static int heuristic(WorldState world) {
-		int Dx = world.getMyX() - world.getGoalX();
-		int Dy = world.getMyY() - world.getGoalY();
-		return Math.abs(Dx) + Math.abs(Dy); 
+
+	private static Direction[] allDirections = {
+		Direction.LEFT, Direction.RIGHT, Direction.DOWN, Direction.UP
+	};
+	
+	private interface Heuristic {
+		public int calculate(WorldState world);
 	}
 	
-	@Override
-	public Direction chooseMove(WorldState world, boolean seek) {
+	public Direction chooseMove(WorldState world, Heuristic h) {
 		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
-			(WorldState a, WorldState b) -> heuristicPlusDepth(a).compareTo(heuristicPlusDepth(b))
+			(WorldState a, WorldState b) -> Integer.compare(h.calculate(a) + a.getDepth(), h.calculate(b) + b.getDepth())
 		);
+		
 
-		// TODO: the order of this list is what resolves ties ... 
-		// should we shuffle this? 
-		List<Direction> allDirections = new ArrayList<Direction>();
-		allDirections.add(Direction.LEFT);
-		allDirections.add(Direction.RIGHT);
-		allDirections.add(Direction.DOWN);
-		allDirections.add(Direction.UP);
 		pq.add(world);
 		
 		int maxNodes = 100;
@@ -36,26 +27,27 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		visited[world.getMyX()][world.getMyY()] = true;
 		
 		Direction bestDirection = null;
-		int bestHeuristic = heuristic(world); 
+		int bestHeuristic = h.calculate(world); 
 		int n = 0;
 		while ((pq.peek() != null)) {
 			n += 1;
-			
 			if (n > maxNodes) {
 				return bestDirection;
 			}
 			
 			WorldState curr = pq.poll();
 			
-			if (curr.hasMetGoal()) {
+			int currHeuristic = h.calculate(curr);
+			
+			if (currHeuristic == 0) {
 				return curr.getStartDirection();
 			} else {
-				int currHeuristic = heuristic(curr); 
 				if (currHeuristic < bestHeuristic) {
 					bestDirection = curr.getStartDirection();
 					bestHeuristic = currHeuristic;
 				}
 			}
+			
 			for (Direction d : allDirections) {
 				WorldState next = curr.transition(d, false);
 				if (next != null) {
@@ -69,8 +61,29 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		return null;
 	}
 	
+	@Override
+	public Direction chooseMove(WorldState world, boolean seek) {
+		Direction chosenDirection = this.chooseMove(world,
+			(WorldState w) ->  w.L1()
+		);
+		if (seek) {
+			return chosenDirection; 
+		} else {
+			if (chosenDirection == null ) {
+				return null;
+			}
+			Direction bestDirection = null;
+			double bestL2 = world.L2();
+			
+			for (Direction d : allDirections) {
+				WorldState next = world.transition(d, false); 
+				if (next != null && next.L2() > bestL2) {
+					bestL2 = world.L2();
+					bestDirection = d;
+				}
+				
+			}
+			return bestDirection;
+		}
+	}
 }
-
-
-
-

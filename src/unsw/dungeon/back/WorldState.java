@@ -99,6 +99,18 @@ public class WorldState {
 		return this.depth;
 	}
 	
+	public int L1() {
+		int Dx = this.getMyX() - this.getGoalX();
+		int Dy = this.getMyY() - this.getGoalY();
+		return Math.abs(Dx) + Math.abs(Dy); 
+	}
+	
+	public double L2() {
+		int Dx = this.getMyX() - this.getGoalX();
+		int Dy = this.getMyY() - this.getGoalY();
+		return Math.sqrt(Math.pow(Dx, 2) + Math.pow(Dy, 2)); 
+	}
+	
 	/**
 	 * Generate a new world-state as though the enemy has moved once in
 	 * direction d.
@@ -139,9 +151,6 @@ public class WorldState {
 		state.depth = this.depth + 1;
 		state.startDirection = this.startDirection != null ? this.startDirection : d;
 		return state;
-	}
-	public boolean hasMetGoal() {
-		return this.getMyX() == this.getGoalX() && this.getMyY() == this.getGoalY();
 	}
 	public Direction getStartDirection() {
 		return this.startDirection;
