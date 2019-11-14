@@ -103,7 +103,8 @@ public class Cell implements Subject {
 	}
 	
 	/**
-	 * Get the cell that is adjacent to this one.
+	 * Get the cell that is <b>effectively</b> adjacent to this one,
+	 * automatically looking through portals.
 	 * @param d direction to get adjacent in
 	 * @return the cell that is adjacent to this one in direction <b>d</b>
 	 */
