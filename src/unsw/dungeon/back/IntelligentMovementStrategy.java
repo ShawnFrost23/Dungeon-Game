@@ -35,6 +35,12 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		
 		int maxNodes = 100;
 		
+		boolean[][] visited = new boolean[world.getWidth()][world.getHeight()];
+		
+		visited[world.getMyX()][world.getMyY()] = true;
+		
+		System.out.println("Making move ... ");
+		
 		Direction bestDirection = null;
 		int bestHeuristic = heuristic(world); 
 		int n = 0;
@@ -46,6 +52,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 			}
 			
 			WorldState curr = pq.poll();
+			
 			if (curr.hasMetGoal()) {
 				return curr.getStartDirection();
 			} else {
@@ -56,9 +63,12 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 				}
 			}
 			for (Direction d : allDirections) {
-				WorldState next = curr.transition(d);
+				WorldState next = curr.transition(d, false);
 				if (next != null) {
-					pq.add(next);
+					if (!visited[next.getMyX()][next.getMyY()]) {
+						visited[next.getMyX()][next.getMyY()] = true;
+						pq.add(next);
+					}
 				}
 			}
 		}

@@ -99,20 +99,28 @@ public class WorldState {
 	 * Generate a new world-state as though the enemy has moved once in
 	 * direction d.
 	 * @param d direction to move enemy in
+	 * @param canUsePortals can the enemy use portals
 	 * @return new world-state representing the change in enemy position, or
 	 * <code>null</code> if the move is impossible
 	 */
-	public WorldState transition(Direction d) {
-		int myNewX = this.getMyX();
-		int myNewY = this.getMyY(); 
-		if (d == Direction.LEFT) {
-			myNewX -= 1;
-		} else if (d == Direction.RIGHT) {
-			myNewX += 1;
-		} else if (d == Direction.UP) {
-			myNewY -= 1;
-		} else if (d == Direction.DOWN) {
-			myNewY += 1;
+	public WorldState transition(Direction d, boolean canUsePortals) {
+		int myNewX;
+		int myNewY;
+		if (canUsePortals) {
+			myNewX = this.myLocation.adjacent(d).getX();
+			myNewY = this.myLocation.adjacent(d).getY();
+		} else {
+			myNewX = this.getMyX();
+			myNewY = this.getMyY();
+			if (d == Direction.LEFT) {
+				myNewX -= 1;
+			} else if (d == Direction.RIGHT) {
+				myNewX += 1;
+			} else if (d == Direction.UP) {
+				myNewY -= 1;
+			} else if (d == Direction.DOWN) {
+				myNewY += 1;
+			}
 		}
 		if (this.getIsCollidable(myNewX, myNewY)) {
 			return null;
