@@ -192,7 +192,12 @@ public class Game implements Observer {
 	 * @param d direction they are trying to swing their sword in
 	 */
 	public void swingSword(Direction d) {
-		this.player.swingSword(d);
+		this.conurrentMovementLock.lock();
+		try {
+			this.player.swingSword(d);
+		} finally {
+			this.conurrentMovementLock.unlock();
+		}
 	}
 
 	/**
