@@ -9,32 +9,34 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 	// it's probably better to treat enemies as uncollidable (unless you're a boulder).
 	// ...
 	
-	private static Integer heuristic(WorldState world) {
+	private static Integer heuristicPlusDepth(WorldState world) {
+		return heuristic(world) + world.getDepth(); 
+	}
+	private static int heuristic(WorldState world) {
 		int Dx = world.getMyX() - world.getGoalX();
 		int Dy = world.getMyY() - world.getGoalY();
-		
-		return Math.abs(Dx) + Math.abs(Dy) + world.getDepth(); 
+		return Math.abs(Dx) + Math.abs(Dy); 
 	}
 	
 	@Override
 	public Direction chooseMove(WorldState world, boolean seek) {
 		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
-			(WorldState a, WorldState b) -> heuristic(a).compareTo(heuristic(b))
+			(WorldState a, WorldState b) -> heuristicPlusDepth(a).compareTo(heuristicPlusDepth(b))
 		);
 
+		// TODO: the order of this list is what resolves ties ... 
+		// should we shuffle this? 
 		List<Direction> allDirections = new ArrayList<Direction>();
-		allDirections.add(Direction.DOWN);
-		allDirections.add(Direction.UP);
 		allDirections.add(Direction.LEFT);
 		allDirections.add(Direction.RIGHT);
+		allDirections.add(Direction.DOWN);
+		allDirections.add(Direction.UP);
 		pq.add(world);
 		
-		int maxNodes = 10000;
+		int maxNodes = 100;
 		
 		Direction bestDirection = null;
 		int bestHeuristic = heuristic(world); 
-		
-		// make sure the pq is doing what it's meant to be doing ...
 		int n = 0;
 		while ((pq.peek() != null)) {
 			n += 1;
@@ -60,54 +62,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 				}
 			}
 		}
-		
-		
-		// don't generate past a certain depth ... 
-
 		return null;
-//		int x = world.getMyX();
-//		int y = world.getMyY();
-//
-//		int Dx = x - world.getGoalX();
-//		int Dy = y - world.getGoalY();
-//		
-//		if (!seek) {
-//			Dx = -Dx;
-//			Dy = -Dy;
-//		}
-//
-//		if (Math.abs(Dx) > Math.abs(Dy)) {
-//			if (Dx > 0) {
-//				if (!world.getIsCollidable(x - 1, y)) {
-//					return Direction.LEFT;
-//				}
-//			} else if (Dx < 0) {
-//				if (!world.getIsCollidable(x + 1, y)) {
-//					return Direction.RIGHT;
-//				}
-//			}
-//		}
-//
-//		if (Dy > 0) {
-//			if (!world.getIsCollidable(x, y - 1)) {
-//				return Direction.UP;
-//			}
-//		} else if (Dy < 0) {
-//			if (!world.getIsCollidable(x, y + 1)) {
-//				return Direction.DOWN;
-//			}
-//		}
-//
-//		if (Dx > 0) {
-//			if (!world.getIsCollidable(x - 1, y)) {
-//				return Direction.LEFT;
-//			}
-//		} else if (Dx < 0) {
-//			if (!world.getIsCollidable(x + 1, y)) {
-//				return Direction.RIGHT;
-//			}
-//		}
-
 	}
 	
 }
