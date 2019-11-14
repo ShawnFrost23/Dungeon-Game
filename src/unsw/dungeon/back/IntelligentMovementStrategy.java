@@ -29,24 +29,38 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		allDirections.add(Direction.RIGHT);
 		pq.add(world);
 		
-		int maxDepth = 10; // change this to max num nodes to generate ...
+		int maxNodes = 10000;
 		
+		Direction bestDirection = null;
+		int bestHeuristic = heuristic(world); 
 		
 		// make sure the pq is doing what it's meant to be doing ...
-		
+		int n = 0;
 		while ((pq.peek() != null)) {
-			WorldState ws = pq.poll();
-			if (ws.hasMetGoal()) {
-				return ws.getStartDirection();
+			n += 1;
+			
+			if (n > maxNodes) {
+				return bestDirection;
 			}
 			
+			WorldState curr = pq.poll();
+			if (curr.hasMetGoal()) {
+				return curr.getStartDirection();
+			} else {
+				int currHeuristic = heuristic(curr); 
+				if (currHeuristic < bestHeuristic) {
+					bestDirection = curr.getStartDirection();
+					bestHeuristic = currHeuristic;
+				}
+			}
 			for (Direction d : allDirections) {
-				WorldState next = ws.transition(d);
-				if (next != null && next.getDepth() < maxDepth) {
+				WorldState next = curr.transition(d);
+				if (next != null) {
 					pq.add(next);
 				}
 			}
 		}
+		
 		
 		// don't generate past a certain depth ... 
 
