@@ -13,7 +13,7 @@ import java.util.List;
  * This is functionally just a version of {@link Board} with methods that
  * produce side-effects being hidden, and there being a coordinate access method
  * to check whether a cell is collidable or not
- * ({@link #getIsCollidable(int, int)}). The user of this class can treat the
+ * ({@link #shouldVisit(int, int)}). The user of this class can treat the
  * world like a maze -- they know their own position, the position of the goal,
  * and what obstructions there are inbetween.
  */
@@ -55,14 +55,18 @@ public class WorldState {
 	}
 	
 	/**
-	 * Get whether the cell at worldState<b>[x][y]</b> is collidable
+	 * Get whether the cell at worldState<b>[x][y]</b> is worth visiting.
 	 * @param x x-coordinate to check
 	 * @param y y-coordinate to check
-	 * @return true if the cell at <b>[x][y]</b> is collidable or out of bounds
+	 * @return true if the cell at <b>[x][y]</b> isn't out of bounds, and isn't
+	 * collidable (or it is an enemy whose collidability is transient).
 	 */
-	public boolean getIsCollidable(int x, int y) {
+	public boolean shouldVisit(int x, int y) {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
 			return true;
+		}
+		if (worldState[x][y].hasEnemy()) {
+			return false;
 		}
 		return worldState[x][y].isCollidable();
 	}
@@ -122,7 +126,7 @@ public class WorldState {
 				myNewY += 1;
 			}
 		}
-		if (this.getIsCollidable(myNewX, myNewY)) {
+		if (this.shouldVisit(myNewX, myNewY)) {
 			return null;
 		}
 		

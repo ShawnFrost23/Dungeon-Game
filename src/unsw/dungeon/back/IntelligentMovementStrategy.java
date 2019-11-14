@@ -5,10 +5,6 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
-
-	// it's probably better to treat enemies as uncollidable (unless you're a boulder).
-	// ...
-	
 	private static Integer heuristicPlusDepth(WorldState world) {
 		return heuristic(world) + world.getDepth(); 
 	}
@@ -38,8 +34,6 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		boolean[][] visited = new boolean[world.getWidth()][world.getHeight()];
 		
 		visited[world.getMyX()][world.getMyY()] = true;
-		
-		System.out.println("Making move ... ");
 		
 		Direction bestDirection = null;
 		int bestHeuristic = heuristic(world); 

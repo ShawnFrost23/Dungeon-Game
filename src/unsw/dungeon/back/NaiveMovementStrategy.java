@@ -24,32 +24,32 @@ public class NaiveMovementStrategy implements Enemy.MovementStrategy {
 
 		if (Math.abs(Dx) > Math.abs(Dy)) {
 			if (Dx > 0) {
-				if (!world.getIsCollidable(x - 1, y)) {
+				if (!world.shouldVisit(x - 1, y)) {
 					return Direction.LEFT;
 				}
 			} else if (Dx < 0) {
-				if (!world.getIsCollidable(x + 1, y)) {
+				if (!world.shouldVisit(x + 1, y)) {
 					return Direction.RIGHT;
 				}
 			}
 		}
 
 		if (Dy > 0) {
-			if (!world.getIsCollidable(x, y - 1)) {
+			if (!world.shouldVisit(x, y - 1)) {
 				return Direction.UP;
 			}
 		} else if (Dy < 0) {
-			if (!world.getIsCollidable(x, y + 1)) {
+			if (!world.shouldVisit(x, y + 1)) {
 				return Direction.DOWN;
 			}
 		}
 
 		if (Dx > 0) {
-			if (!world.getIsCollidable(x - 1, y)) {
+			if (!world.shouldVisit(x - 1, y)) {
 				return Direction.LEFT;
 			}
 		} else if (Dx < 0) {
-			if (!world.getIsCollidable(x + 1, y)) {
+			if (!world.shouldVisit(x + 1, y)) {
 				return Direction.RIGHT;
 			}
 		}

@@ -168,6 +168,15 @@ public class Cell implements Subject {
 		this.notifyAllOf(new CellPushedEvent(p, d));
 	}
 
+	public boolean hasEnemy() {
+		for (Entity e : this.entities) {
+			if (e instanceof Enemy) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Declare that a Player has swung their sword in this cell.
 	 * @param d direction the sword was swung in
