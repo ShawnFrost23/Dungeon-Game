@@ -1,5 +1,8 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A world that {@link Enemy.MovementStrategy} can query to decide what move to
  * make.
@@ -21,6 +24,16 @@ public class WorldState {
 	private Cell myLocation;
 	private Cell goalLocation;
 	
+	private int depth;
+	/**
+	 * Which direction the enemy started exploring this WorldState in.
+	 */
+	private Direction startDirection;
+	
+	private WorldState() {
+		
+	}
+	
 	/**
 	 * Construct a new WorldState object.
 	 * @param worldState a 2d array of Cells that are in the world, of size
@@ -37,8 +50,10 @@ public class WorldState {
 		this.width = width;
 		this.myLocation = myLocation;
 		this.goalLocation = goalLocation;
+		this.depth = 0;
+		this.startDirection = null;
 	}
-
+	
 	/**
 	 * Get whether the cell at worldState<b>[x][y]</b> is collidable
 	 * @param x x-coordinate to check
@@ -74,5 +89,49 @@ public class WorldState {
 	
 	public int getGoalY() {
 		return this.goalLocation.getY();
+	}
+	
+	public int getDepth() {
+		return this.depth;
+	}
+	
+	/**
+	 * Generate a new world-state as though the enemy has moved once in
+	 * direction d.
+	 * @param d direction to move enemy in
+	 * @return new world-state representing the change in enemy position, or
+	 * <code>null</code> if the move is impossible
+	 */
+	public WorldState transition(Direction d) {
+		int myNewX = this.getMyX();
+		int myNewY = this.getMyY(); 
+		if (d == Direction.LEFT) {
+			myNewX -= 1;
+		} else if (d == Direction.RIGHT) {
+			myNewX += 1;
+		} else if (d == Direction.UP) {
+			myNewY -= 1;
+		} else if (d == Direction.DOWN) {
+			myNewY += 1;
+		}
+		if (this.getIsCollidable(myNewX, myNewY)) {
+			return null;
+		}
+		
+		WorldState state = new WorldState();
+		state.worldState = this.worldState;
+		state.height = this.height;
+		state.width = this.width;
+		state.myLocation = this.myLocation.adjacent(d);
+		state.goalLocation = this.goalLocation;
+		state.depth = this.depth + 1;
+		state.startDirection = this.startDirection != null ? this.startDirection : d;
+		return state;
+	}
+	public boolean hasMetGoal() {
+		return this.getMyX() == this.getGoalX() && this.getMyY() == this.getGoalY();
+	}
+	public Direction getStartDirection() {
+		return this.startDirection;
 	}
 }

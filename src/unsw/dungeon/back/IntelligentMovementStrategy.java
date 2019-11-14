@@ -1,16 +1,56 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.PriorityQueue;
 
-/**
- * A naive movement strategy whereby Enemies move in such a way to minimise the
- * L2 norm to the player, getting stuck on any obstacles inbetween.
- * 
- * They will run away from the player if the "seek" flag is set to false.
- */
 public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 
+	// it's probably better to treat enemies as uncollidable (unless you're a boulder).
+	// ...
+	
+	private static Integer heuristic(WorldState world) {
+		int Dx = world.getMyX() - world.getGoalX();
+		int Dy = world.getMyY() - world.getGoalY();
+		
+		return Math.abs(Dx) + Math.abs(Dy) + world.getDepth(); 
+	}
+	
 	@Override
 	public Direction chooseMove(WorldState world, boolean seek) {
+		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
+			(WorldState a, WorldState b) -> heuristic(a).compareTo(heuristic(b))
+		);
+
+		List<Direction> allDirections = new ArrayList<Direction>();
+		allDirections.add(Direction.DOWN);
+		allDirections.add(Direction.UP);
+		allDirections.add(Direction.LEFT);
+		allDirections.add(Direction.RIGHT);
+		pq.add(world);
+		
+		int maxDepth = 10; // change this to max num nodes to generate ...
+		
+		
+		// make sure the pq is doing what it's meant to be doing ...
+		
+		while ((pq.peek() != null)) {
+			WorldState ws = pq.poll();
+			if (ws.hasMetGoal()) {
+				return ws.getStartDirection();
+			}
+			
+			for (Direction d : allDirections) {
+				WorldState next = ws.transition(d);
+				if (next != null && next.getDepth() < maxDepth) {
+					pq.add(next);
+				}
+			}
+		}
+		
+		// don't generate past a certain depth ... 
+
+		return null;
 //		int x = world.getMyX();
 //		int y = world.getMyY();
 //
@@ -54,7 +94,6 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 //			}
 //		}
 
-		return null;
 	}
 	
 }
