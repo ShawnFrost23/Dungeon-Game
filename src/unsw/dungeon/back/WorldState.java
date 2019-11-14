@@ -63,12 +63,12 @@ public class WorldState {
 	 */
 	public boolean shouldVisit(int x, int y) {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
-			return true;
-		}
-		if (worldState[x][y].hasEnemy()) {
 			return false;
 		}
-		return worldState[x][y].isCollidable();
+		if (worldState[x][y].hasEnemy()) {
+			return true;
+		}
+		return !worldState[x][y].isCollidable();
 	}
 
 	public int getHeight() {
@@ -126,7 +126,7 @@ public class WorldState {
 				myNewY += 1;
 			}
 		}
-		if (this.shouldVisit(myNewX, myNewY)) {
+		if (!this.shouldVisit(myNewX, myNewY)) {
 			return null;
 		}
 		
