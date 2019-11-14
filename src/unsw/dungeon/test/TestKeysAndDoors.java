@@ -17,7 +17,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P ~ W \n"
 			+ "    # \n"
 			+ "    W \n"
@@ -41,7 +41,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P~    #\n"
 			, ""
 			+ "  ~  # \n"
@@ -66,7 +66,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P~#      \n"
 			, ""
 			+ "   ~#    \n"
@@ -100,7 +100,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void AC4() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " PB#!  \n"
 			+ "    ~  \n"
 		);
@@ -191,7 +191,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void AC5() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P~    # \n"
 			, ""
 			+ "  ~  #  \n"
@@ -275,7 +275,7 @@ public class TestKeysAndDoors {
 	 */
 	@Test
 	public void EnemiesDontPickUpKeys() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P   #  ~!\n"
 		);
 		g.moveEnemies();

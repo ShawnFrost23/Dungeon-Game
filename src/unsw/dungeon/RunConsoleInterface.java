@@ -5,7 +5,7 @@ import unsw.dungeon.back.*;
 
 public class RunConsoleInterface {
 	public static void main(String[] args) {
-		Game g = Game.createGame(new PuzzleGoal(), ""
+		Game g = Game.createMockGame(new PuzzleGoal(), ""
 			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
 			+ "W    T                 W  !    T W\n"
 			+ "W  T  W  BWW    ! WWW  W  W B    W\n"

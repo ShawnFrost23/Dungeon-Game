@@ -19,7 +19,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      _ \n"
 			+ "    _   \n"
 			+ "  P     \n"
@@ -42,7 +42,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "  P_ \n"
 		);
 		
@@ -67,7 +67,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new PuzzleGoal(), ""
+		Game g1 = Game.createMockGame(new PuzzleGoal(), ""
 			+ " PB_ \n"
 		);
 		
@@ -78,7 +78,7 @@ public class TestFloorSwitches {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(new PuzzleGoal(), ""
+		Game g2 = Game.createMockGame(new PuzzleGoal(), ""
 			+ " PB_ \n"
 			+ "_BB  \n"
 			+ "  _  \n"
@@ -105,7 +105,7 @@ public class TestFloorSwitches {
 		
 		assertTrue(g2.getHasWon());
 
-		Game g3 = Game.createGame(new PuzzleGoal(), ""
+		Game g3 = Game.createMockGame(new PuzzleGoal(), ""
 			+ "   PB_    \n"
 			+ "        B_\n"
 		);
@@ -157,7 +157,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC4() {
-		Game g1 = Game.createGame(new PuzzleGoal(), ""
+		Game g1 = Game.createMockGame(new PuzzleGoal(), ""
 			+ " _P_ \n"
 			, ""
 			+ " B B \n"
@@ -165,7 +165,7 @@ public class TestFloorSwitches {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(new PuzzleGoal(), ""
+		Game g2 = Game.createMockGame(new PuzzleGoal(), ""
 			+ "_BP_ \n"
 			, ""
 			+ "   B \n"
@@ -184,7 +184,7 @@ public class TestFloorSwitches {
 	 */
 	@Test
 	public void AC5() {
-		Game g = Game.createGame(new PuzzleGoal(), ""
+		Game g = Game.createMockGame(new PuzzleGoal(), ""
 			+ "PB__\n"
 		);
 		

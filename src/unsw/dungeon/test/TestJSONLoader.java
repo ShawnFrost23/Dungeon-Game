@@ -64,7 +64,7 @@ public class TestJSONLoader {
 	 */
 	@Test
 	public void TestGoalLoading() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " PT  \n"
 		);
 		JSONObject json = Board.boardStringsToJSON(g1.getBoardString());
@@ -82,7 +82,7 @@ public class TestJSONLoader {
 		winningDirections.add(Direction.LEFT);
 		winningDirections.add(Direction.RIGHT);
 		for (Direction d : winningDirections) {
-			Game g2 = Game.createGame(new ImpossibleGoal(), ""
+			Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 				+ "_BPT  \n"
 			);
 			json = Board.boardStringsToJSON(g2.getBoardString());

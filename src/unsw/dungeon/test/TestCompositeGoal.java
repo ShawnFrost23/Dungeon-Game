@@ -104,7 +104,7 @@ public class TestCompositeGoal {
 	 */
 	@Test
 	public void AC1TestSimple() {
-		Game g1 = Game.createGame(createTreasureAndPuzzleGoal(), ""
+		Game g1 = Game.createMockGame(createTreasureAndPuzzleGoal(), ""
 			+ "_BPT\n"
 		);
 		
@@ -120,7 +120,7 @@ public class TestCompositeGoal {
 		assertTrue(g1.getHasWon());
 		
 		
-		Game g2 = Game.createGame(createTreasureAndPuzzleGoal(), ""
+		Game g2 = Game.createMockGame(createTreasureAndPuzzleGoal(), ""
 			+ "_BPT\n"
 		);
 		
@@ -136,7 +136,7 @@ public class TestCompositeGoal {
 		assertTrue(g2.getHasWon());
 		
 		
-		Game g3 = Game.createGame(createTreasureOrPuzzleGoal(), ""
+		Game g3 = Game.createMockGame(createTreasureOrPuzzleGoal(), ""
 			+ "_BPT\n"
 		);
 		
@@ -146,7 +146,7 @@ public class TestCompositeGoal {
 		
 		assertTrue(g3.getHasWon());
 		
-		Game g4 = Game.createGame(createTreasureOrPuzzleGoal(), ""
+		Game g4 = Game.createMockGame(createTreasureOrPuzzleGoal(), ""
 			+ "_BPT\n"
 		);
 		
@@ -168,7 +168,7 @@ public class TestCompositeGoal {
     @ParameterizedTest
     @MethodSource(value = "createEverythingGoals")
 	public void AC1MultiLevelled(Goal everythingGoal) {
-		Game g1 = Game.createGame(everythingGoal, ""
+		Game g1 = Game.createMockGame(everythingGoal, ""
 			+ "PS!    \n"
 			+ "TE B_  \n"
 		);
@@ -196,7 +196,7 @@ public class TestCompositeGoal {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(everythingGoal, ""
+		Game g2 = Game.createMockGame(everythingGoal, ""
 			+ "PS!    \n"
 			+ "TE B_ E\n"
 		);
@@ -251,7 +251,7 @@ public class TestCompositeGoal {
 		
 		assertTrue(g2.getHasWon());
 	
-		Game g3 = Game.createGame(everythingGoal, ""
+		Game g3 = Game.createMockGame(everythingGoal, ""
 			+ "S! \n"
 			+ "BE \n"
 			+ "_T \n"
@@ -280,7 +280,7 @@ public class TestCompositeGoal {
 	 */
 	@Test
 	public void AC2() {
-		Game g1 = Game.createGame(createMazeAndEnemiesGoal(), ""
+		Game g1 = Game.createMockGame(createMazeAndEnemiesGoal(), ""
 			+ "PSE!\n"
 		);
 		
@@ -293,7 +293,7 @@ public class TestCompositeGoal {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(createMazeAndEnemiesGoal(), ""
+		Game g2 = Game.createMockGame(createMazeAndEnemiesGoal(), ""
 			+ "PSEEE!\n"
 		);
 		

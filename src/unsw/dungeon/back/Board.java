@@ -146,7 +146,7 @@ public class Board {
 				e = new Boulder(cell);
 				break;
 			case "enemy":
-				e = new Enemy(cell, new NaiveMovementStrategy());
+				e = new Enemy(cell, new IntelligentMovementStrategy());
 				game.trackEnemy((Enemy) e);
 				break;
 			case "switch":

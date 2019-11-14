@@ -20,7 +20,7 @@ public class TestTreasure {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      T \n"
 			+ "        \n"
 			+ "  P     \n"
@@ -44,7 +44,7 @@ public class TestTreasure {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      _ \n"
 			+ "  PT    \n"
 			+ "        \n"
@@ -70,7 +70,7 @@ public class TestTreasure {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new TreasureGoal(), ""
+		Game g1 = Game.createMockGame(new TreasureGoal(), ""
 			+ " PT  \n"
 		);
 		
@@ -80,7 +80,7 @@ public class TestTreasure {
 		
 		assertTrue(g1.getHasWon());
 		
-		Game g2 = Game.createGame(new TreasureGoal(), ""
+		Game g2 = Game.createMockGame(new TreasureGoal(), ""
 				+ " PT  \n"
 				+ " TT  \n"
 				+ "     \n"

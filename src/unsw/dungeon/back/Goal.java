@@ -7,7 +7,7 @@ import unsw.dungeon.back.event.Observer;
 
 /**
  * Objects that extend this interface can be provided to
- * {@link Game#createGame(Goal, String...)}. If the Goal at root level becomes
+ * {@link Game#createMockGame(Goal, String...)}. If the Goal at root level becomes
  * satisfied, the game is won.
  */
 public interface Goal {

@@ -18,7 +18,7 @@ public class TestSwordplay {
 	 */ 
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P S\n"
 			+ "   S\n"
 			+ " S  \n"
@@ -42,7 +42,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " PS \n"
 		);
 		
@@ -62,7 +62,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P S S \n"
 		);
 		
@@ -77,7 +77,7 @@ public class TestSwordplay {
 			, g1.getBoardString()
 		);
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " S \n"
 			, ""
 			+ " P \n"
@@ -99,7 +99,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC4() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "   \n"
 			+ " S \n"
 			+ "   \n"
@@ -120,7 +120,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC5() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "    \n"
 			+ "!!S \n"
 			+ " !  \n"
@@ -174,7 +174,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC6() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " ! \n"
 			+ "SS!\n"
 			+ " W \n"
@@ -224,7 +224,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC7() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " !!!SS!\n"
 			+ "    !! \n"
 			, ""
@@ -290,7 +290,7 @@ public class TestSwordplay {
 	 */
 	@Test
 	public void AC8() {
-		Game g = Game.createGame(new EnemiesGoal(), ""
+		Game g = Game.createMockGame(new EnemiesGoal(), ""
 			+ "   !P !\n"
 			, ""
 			+ "     S \n"

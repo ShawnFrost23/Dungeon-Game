@@ -22,7 +22,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P  \n"
 			+ "  !!\n"
 			+ " !  \n"
@@ -43,7 +43,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "!   P   ! \n"
 		);
 		
@@ -73,7 +73,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P        ! \n"
 		);
 		
@@ -95,7 +95,7 @@ public class TestEnemies {
 			+ " P     !    \n"
 		);
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " !W  P  B! \n"
 			+ "           \n"
 			+ "     !     \n"
@@ -109,7 +109,7 @@ public class TestEnemies {
 			+ "           \n"
 		);
 
-		Game g3 = Game.createGame(new ImpossibleGoal(), ""
+		Game g3 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      \n"
 			+ " P    \n"
 			+ "  W  !\n"
@@ -239,7 +239,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC4() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P W!! \n"
 		);
 		
@@ -249,7 +249,7 @@ public class TestEnemies {
 			+ "P W!! \n"
 		);
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "  W!  \n"
 			+ " P  ! \n"
 		);
@@ -280,7 +280,7 @@ public class TestEnemies {
 	 */
 	@Test
 	public void AC5() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P ! \n"
 		);
 		
@@ -296,7 +296,7 @@ public class TestEnemies {
 		
 		assertTrue(g1.getHasLost());
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " P ! \n"
 		);
 		

@@ -20,7 +20,7 @@ public class TestMazeExits {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      E \n"
 			+ "        \n"
 			+ "  P     \n"
@@ -46,7 +46,7 @@ public class TestMazeExits {
 	 */
 	@Test
 	public void AC2() {
- 		Game g1 = Game.createGame(new MazeGoal(), ""
+ 		Game g1 = Game.createMockGame(new MazeGoal(), ""
 			+ "PE\n"
 		);
 		
@@ -56,7 +56,7 @@ public class TestMazeExits {
 		
 		assertTrue(g1.getHasWon());
 
-		Game g2 = Game.createGame(new MazeGoal(), ""
+		Game g2 = Game.createMockGame(new MazeGoal(), ""
 			+ "EPE\n"
 		);
 		
@@ -66,7 +66,7 @@ public class TestMazeExits {
 		
 		assertTrue(g2.getHasWon());
 		
-		Game g3 = Game.createGame(new MazeGoal(), ""
+		Game g3 = Game.createMockGame(new MazeGoal(), ""
 			+ "EPE\n"
 		);
 		
@@ -76,7 +76,7 @@ public class TestMazeExits {
 		
 		assertTrue(g3.getHasWon());
 		
- 		Game g4 = Game.createGame(new ImpossibleGoal(), ""
+ 		Game g4 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "PE\n"
 		);
  		
@@ -92,7 +92,7 @@ public class TestMazeExits {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " PBE   E! \n"
 		);
 		

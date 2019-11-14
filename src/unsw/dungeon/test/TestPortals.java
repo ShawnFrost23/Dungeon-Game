@@ -19,7 +19,7 @@ public class TestPortals {
 	 */ 
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "   O \n"
 			+ " OP  \n"
 			+ "     \n"
@@ -45,7 +45,7 @@ public class TestPortals {
 	 */ 
 	@Test
 	public void AC2() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "PO O \n"
 		);
 
@@ -56,7 +56,7 @@ public class TestPortals {
 			, g1.getBoardString()
 		);
 
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "PO OW\n"
 		);
 		
@@ -67,7 +67,7 @@ public class TestPortals {
 			, g2.getBoardString()
 		);
 		
-		Game g3 = Game.createGame(new ImpossibleGoal(), ""
+		Game g3 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "PBO O  \n"
 		);
 		
@@ -85,7 +85,7 @@ public class TestPortals {
 			, g3.getBoardString()
 		);
 		
-		Game g4 = Game.createGame(new ImpossibleGoal(), ""
+		Game g4 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "PO O!\n"
 		);
 		
@@ -95,7 +95,7 @@ public class TestPortals {
 		
 		assertTrue(g4.getHasLost());
 		
-		Game g5 = Game.createGame(new ImpossibleGoal(), ""
+		Game g5 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "SO O!\n"
 			, ""
 			+ "P    \n"
@@ -108,7 +108,7 @@ public class TestPortals {
 			, g5.getBoardString()
 		);
 
-		Game g6 = Game.createGame(new ImpossibleGoal(), ""
+		Game g6 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "~PO O# \n"
 		);
 		
@@ -135,7 +135,7 @@ public class TestPortals {
 	 */
 	@Test
 	public void AC3() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P OWO !\n"
 		);
 		
@@ -153,7 +153,7 @@ public class TestPortals {
 			, g1.getBoardString()
 		);
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P OW!  \n"
 			+ "   W  O\n"
 		);
@@ -174,7 +174,7 @@ public class TestPortals {
 	 */
 	@Test
 	public void AC4() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P            \n"
 			+ " O         O \n"
 			+ "             \n"

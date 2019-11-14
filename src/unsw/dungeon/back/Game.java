@@ -34,6 +34,19 @@ public class Game implements Observer {
 		this.enemies = new ArrayList<Enemy>();
 		this.goal = goal;
 	}
+	
+	/**
+	 * Create a mock game with predictable enemy movement for convenience of
+	 * testing.
+	 * @see {@link #createMockGame(Goal, String...)}
+	 */
+	public static Game createMockGame(Goal goal, String ...boardStrings) {
+		Game game = Game.createGame(goal, boardStrings);
+		for (Enemy e : game.enemies) {
+			e.setMovementStrategy(new NaiveMovementStrategy());
+		}
+		return game;
+	}
 
 	/**
 	 * Create a new Game object from a Board's string representation.
@@ -113,7 +126,6 @@ public class Game implements Observer {
 		return game;
 	}
 	
-		
 	/**
 	 * Get a displayable string representation for this game's board. e.g.
 	 * <br />
@@ -133,7 +145,7 @@ public class Game implements Observer {
 	 * <br />
 	 * Note: information about portal and key pairings are lost when this
 	 * function is called; the return value of this function may not be a valid
-	 * argument to {@link #createGame(Goal, String...)};
+	 * argument to {@link #createMockGame(Goal, String...)};
 	 * 
 	 * @return a displayable string representation for this game's board
 	 */

@@ -18,7 +18,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testTinyDungeons() {
-		Game g1 = Game.createGame(new ImpossibleGoal(), ""
+		Game g1 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "  P  \n"
 		);
 		
@@ -27,7 +27,7 @@ public class TestBasics {
 			, g1.getBoardString()
 		);
 		
-		Game g2 = Game.createGame(new ImpossibleGoal(), ""
+		Game g2 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ " \n"
 			+ " \n"
 			+ "P\n"
@@ -42,7 +42,7 @@ public class TestBasics {
 			, g2.getBoardString()
 		);
 		
-		Game g3 = Game.createGame(new ImpossibleGoal(), ""
+		Game g3 = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "P\n"
 		);
 		
@@ -57,7 +57,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testSimplePlayerNavigation() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "     \n"
 			+ "  P  \n"
 			+ "  W  \n"
@@ -130,7 +130,7 @@ public class TestBasics {
 	 */
 	@Test
 	public void testOverlayBoardConstruction() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "  W \n"
 			+ "P_  \n"
 			+ "    \n"

@@ -19,7 +19,7 @@ public class TestInvincibilityPotions {
 	 */
 	@Test
 	public void AC1() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "      * \n"
 			+ "        \n"
 			+ "  P     \n"
@@ -43,7 +43,7 @@ public class TestInvincibilityPotions {
 	 */
 	@Test
 	public void AC2() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "   P*   \n"
 		);
 		g.movePlayer(Direction.RIGHT);
@@ -62,7 +62,7 @@ public class TestInvincibilityPotions {
 	 */
 	@Test
 	public void AC3() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "   P***!!!\n"
 		);
 		g.movePlayer(Direction.RIGHT);
@@ -109,7 +109,7 @@ public class TestInvincibilityPotions {
 	 */
 	@Test
 	public void AC4() {
-		Game g = Game.createGame(new ImpossibleGoal(), ""
+		Game g = Game.createMockGame(new ImpossibleGoal(), ""
 			+ "W!   P*   !  W\n"
 		);
 		
