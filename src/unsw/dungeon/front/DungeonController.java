@@ -121,10 +121,58 @@ public class DungeonController implements Observer {
 		}
 	}
 
-	private void playSwordAnimation(Cell cell) {
+	private void playSwordAnimation(Cell cell, Direction d) {
 		int x = cell.getX();
 		int y = cell.getY();
-		this.effectGroup.get(x).get(y).getChildren().add(new ImageView("hound.png"));
+		ImageView swordSwing = new ImageView();
+		if (d == Direction.UP) {
+			swordSwing.setRotate(270);
+		} else if (d == Direction.LEFT) {
+			swordSwing.setRotate(180);
+		} else if (d == Direction.DOWN) {
+			swordSwing.setRotate(90);
+		} else if (d == Direction.RIGHT) {
+			swordSwing.setRotate(0);
+		}
+		
+		KeyFrame frame1 = new KeyFrame(Duration.millis(0), 
+			(ActionEvent event) -> {
+				this.effectGroup.get(x).get(y).getChildren().add(swordSwing);
+				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_1.png")));
+			}
+		);
+		
+		KeyFrame frame2 = new KeyFrame(Duration.millis(100), 
+			(ActionEvent event) -> {
+				swordSwing.setOpacity(0.6);
+				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_2.png")));
+			}
+		);
+		
+		KeyFrame frame3 = new KeyFrame(Duration.millis(200), 
+			(ActionEvent event) -> {
+				swordSwing.setOpacity(0.3);
+				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_3.png")));
+			}
+		);
+		
+		
+		KeyFrame frame4 = new KeyFrame(Duration.millis(300), 
+			(ActionEvent event) -> {
+				this.effectGroup.get(x).get(y).getChildren().remove(swordSwing);
+			}
+		);
+		
+		Timeline swordAnimationTimeline = new Timeline();
+		swordAnimationTimeline.getKeyFrames().add(frame1);
+		swordAnimationTimeline.getKeyFrames().add(frame2);
+		swordAnimationTimeline.getKeyFrames().add(frame3);
+		swordAnimationTimeline.getKeyFrames().add(frame4);
+		swordAnimationTimeline.play();
+		// TODO -- we need a way of cancelling this animation when we switch off the screen.
+		
+		this.effectGroup.get(x).get(y).getChildren().remove(swordSwing);
+		
 	}
 	
 	private Image getImage(Texture texture) {
@@ -186,7 +234,8 @@ public class DungeonController implements Observer {
 			this.redraw(cell);
 		} else if (event instanceof CellHitWithSwordEvent) {
 			Cell cell = ((CellHitWithSwordEvent) event).getCell();
-			this.playSwordAnimation(cell);
+			Direction d = ((CellHitWithSwordEvent) event).getDirection();
+			this.playSwordAnimation(cell, d);
 		}
 	}
 }
