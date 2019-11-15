@@ -75,10 +75,15 @@ public class Player implements Moveable, Subject, Observer {
 		if (this.isInvincible()) {
 			e.kill();
 		} else {
-			this.notifyAllOf(new PlayerKilledEvent());
+			this.kill();
 		}
 	}
 	
+	private void kill() {
+		this.location.removeEntity(this);
+		this.notifyAllOf(new PlayerKilledEvent());
+	}
+
 	/**
 	 * Get whether the player is currently invincible.
 	 * @return true if the player is invincible

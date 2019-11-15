@@ -14,20 +14,22 @@ import org.json.JSONTokener;
 
 import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.GameOverEvent;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.PlayerKilledEvent;
+import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.spoof.ImpossibleGoal;
 
 /**
  * The interface through which a Game can be played.
  */
-public class Game implements Observer {
+public class Game implements Observer, Subject {
 	private Board board;
 	private Player player;
 	private List<Enemy> enemies;
 	private Goal goal;
+	private List<Observer> observers;
 
-	private boolean hasWon;
 	private boolean hasLost;
 	
 	/**
@@ -37,19 +39,18 @@ public class Game implements Observer {
 	 * move at once. 
 	 */
 	private Lock conurrentMovementLock;
-	
 	private Game(Goal goal) {
-		this.hasWon = false;
 		this.hasLost = false;
 		this.enemies = new ArrayList<Enemy>();
 		this.goal = goal;
 		this.conurrentMovementLock = new ReentrantLock();
+		this.observers = new ArrayList<Observer>();
 	}
 	
 	/**
 	 * Create a mock game with predictable enemy movement for convenience of
 	 * testing.
-	 * @see {@link #createMockGame(Goal, String...)}
+	 * @see {@link #createGame(Goal, String...)}
 	 */
 	public static Game createMockGame(Goal goal, String ...boardStrings) {
 		Game game = Game.createGame(goal, boardStrings);
@@ -283,14 +284,9 @@ public class Game implements Observer {
 		return this.hasLost;
 	}
 	
-	private void win() {
-		this.hasWon = true;
-		System.out.println("Game won.");
-	}
-	
 	private void lose() {
 		this.hasLost = true;
-		System.out.println("Game lost.");
+		this.notifyAllOf(new GameOverEvent());
 	}
 	
 	@Override
@@ -302,11 +298,11 @@ public class Game implements Observer {
 		}
 	}
 	
-	private void onPlayerKilled(PlayerKilledEvent event) {
+	public void onPlayerKilled(PlayerKilledEvent event) {
 		this.lose();
 	}
 	
-	private void onEnemyKilled(EnemyKilledEvent event) {
+	public void onEnemyKilled(EnemyKilledEvent event) {
 		Enemy who = event.getWhoDied();
 		this.enemies.remove(who);
 		who.detachListener(this);
@@ -322,5 +318,25 @@ public class Game implements Observer {
 	
 	public int getWidth() {
 		return this.board.getWidth();
+	}
+	
+	
+	
+	@Override
+	public void attachListener(Observer observer) {
+		this.observers.add(observer);
+	}
+
+	@Override
+	public void detachListener(Observer observer) {
+		this.observers.remove(observer);
+		
+	}
+
+	@Override
+	public void notifyAllOf(Event event) {
+		for (Observer observer : new ArrayList<Observer>(this.observers)) {
+			observer.notifyOf(event);
+		}
 	}
 }

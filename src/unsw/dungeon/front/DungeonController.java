@@ -25,7 +25,9 @@ import unsw.dungeon.back.Texture;
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.CellRedrawEvent;
 import unsw.dungeon.back.event.Event;
+import unsw.dungeon.back.event.GameOverEvent;
 import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.PlayerKilledEvent;
 
 public class DungeonController implements Observer {
 	@FXML
@@ -68,9 +70,20 @@ public class DungeonController implements Observer {
 	public DungeonController() {
 
 	}
+
+	// don't forget to call this when navigating away!
+	private void unloadGame() {
+		if (this.game == null) {
+			return;
+		}
+		
+		this.squares.getChildren().clear();
+		this.game.detachListener(this);
+	}
 	
 	public void loadGame(Game game) {
 		this.game = game;
+		this.game.attachListener(this);
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
 			(ActionEvent event) -> {
@@ -248,8 +261,10 @@ public class DungeonController implements Observer {
 			Cell cell = ((CellHitWithSwordEvent) event).getCell();
 			Direction d = ((CellHitWithSwordEvent) event).getDirection();
 			this.playSwordAnimation(cell, d);
+		} else if (event instanceof GameOverEvent) {
+			System.out.println("Over!");
+			this.pauseTimelines();
 		}
 	}
-
 }
 
