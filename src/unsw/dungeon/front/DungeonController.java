@@ -63,6 +63,8 @@ public class DungeonController implements Observer {
 	
 	private StartScreen startScreen;
 
+	private boolean preventPlayerMovement;
+
 	public void setStartScreen(StartScreen startScreen) {
 		this.startScreen = startScreen;
 	}
@@ -82,6 +84,7 @@ public class DungeonController implements Observer {
 	}
 	
 	public void loadGame(Game game) {
+		this.preventPlayerMovement = true;
 		this.game = game;
 		this.game.attachListener(this);
 
@@ -208,17 +211,23 @@ public class DungeonController implements Observer {
 	/**
 	 * Warning: this will not pause ongoing sword animations.
 	 */
-	public void pauseTimelines() {
+	public void pause() {
 		this.enemyTimeline.pause();
 		this.buffTimeline.pause();
+		this.preventPlayerMovement = true;
 	}
-	public void playTimelines() {
+	public void play() {
 		this.enemyTimeline.play();
-		this.buffTimeline.play();		
+		this.buffTimeline.play();
+		this.preventPlayerMovement = false;
 	}
 
 	@FXML
 	public void handleKeyPress(KeyEvent event) {
+		if (this.preventPlayerMovement) {
+			return;
+		}
+		
 		switch (event.getCode()) {
 		case UP:
 			game.swingSword(Direction.UP);
@@ -262,8 +271,13 @@ public class DungeonController implements Observer {
 			Direction d = ((CellHitWithSwordEvent) event).getDirection();
 			this.playSwordAnimation(cell, d);
 		} else if (event instanceof GameOverEvent) {
-			System.out.println("Over!");
-			this.pauseTimelines();
+			if (this.game.getHasWon()) {
+				System.out.println("win");
+				this.pause();
+			} else if (this.game.getHasLost()) {
+				System.out.println("lose");
+				this.pause();
+			}
 		}
 	}
 }

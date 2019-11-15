@@ -43,7 +43,7 @@ public class DungeonScreen {
 		this.stage.setScene(this.scene);
 		this.stage.show();
 		
-		this.controller.playTimelines();
+		this.controller.play();
 	}
 	
 	public DungeonController getController() {
