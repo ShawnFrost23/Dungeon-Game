@@ -30,7 +30,6 @@ public class DungeonScreen {
 	}
 	
 	public void loadLevel(String jsonPath) {
-		
 		Game game;
 		try {
 			game = Game.createGame(jsonPath);
@@ -43,53 +42,11 @@ public class DungeonScreen {
 		this.stage.setTitle(this.title);
 		this.stage.setScene(this.scene);
 		this.stage.show();
+		
+		this.controller.playTimelines();
 	}
 	
-	public void start() {
-
-		Game game = Game.createGame(new PuzzleGoal(), ""
-			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
-			+ "W    T                 W       T           W\n"
-			+ "W  T  W  BWW      WWW  W  W B              W\n"
-			+ "W     ~   SW   !  W_W  W WWO               W\n"
-			+ "W  P  B _   !          W  W         !      W\n"
-			+ "W  S  * !  #   _   O   W    W              W\n"
-			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
-			, ""
-			+ "                                            \n"
-			+ "                                            \n"
-			+ "                                            \n"
-			+ "                   ~    #                   \n"
-			+ "                                            \n"
-			+ "                                            \n"
-			+ "                                            \n"
-		);
-
-		
-		this.controller.loadGame(game);
-		
-		this.stage.setTitle(this.title);
-		this.stage.setScene(this.scene);
-		this.stage.show();
-	}
 	public DungeonController getController() {
 		return this.controller;
 	}
 }
-
-
-//primaryStage.setTitle("Dungeon");
-//
-
-//// Game game = Game.createGame("blah.json")
-//
-//DungeonController controller = new DungeonController(game);
-//
-//FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
-//loader.setController(controller);
-//Parent root = loader.load();
-//Scene scene = new Scene(root);
-//root.requestFocus();
-//primaryStage.setResizable(false);
-//primaryStage.setScene(scene);
-//primaryStage.show();

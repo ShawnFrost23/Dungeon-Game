@@ -58,18 +58,12 @@ public class DungeonController implements Observer {
 	
 	private Timeline enemyTimeline;
 	private Timeline buffTimeline;
-
-	
-	// Give this a StartScreen, so it can call 
-	// startScreen.start() to quit to main menu.
 	
 	private StartScreen startScreen;
 
 	public void setStartScreen(StartScreen startScreen) {
 		this.startScreen = startScreen;
 	}
-	
-	
 	
 	public DungeonController() {
 
@@ -97,11 +91,7 @@ public class DungeonController implements Observer {
 		this.buffTimeline.setCycleCount(Timeline.INDEFINITE);
 
 		this.imageCache = new HashMap<String, Image>();
-		
-		this.startEnemyTimeline();
-		this.startBuffTimeline();
-		
-		
+
 		this.entityGroup = new ArrayList<ArrayList<Group>>();
 		this.effectGroup = new ArrayList<ArrayList<Group>>();
 		for (int x = 0; x < this.game.getWidth(); ++x) {
@@ -188,7 +178,6 @@ public class DungeonController implements Observer {
 		swordAnimationTimeline.getKeyFrames().add(frame3);
 		swordAnimationTimeline.getKeyFrames().add(frame4);
 		swordAnimationTimeline.play();
-		// TODO -- we need a way of cancelling this animation when we switch off the screen.
 		
 		this.effectGroup.get(x).get(y).getChildren().remove(swordSwing);
 		
@@ -203,12 +192,16 @@ public class DungeonController implements Observer {
 		
 	}
 	
-	private void startEnemyTimeline() {
-		this.enemyTimeline.play();
+	/**
+	 * Warning: this will not pause ongoing sword animations.
+	 */
+	public void pauseTimelines() {
+		this.enemyTimeline.pause();
+		this.buffTimeline.pause();
 	}
-	
-	private void startBuffTimeline() {
-		this.buffTimeline.play();
+	public void playTimelines() {
+		this.enemyTimeline.play();
+		this.buffTimeline.play();		
 	}
 
 	@FXML

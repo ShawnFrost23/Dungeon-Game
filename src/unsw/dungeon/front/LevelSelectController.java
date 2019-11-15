@@ -32,6 +32,8 @@ public class LevelSelectController {
 	private ToggleGroup levelsGroup;
 
 	public void displayAvailableLevels() {
+		this.playBtn.setDisable(true);
+		
 		String path = "dungeons";
 		Path dir = Paths.get(path);
 		int numLevels = 0;
@@ -49,9 +51,7 @@ public class LevelSelectController {
 		
 	    for (Path file : stream) {
 	    	numLevels += 1;
-	        System.out.println(file);
-	        
-	        
+        
         	String displayString = file.getFileName().toString();
         	displayString = displayString.replaceFirst(".json$", "");
 	        
@@ -64,14 +64,10 @@ public class LevelSelectController {
 	        	this.selectedLevelPath = file.toString();
 	        });
 	    }
-		
-		
 
 		if (numLevels == 0) {
 			levelList.getChildren().add(new Label("Could not find levels."));
 		}
-		
-		// If there are no levels, display a message ... 
 	}
 	
 	public void setStartScreen(StartScreen startScreen) {
