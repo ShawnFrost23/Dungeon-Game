@@ -1,4 +1,4 @@
-package unsw.dungeon.front;
+package unsw.dungeon;
 
 import java.io.IOException;
 
@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import unsw.dungeon.back.Game;
 import unsw.dungeon.back.PuzzleGoal;
+import unsw.dungeon.front.DungeonScreen;
+import unsw.dungeon.front.StartScreen;
 
 public class RunGUI extends Application {
 
