@@ -9,6 +9,7 @@ import java.nio.file.Paths;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.VBox;
@@ -31,27 +32,40 @@ public class LevelSelectController {
 	private ToggleGroup levelsGroup;
 
 	public void displayAvailableLevels() {
-		Path dir = Paths.get("dungeons");
-		try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir, "*.json")) {
-			this.levelsGroup = new ToggleGroup();
-			
-		    for (Path file : stream) {
-		        System.out.println(file);
-		        
-		        RadioButton rb = new RadioButton(file.toString());
-		        rb.setToggleGroup(this.levelsGroup);
-		        levelList.getChildren().add(rb);
-		        
-		        rb.setOnAction((ActionEvent e) -> {
-		        	this.playBtn.setDisable(false);
-		        	this.selectedLevelPath = file.toString();
-		        });
-		    }
+		String path = "dungeons";
+		Path dir = Paths.get(path);
+		int numLevels = 0;
+		DirectoryStream<Path> stream;
+		try {
+			stream = Files.newDirectoryStream(dir, "*.json");
 		} catch (IOException e) {
 			e.printStackTrace();
+			throw new Error("Could not load dungeon list");
 		}
+
+		// levelList.getChildren().clear();
+		
+		this.levelsGroup = new ToggleGroup();
+		
+	    for (Path file : stream) {
+	    	numLevels += 1;
+	        System.out.println(file);
+	        
+	        RadioButton rb = new RadioButton(file.toString());
+	        rb.setToggleGroup(this.levelsGroup);
+	        levelList.getChildren().add(rb);
+	        
+	        rb.setOnAction((ActionEvent e) -> {
+	        	this.playBtn.setDisable(false);
+	        	this.selectedLevelPath = file.toString();
+	        });
+	    }
+		
 		
 
+		if (numLevels == 0) {
+			levelList.getChildren().add(new Label("Could not find levels."));
+		}
 		
 		// If there are no levels, display a message ... 
 	}
@@ -67,9 +81,7 @@ public class LevelSelectController {
 	
 	@FXML
 	public void handleMenuBtn(ActionEvent event) {
-		// System.out.println(levelSelectRadio.getSelectedToggle().selectedProperty());
-		
-		// this.startScreen.start();
+		this.startScreen.start();
 	}
 	
 	@FXML

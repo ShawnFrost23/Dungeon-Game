@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
@@ -17,8 +18,10 @@
 
 <StackPane id="levelSelect" xmlns:fx="http://javafx.com/fxml/1">
 	<VBox>
-		<VBox fx:id="levelList">
-		</VBox>
+		<ScrollPane maxHeight="100">
+			<VBox fx:id="levelList">
+			</VBox>
+		</ScrollPane>
 		<HBox>
 			<Button fx:id="menuBtn" onAction="#handleMenuBtn" text="Back to menu" />
 			<Button fx:id="playBtn" onAction="#handlePlayBtn" disable="true" text="Play this level" />

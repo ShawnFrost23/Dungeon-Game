@@ -22,7 +22,6 @@ public class RunGUI extends Application {
         DungeonScreen dungeonScreen = new DungeonScreen(primaryStage);
 		
         startScreen.getController().setLevelSelectScreen(levelSelectScreen);
-        startScreen.getController().setDungeonScreen(dungeonScreen);
         dungeonScreen.getController().setStartScreen(startScreen);
         
         
