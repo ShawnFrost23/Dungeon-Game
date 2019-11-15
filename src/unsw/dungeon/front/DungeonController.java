@@ -57,7 +57,7 @@ public class DungeonController implements Observer {
 	
 	private Timeline enemyTimeline;
 	private Timeline buffTimeline;
-
+	
 	public DungeonController(Game game) {
 		this.game = game;
 
