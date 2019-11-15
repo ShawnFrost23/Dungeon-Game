@@ -41,7 +41,10 @@ public class DungeonScreen {
 		
 		this.stage.setTitle(this.title);
 		this.stage.setScene(this.scene);
+		this.stage.centerOnScreen();
 		this.stage.show();
+		
+		
 		
 		this.controller.play();
 	}
