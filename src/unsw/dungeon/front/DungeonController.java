@@ -41,6 +41,7 @@ public class DungeonController implements Observer {
 	private ImageView statusKeyIcon;
 	
 	
+	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
 	 *  node of the GridPane.
@@ -58,6 +59,21 @@ public class DungeonController implements Observer {
 	private Timeline enemyTimeline;
 	private Timeline buffTimeline;
 
+	
+	// Give this a StartScreen, so it can call 
+	// startScreen.start() to quit to main menu.
+	
+	
+	private StartScreen startScreen;
+
+    public void setStartScreen(StartScreen startScreen) {
+        this.startScreen = startScreen;
+    }
+	
+	
+    
+    
+	
 	public DungeonController(Game game) {
 		this.game = game;
 
@@ -238,5 +254,6 @@ public class DungeonController implements Observer {
 			this.playSwordAnimation(cell, d);
 		}
 	}
+
 }
 
