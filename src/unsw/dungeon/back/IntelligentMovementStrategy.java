@@ -1,5 +1,9 @@
 package unsw.dungeon.back;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.PriorityQueue;
 
 public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
@@ -16,8 +20,23 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
 			(WorldState a, WorldState b) -> Integer.compare(h.calculate(a) + a.getDepth(), h.calculate(b) + b.getDepth())
 		);
-		
 
+		
+		List<Direction> directionPreferenceList = Arrays.asList(allDirections);
+		directionPreferenceList.sort(
+			(Direction a, Direction b) -> {
+				WorldState wa = world.transition(a, false);
+				WorldState wb = world.transition(b, false);
+				if (wa == null) {
+					return -1;
+				} else if (wb == null) {
+					return 1;
+				}
+				Double L2a = wa.L2();
+				Double L2b = wb.L2();
+				return L2a.compareTo(L2b);
+			}
+		);
 		pq.add(world);
 		
 		int maxNodes = 100;
@@ -48,7 +67,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 				}
 			}
 			
-			for (Direction d : allDirections) {
+			for (Direction d : directionPreferenceList) {
 				WorldState next = curr.transition(d, false);
 				if (next != null) {
 					if (!visited[next.getMyX()][next.getMyY()]) {
