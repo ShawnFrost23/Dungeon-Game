@@ -65,12 +65,12 @@ public class DungeonController implements Observer {
 	
 	private StartScreen startScreen;
 
-    public void setStartScreen(StartScreen startScreen) {
-        this.startScreen = startScreen;
-    }
+	public void setStartScreen(StartScreen startScreen) {
+		this.startScreen = startScreen;
+	}
 	
 	
-    
+	
 	public DungeonController() {
 
 	}

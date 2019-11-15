@@ -7,33 +7,35 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class StartScreen {
+public class LevelSelectScreen {
 
 	private Stage stage;
 	private String title;
-	private StartController controller;
+	private LevelSelectController controller;
 	private Scene scene;
+	
+	public LevelSelectScreen(Stage primaryStage) throws IOException {
+		this.stage = primaryStage;
+		this.title = "Level Select Screen";
 
-	public StartScreen(Stage stage) throws IOException {
-		this.stage = stage;
-		this.title = "Start Screen";
-
-		this.controller = new StartController();
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("StartView.fxml"));
+		this.controller = new LevelSelectController();
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("LevelSelectView.fxml"));
 		loader.setController(controller);
-
+		
 		Parent root = loader.load();
 		this.scene = new Scene(root);
 		root.requestFocus();
 	}
 
 	public void start() {
+		this.controller.displayAvailableLevels();
+		
 		stage.setTitle(title);
 		stage.setScene(scene);
 		stage.show();
 	}
 
-	public StartController getController() {
+	public LevelSelectController getController() {
 		return this.controller;
 	}
 }
