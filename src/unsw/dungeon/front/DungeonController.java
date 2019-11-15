@@ -63,7 +63,6 @@ public class DungeonController implements Observer {
 	// Give this a StartScreen, so it can call 
 	// startScreen.start() to quit to main menu.
 	
-	
 	private StartScreen startScreen;
 
     public void setStartScreen(StartScreen startScreen) {
@@ -72,9 +71,11 @@ public class DungeonController implements Observer {
 	
 	
     
-    
+	public DungeonController() {
+
+	}
 	
-	public DungeonController(Game game) {
+	public void loadGame(Game game) {
 		this.game = game;
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
@@ -96,10 +97,7 @@ public class DungeonController implements Observer {
 		this.buffTimeline.setCycleCount(Timeline.INDEFINITE);
 
 		this.imageCache = new HashMap<String, Image>();
-	}
-
-	@FXML
-	public void initialize() {
+		
 		this.startEnemyTimeline();
 		this.startBuffTimeline();
 		
@@ -124,6 +122,11 @@ public class DungeonController implements Observer {
 			cell.attachListener(this);
 			this.redraw(cell);
 		}
+		
+	}
+
+	@FXML
+	public void initialize() {
 	}
 	
 	private void redraw(Cell cell) {

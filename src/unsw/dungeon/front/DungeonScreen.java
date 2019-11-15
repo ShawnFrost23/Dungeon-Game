@@ -1,5 +1,6 @@
 package unsw.dungeon.front;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
@@ -20,25 +21,7 @@ public class DungeonScreen {
     	this.stage = stage;
     	this.title = "Dungeon Screen";
 
-    	Game game = Game.createGame(new PuzzleGoal(), ""
-    			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
-    			+ "W    T                 W       T           W\n"
-    			+ "W  T  W  BWW      WWW  W  W B              W\n"
-    			+ "W     ~   SW   !  W_W  W WWO               W\n"
-    			+ "W  P  B _   !          W  W         !      W\n"
-    			+ "W  S  * !  #   _   O   W    W              W\n"
-    			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
-    			, ""
-    			+ "                                            \n"
-    			+ "                                            \n"
-    			+ "                                            \n"
-    			+ "                   ~    #                   \n"
-    			+ "                                            \n"
-    			+ "                                            \n"
-    			+ "                                            \n"
-    		);
-    	
-    	controller = new DungeonController(game);
+    	controller = new DungeonController();
     	FXMLLoader loader = new FXMLLoader(getClass().getResource("DungeonView.fxml"));
     	loader.setController(controller);
     	Parent root = loader.load();
@@ -47,9 +30,28 @@ public class DungeonScreen {
     }
     
     public void start() {
-    	// TODO: move logic from the constructor into this -- start
-    	// should take in a game and set up a controller appropriately,
-    	// not have it fixed at construction time.
+
+		Game game = Game.createGame(new PuzzleGoal(), ""
+			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
+			+ "W    T                 W       T           W\n"
+			+ "W  T  W  BWW      WWW  W  W B              W\n"
+			+ "W     ~   SW   !  W_W  W WWO               W\n"
+			+ "W  P  B _   !          W  W         !      W\n"
+			+ "W  S  * !  #   _   O   W    W              W\n"
+			+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW\n"
+			, ""
+			+ "                                            \n"
+			+ "                                            \n"
+			+ "                                            \n"
+			+ "                   ~    #                   \n"
+			+ "                                            \n"
+			+ "                                            \n"
+			+ "                                            \n"
+		);
+
+    	
+    	this.controller.loadGame(game);
+    	
     	this.stage.setTitle(this.title);
     	this.stage.setScene(this.scene);
     	this.stage.show();
