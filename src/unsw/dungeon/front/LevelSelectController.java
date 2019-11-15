@@ -40,10 +40,10 @@ public class LevelSelectController {
 			stream = Files.newDirectoryStream(dir, "*.json");
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new Error("Could not load dungeon list");
+			throw new Error("Could not load dungeon list.");
 		}
 
-		// levelList.getChildren().clear();
+		levelList.getChildren().clear();
 		
 		this.levelsGroup = new ToggleGroup();
 		
@@ -51,7 +51,11 @@ public class LevelSelectController {
 	    	numLevels += 1;
 	        System.out.println(file);
 	        
-	        RadioButton rb = new RadioButton(file.toString());
+	        
+        	String displayString = file.getFileName().toString();
+        	displayString = displayString.replaceFirst(".json$", "");
+	        
+	        RadioButton rb = new RadioButton(displayString);
 	        rb.setToggleGroup(this.levelsGroup);
 	        levelList.getChildren().add(rb);
 	        
