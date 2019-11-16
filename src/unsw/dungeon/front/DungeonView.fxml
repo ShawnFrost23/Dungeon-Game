@@ -57,6 +57,15 @@
 					</HBox>
 				</HBox>
 			</StackPane>
+			<StackPane fx:id="loseMenu" visible="false">
+				<Label id="overlay-text" text="I'm sorry! You lost :(" textFill="#FFF" style="-fx-font-size: 30; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
+				<HBox alignment="CENTER">
+					<HBox alignment="CENTER">
+						<Button fx:id="restartBtn" onAction="#handleRestartBtnW" text="Restart"/>
+						<Button fx:id="backToMenuBtn" onAction="#handleBackToMenuBtnW" text="Back to menu"/>
+					</HBox>
+				</HBox>
+			</StackPane>
 		</StackPane>
 	</VBox>
 </Pane>

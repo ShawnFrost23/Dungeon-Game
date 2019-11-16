@@ -54,6 +54,9 @@ public class DungeonController implements Observer {
 	private StackPane winMenu;
 	
 	@FXML
+	private StackPane loseMenu;
+	
+	@FXML
 	private Button resumeBtn;
 	
 	@FXML
@@ -123,6 +126,7 @@ public class DungeonController implements Observer {
 		this.isPaused = false;
 		this.winMenu.setVisible(false);
 		this.pauseMenu.setVisible(false);
+		this.loseMenu.setVisible(false);
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
 			(ActionEvent event) -> {
@@ -351,6 +355,10 @@ public class DungeonController implements Observer {
 		this.winMenu.setVisible(true);
 	}
 	
+	private void toggleLoseMenu() {
+		this.loseMenu.setVisible(true);
+	}
+	
 	@FXML
 	public void handleResumeBtn(ActionEvent event) {
 		this.togglePauseMenu();
@@ -392,6 +400,7 @@ public class DungeonController implements Observer {
 		this.togglePauseMenu();
 		this.pause();
 		this.winMenu.setVisible(false);
+		this.loseMenu.setVisible(false);
 		this.unloadGame();
 		this.startScreen.start();
 	}
@@ -412,6 +421,7 @@ public class DungeonController implements Observer {
 				this.pause();
 			} else if (this.game.getHasLost()) {
 				System.out.println("lose");
+				this.toggleLoseMenu();
 				this.pause();
 			}
 		} else if (event instanceof CellKeyDroppedEvent) {
