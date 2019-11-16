@@ -10,16 +10,20 @@ import javafx.beans.property.SimpleIntegerProperty;
  */
 public class Buffs {
 	private IntegerProperty invincibilityDuration = new SimpleIntegerProperty();
-	
-	public IntegerProperty getInvincibilityDuration() {
-		return invincibilityDuration;
-	}
 
 	/**
 	 * Construct a new Buffs object.
 	 */
 	public Buffs() {
 		this.invincibilityDuration.set(0);
+	}
+	
+	/**
+	 * Get the Sword durability
+	 * @return IntegerProperty of the Sword durability 
+	 */
+	public IntegerProperty getInvincibilityDuration() {
+		return invincibilityDuration;
 	}
 	
 	/**

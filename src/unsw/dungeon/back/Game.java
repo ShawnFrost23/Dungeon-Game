@@ -268,10 +268,18 @@ public class Game implements Observer {
 		this.player.tickBuffs();
 	}
 	
+	/**
+	 * Get the Potion duration
+	 * @return IntegerProperty of the Potion duration 
+	 */
 	public IntegerProperty getPotionDurProperty() {
 		return player.getBuffValue();
 	}
 	
+	/**
+	 * Get the Sword durability
+	 * @return IntegerProperty of the Sword durability 
+	 */
 	public IntegerProperty getSwordDurProperty() {
 		return player.getSwordDurabilityValue();
 	}

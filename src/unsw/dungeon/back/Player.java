@@ -183,10 +183,18 @@ public class Player implements Moveable, Subject, Observer {
 		this.buffs.tick();
 	}
 	
+	/**
+	 * Get the Sword durability
+	 * @return IntegerProperty of the Sword durability 
+	 */
 	public IntegerProperty getBuffValue() {
 		return buffs.getInvincibilityDuration();
 	}
 	
+	/**
+	 * Get whether the this Game's goal has been satisfied.
+	 * @return true if the goal has been satisfied
+	 */
 	public IntegerProperty getSwordDurabilityValue() {
 		return swordDurability;
 	}
