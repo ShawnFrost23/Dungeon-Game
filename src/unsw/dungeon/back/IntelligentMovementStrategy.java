@@ -1,6 +1,7 @@
 package unsw.dungeon.back;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -29,12 +30,12 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 	 * Get a list of the directions {left, right, down, up} sorted increasingly
 	 * in the L2 distance between the player and enemy they would result in.
 	 * @param world WorldState object to check distance within
-	 * @return sorted list of directions in order their exploration should
-	 * occur in.
+	 * @return sorted list of directions in order of L2 distance they would
+	 * result in.
 	 */
-	private List<Direction> getDirectionPreferenceList(WorldState world) {
-		List<Direction> directionPreferenceList = Arrays.asList(allDirections);
-		directionPreferenceList.sort(
+	private List<Direction> DirectionsL2Order(WorldState world) {
+		List<Direction> orderedDirections = Arrays.asList(allDirections);
+		orderedDirections.sort(
 			(Direction a, Direction b) -> {
 				WorldState wa = world.transition(a, this.canUsePortals);
 				WorldState wb = world.transition(b, this.canUsePortals);
@@ -48,7 +49,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 				return L2a.compareTo(L2b);
 			}
 		);
-		return directionPreferenceList;
+		return orderedDirections;
 	}
 	
 	/**
@@ -68,7 +69,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 	 * @return best found move (<code>can be null</code>)
 	 */
 	private Direction chooseSeekMove(WorldState world, Heuristic h) {
-		List<Direction> directionPreferenceList = this.getDirectionPreferenceList(world);
+		List<Direction> directionPreferenceList = this.DirectionsL2Order(world);
 		
 		boolean[][] visited = new boolean[world.getWidth()][world.getHeight()];
 		visited[world.getMyX()][world.getMyY()] = true;
@@ -115,19 +116,23 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 	}
 	
 	/**
-	 * Choose a move that will immediately increase the L2 distance between us
-	 * and the player.
+	 * Choose a move that will immediately increase the L1 distance between us
+	 * and the player, breaking ties preferencing those which maximise L2
+	 * distance.
 	 * @param world WorldState to choose with
 	 * @return best found move (<code>can be null</code>)
 	 */
 	private Direction chooseAvoidMove(WorldState world) {
-		Direction bestDirection = null;
-		double bestL2 = world.L2();
+		List<Direction> directionPreferenceList = this.DirectionsL2Order(world);
+		Collections.reverse(directionPreferenceList);
 		
-		for (Direction d : allDirections) {
+		Direction bestDirection = null;
+		int bestL1 = world.L1();
+
+		for (Direction d : directionPreferenceList) {
 			WorldState next = world.transition(d, this.canUsePortals); 
-			if (next != null && next.L2() > bestL2) {
-				bestL2 = world.L2();
+			if (next != null && next.L1() > bestL1) {
+				bestL1 = world.L1();
 				bestDirection = d;
 			}
 			
