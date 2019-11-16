@@ -1,5 +1,6 @@
 package unsw.dungeon.front;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -47,6 +49,15 @@ public class DungeonController implements Observer {
 	@FXML
 	private StackPane pauseMenu;
 	
+	@FXML
+	private Button resumeBtn;
+	
+	@FXML
+	private Button restartBtn;
+	
+	@FXML
+	private Button backToMenuBtn;
+	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
 	 *  node of the GridPane.
@@ -70,6 +81,8 @@ public class DungeonController implements Observer {
 
 	private boolean isPaused;
 
+	private String jsonPath;
+
 	public void setStartScreen(StartScreen startScreen) {
 		this.startScreen = startScreen;
 	}
@@ -87,12 +100,21 @@ public class DungeonController implements Observer {
 		this.squares.getChildren().clear();
 		this.game.detachListener(this);
 		
-		// TODO: also unload bindings
+		// TODO: also unload bindings?
+		// "Note that JavaFX has all the bind calls implemented through weak listeners.
+		// This means the bound property can be garbage collected and stopped from being
+		// updated."
 	}
 	
-	public void loadGame(Game game) {
+	public void loadGame(String jsonPath) {
+		this.jsonPath = jsonPath;
+		try {
+			this.game = Game.createGame(jsonPath);
+		} catch (FileNotFoundException e) {
+			throw new Error("" + jsonPath + " file not found.");
+		}
+		
 		this.preventPlayerMovement = true;
-		this.game = game;
 		this.game.attachListener(this);
 		this.isPaused = false;
 
@@ -235,6 +257,7 @@ public class DungeonController implements Observer {
 	@FXML
 	public void handleKeyPress(KeyEvent event) {
 		switch (event.getCode()) {
+		// TODO: make sure winning / losing prevents all key presses ...
 		case ESCAPE:
 			this.togglePauseMenu();
 			break;
@@ -291,6 +314,30 @@ public class DungeonController implements Observer {
 			this.pauseMenu.setVisible(true);
 		}
 	}
+	
+	@FXML
+	public void handleResumeBtn(ActionEvent event) {
+		this.togglePauseMenu();
+	}
+	
+	@FXML
+	public void handleRestartBtn(ActionEvent event) {
+		this.togglePauseMenu();
+		this.pause();
+		this.unloadGame();
+		this.loadGame(this.jsonPath);
+		this.play();
+	}
+	
+	// timers aren't properly unbound ... wah.
+	
+	@FXML
+	public void handleBackToMenuBtn(ActionEvent event) {
+		this.togglePauseMenu();
+		this.pause();
+		this.unloadGame();
+		this.startScreen.start();
+	}
 
 	@Override
 	public void notifyOf(Event event) {
@@ -311,5 +358,8 @@ public class DungeonController implements Observer {
 			}
 		}
 	}
+	
+	
+	
 }
 

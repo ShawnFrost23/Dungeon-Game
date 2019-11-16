@@ -42,9 +42,9 @@
 				<Label id="overlay-text" text="Paused" textFill="#FFF" style="-fx-font-size: 30; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
 				<HBox alignment="CENTER">
 					<HBox alignment="CENTER">
-						<Button text="Resume"/>
-						<Button text="Restart"/>
-						<Button text="Back to menu"/>
+						<Button fx:id="resumeBtn" onAction="#handleResumeBtn" text="Resume"/>
+						<Button fx:id="restartBtn" onAction="#handleRestartBtn" text="Restart"/>
+						<Button fx:id="backToMenuBtn" onAction="#handleBackToMenuBtn" text="Back to menu"/>
 					</HBox>
 				</HBox>
 			</StackPane>

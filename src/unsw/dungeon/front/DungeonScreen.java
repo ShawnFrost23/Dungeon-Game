@@ -30,14 +30,7 @@ public class DungeonScreen {
 	}
 	
 	public void loadLevel(String jsonPath) {
-		Game game;
-		try {
-			game = Game.createGame(jsonPath);
-		} catch (FileNotFoundException e) {
-			throw new Error("" + jsonPath + " file not found.");
-		}
-		
-		this.controller.loadGame(game);
+		this.controller.loadGame(jsonPath);
 		
 		this.stage.setTitle(this.title);
 		this.stage.setScene(this.scene);
