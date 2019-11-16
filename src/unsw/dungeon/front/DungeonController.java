@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -84,7 +85,7 @@ public class DungeonController implements Observer {
 	
 	private StartScreen startScreen;
 
-	private boolean preventPlayerMovement;
+	private boolean preventPlayerInteraction;
 
 	private boolean isPaused;
 
@@ -98,7 +99,6 @@ public class DungeonController implements Observer {
 
 	}
 
-	// don't forget to call this when navigating away!
 	private void unloadGame() {
 		if (this.game == null) {
 			return;
@@ -106,11 +106,6 @@ public class DungeonController implements Observer {
 		
 		this.squares.getChildren().clear();
 		this.game.detachListener(this);
-		
-		// TODO: also unload bindings?
-		// "Note that JavaFX has all the bind calls implemented through weak listeners.
-		// This means the bound property can be garbage collected and stopped from being
-		// updated."
 	}
 	
 	public void loadGame(String jsonPath) {
@@ -121,7 +116,7 @@ public class DungeonController implements Observer {
 			throw new Error("" + jsonPath + " file not found.");
 		}
 		
-		this.preventPlayerMovement = true;
+		this.preventPlayerInteraction = true;
 		this.game.attachListener(this);
 		this.isPaused = false;
 		this.winMenu.setVisible(false);
@@ -275,33 +270,27 @@ public class DungeonController implements Observer {
 		return this.imageCache.get(src); 
 		
 	}
-	
-	/**
-	 * Warning: this will not pause ongoing sword animations.
-	 */
-	public void pause() {
+
+	private void pause() {
 		this.enemyTimeline.pause();
 		this.buffTimeline.pause();
-		this.preventPlayerMovement = true;
+		this.preventPlayerInteraction = true;
 	}
 	public void play() {
 		this.enemyTimeline.play();
 		this.buffTimeline.play();
-		this.preventPlayerMovement = false;
+		this.preventPlayerInteraction = false;
 	}
 
 	@FXML
 	public void handleKeyPress(KeyEvent event) {
-		switch (event.getCode()) {
-		// TODO: make sure winning / losing prevents all key presses ...
-		case ESCAPE:
-			this.togglePauseMenu();
-			break;
-		default:
-			break;
+		if (event.getCode() == KeyCode.ESCAPE) {
+			if (!this.preventPlayerInteraction || this.isPaused) {
+				this.togglePauseMenu();
+			}
 		}
 		
-		if (this.preventPlayerMovement) {
+		if (this.preventPlayerInteraction) {
 			return;
 		}
 		
@@ -383,8 +372,6 @@ public class DungeonController implements Observer {
 		this.play();
 	}
 	
-	// timers aren't properly unbound ... wah.
-	
 	@FXML
 	public void handleBackToMenuBtn(ActionEvent event) {
 		this.togglePauseMenu();
@@ -429,8 +416,5 @@ public class DungeonController implements Observer {
 			this.playKeyAnimation(cell);
 		}
 	}
-	
-	
-	
 }
 
