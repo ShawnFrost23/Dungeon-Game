@@ -32,6 +32,7 @@ public class Game implements Observer, Subject {
 	private List<Observer> observers;
 
 	private boolean hasLost;
+	private boolean hasWon;
 	
 	/**
 	 * Enemies will try to make moves every 500ms ... if the player kills them
@@ -42,10 +43,13 @@ public class Game implements Observer, Subject {
 	private Lock conurrentMovementLock;
 	private Game(Goal goal) {
 		this.hasLost = false;
+		this.hasWon = false;
 		this.enemies = new ArrayList<Enemy>();
 		this.goal = goal;
 		this.conurrentMovementLock = new ReentrantLock();
 		this.observers = new ArrayList<Observer>();
+		
+		
 	}
 	
 	/**
@@ -186,7 +190,19 @@ public class Game implements Observer, Subject {
 		} finally {
 			this.conurrentMovementLock.unlock();
 		}
+		this.checkIfWon();
 	}
+	
+	private void checkIfWon() {
+		// Concurrency ... we don't want to send duplicate GameOverEvents.
+		if (this.hasWon) {
+			return;
+		}
+		if (this.getHasWon()) {
+			this.notifyAllOf(new GameOverEvent());
+		}
+	}
+
 	
 	/**
 	 * Signal that the player is attempting to swing their sword in a
@@ -200,6 +216,7 @@ public class Game implements Observer, Subject {
 		} finally {
 			this.conurrentMovementLock.unlock();
 		}
+		this.checkIfWon();
 	}
 
 	/**
@@ -237,7 +254,9 @@ public class Game implements Observer, Subject {
 			} finally {
 				this.conurrentMovementLock.unlock();
 			}
+			
 		}
+		this.checkIfWon();
 	}
 
 	/**

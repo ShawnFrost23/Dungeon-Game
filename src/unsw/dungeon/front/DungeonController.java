@@ -51,6 +51,9 @@ public class DungeonController implements Observer {
 	private StackPane pauseMenu;
 	
 	@FXML
+	private StackPane winMenu;
+	
+	@FXML
 	private Button resumeBtn;
 	
 	@FXML
@@ -118,6 +121,8 @@ public class DungeonController implements Observer {
 		this.preventPlayerMovement = true;
 		this.game.attachListener(this);
 		this.isPaused = false;
+		this.winMenu.setVisible(false);
+		this.pauseMenu.setVisible(false);
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
 			(ActionEvent event) -> {
@@ -342,6 +347,10 @@ public class DungeonController implements Observer {
 		}
 	}
 	
+	private void toggleWinMenu() {
+		this.winMenu.setVisible(true);
+	}
+	
 	@FXML
 	public void handleResumeBtn(ActionEvent event) {
 		this.togglePauseMenu();
@@ -356,12 +365,33 @@ public class DungeonController implements Observer {
 		this.play();
 	}
 	
+	@FXML
+	public void handleRestartBtnW(ActionEvent event) {
+		this.isPaused = true;
+		this.togglePauseMenu();
+		this.pause();
+		this.unloadGame();
+		this.loadGame(this.jsonPath);
+		this.play();
+	}
+	
 	// timers aren't properly unbound ... wah.
 	
 	@FXML
 	public void handleBackToMenuBtn(ActionEvent event) {
 		this.togglePauseMenu();
 		this.pause();
+		this.pauseMenu.setVisible(false);
+		this.unloadGame();
+		this.startScreen.start();
+	}
+	
+	@FXML
+	public void handleBackToMenuBtnW(ActionEvent event) {	
+		this.isPaused = true;
+		this.togglePauseMenu();
+		this.pause();
+		this.winMenu.setVisible(false);
 		this.unloadGame();
 		this.startScreen.start();
 	}
@@ -378,6 +408,7 @@ public class DungeonController implements Observer {
 		} else if (event instanceof GameOverEvent) {
 			if (this.game.getHasWon()) {
 				System.out.println("win");
+				this.toggleWinMenu();
 				this.pause();
 			} else if (this.game.getHasLost()) {
 				System.out.println("lose");
