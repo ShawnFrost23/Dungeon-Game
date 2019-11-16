@@ -7,5 +7,6 @@
 <StackPane xmlns:fx="http://javafx.com/fxml/1">
 	<VBox>
 		<Button fx:id="levelSelectBtn" onAction="#handleLevelSelectBtn" text="Select Level" />
+		<Button fx:id="quitBtn" onAction="#handleQuitBtn" text="Quit" />
 	</VBox>
 </StackPane>
