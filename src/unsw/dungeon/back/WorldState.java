@@ -1,21 +1,15 @@
 package unsw.dungeon.back;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A world that {@link Enemy.MovementStrategy} can query to decide what move to
  * make.
  * 
  * <br />
-* <br />
+ * <br />
  * 
  * This is functionally just a version of {@link Board} with methods that
- * produce side-effects being hidden, and there being a coordinate access method
- * to check whether a cell is collidable or not
- * ({@link #shouldVisit(int, int)}). The user of this class can treat the
- * world like a maze -- they know their own position, the position of the goal,
- * and what obstructions there are inbetween.
+ * produce side-effects being hidden, and with cells being directly addressable
+ * by coordinates.
  */
 public class WorldState {
 	private Cell[][] worldState;
@@ -23,11 +17,7 @@ public class WorldState {
 	private int width;
 	private Cell myLocation;
 	private Cell goalLocation;
-	
 	private int depth;
-	/**
-	 * Which direction the enemy started exploring this WorldState in.
-	 */
 	private Direction startDirection;
 	
 	private WorldState() {
@@ -35,7 +25,7 @@ public class WorldState {
 	}
 	
 	/**
-	 * Construct a new WorldState object.
+	 * Construct a new WorldState root node.
 	 * @param worldState a 2d array of Cells that are in the world, of size
 	 * [<b>width</b>][<b>height</b>] 
 	 * @param height height of the provided <b>worldState</b> array 
@@ -55,11 +45,15 @@ public class WorldState {
 	}
 	
 	/**
-	 * Get whether the cell at worldState<b>[x][y]</b> is worth visiting.
+	 * Get whether the cell at worldState[<b>x</b>][<b>y</b>] is worth visiting
+	 * -- whether a {@link #transition(Direction, boolean)} should be generated
+	 * into this cell. Viz., true if this cell should be used as a viable
+	 * intermediary in path planning.
 	 * @param x x-coordinate to check
 	 * @param y y-coordinate to check
-	 * @return true if the cell at <b>[x][y]</b> isn't out of bounds, and isn't
-	 * collidable (or it is an enemy whose collidability is transient).
+	 * @return true if the cell at [<b>x</b>][<b>y</b>] isn't out of bounds,
+	 * and isn't collidable (or it is an enemy whose collidability is
+	 * transient).
 	 */
 	public boolean shouldVisit(int x, int y) {
 		if (x < 0 || y < 0 || x >= this.width || y >= this.height) {
@@ -71,40 +65,79 @@ public class WorldState {
 		return !worldState[x][y].isCollidable();
 	}
 
+	/**
+	 * Get the height of the game this WorldState represents.
+	 * @return the height
+	 */
 	public int getHeight() {
 		return height;
 	}
 
+	/**
+	 * Get the width of the game this WorldState represents.
+	 * @return the width
+	 */
 	public int getWidth() {
 		return width;
 	}
 
+	/**
+	 * Get the "my" x-coordinate -- the x-coordinate of the entity using this
+	 * WorldState to plan their moves.
+	 * @return the planner's x-coordinate 
+	 */
 	public int getMyX() {
 		return this.myLocation.getX();
 	}
 
+	/**
+	 * Get the "my" y-coordinate -- the x-coordinate of the entity using this
+	 * WorldState to plan their moves.
+	 * @return the planner's y-coordinate 
+	 */
 	public int getMyY() {
 		return this.myLocation.getY();
 	}
 
+	/**
+	 * Get the x-coordinate of this WorldState's goal.
+	 * @return the x-coordinate of the goal
+	 */
 	public int getGoalX() {
 		return this.goalLocation.getX();
 	}
-	
+
+	/**
+	 * Get the y-coordinate of this WorldState's goal.
+	 * @return the y-coordinate of the goal
+	 */
 	public int getGoalY() {
 		return this.goalLocation.getY();
 	}
 	
+	/**
+	 * Get how many times {@link #transition(Direction, boolean)} has been
+	 * applied in order to reach this WorldState from a root node.
+	 * @return the number of transitions applied to reach this state
+	 */
 	public int getDepth() {
 		return this.depth;
 	}
 	
+	/**
+	 * Get the L1 distance from "my" current position to the goal.
+	 * @return the L1 distance to the goal
+	 */
 	public int L1() {
 		int Dx = this.getMyX() - this.getGoalX();
 		int Dy = this.getMyY() - this.getGoalY();
 		return Math.abs(Dx) + Math.abs(Dy); 
 	}
-	
+
+	/**
+	 * Get the L2 distance from "my" current position to the goal.
+	 * @return the L2 distance to the goal
+	 */
 	public double L2() {
 		int Dx = this.getMyX() - this.getGoalX();
 		int Dy = this.getMyY() - this.getGoalY();
@@ -152,6 +185,29 @@ public class WorldState {
 		state.startDirection = this.startDirection != null ? this.startDirection : d;
 		return state;
 	}
+	
+	/**
+	 * Get the "start" direction of this branch, e.g.
+	 * <p>
+	 *   <code>
+	 *     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Root&nbsp;WorldState
+	 *     <br />
+	 *     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;\&nbsp;&nbsp;&nbsp;&nbsp;\
+	 *     <br />
+	 *     &nbsp;&nbsp;&nbsp;LEFT&nbsp;&nbsp;DOWN&nbsp;&nbsp;&nbsp;UP&nbsp;&nbsp;RIGHT
+	 *     <br />
+	 *     &nbsp;&nbsp;&nbsp;//\\&nbsp;&nbsp;//\\&nbsp;&nbsp;//\\&nbsp;//\\
+	 *     <br />
+	 *     &nbsp;&nbsp;&nbsp;....&nbsp;&nbsp;....&nbsp;&nbsp;....&nbsp;....
+	 *     <br />
+	 *   </code>
+	 * </p>
+	 * All descendants of the left group will have start direction of LEFT.
+	 * All descendants of the second group, DOWN, will have start direction of
+	 * DOWN. Similarly for the third and fourth group.
+	 * @return the start direction of this branch, or <code>null</code> if this
+	 * is a root WorldState that was not generated from a transition
+	 */
 	public Direction getStartDirection() {
 		return this.startDirection;
 	}

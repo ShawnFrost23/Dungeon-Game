@@ -1,32 +1,43 @@
 package unsw.dungeon.back;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * An enemy movement strategy whereby Enemies use A* search up to
+ * <b>maxNodes</b> many nodes of effort in order to choose a move. If this depth
+ * is sufficient that they realise reaching the player is
+ * impossible, they stay still.
+ * 
+ * <br />
+ * <br />
+ * 
+ * If the a move is requested with the <b>seek</b> set to false, they will
+ * greedily run away from the player so long as they feel threatened -- so long
+ * as their usual A* search returns that there is a possible move they could
+ * make to bring them closer to the player. 
+ */
 public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
-
+	private boolean canUsePortals = false;
+	private int maxNodes = 100;
 	private static Direction[] allDirections = {
 		Direction.LEFT, Direction.RIGHT, Direction.DOWN, Direction.UP
 	};
 	
-	private interface Heuristic {
-		public int calculate(WorldState world);
-	}
-	
-	public Direction chooseMove(WorldState world, Heuristic h) {
-		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
-			(WorldState a, WorldState b) -> Integer.compare(h.calculate(a) + a.getDepth(), h.calculate(b) + b.getDepth())
-		);
-
-		
+	/**
+	 * Get a list of the directions {left, right, down, up} sorted increasingly
+	 * in the L2 distance between the player and enemy they would result in.
+	 * @param world WorldState object to check distance within
+	 * @return sorted list of directions in order their exploration should
+	 * occur in.
+	 */
+	private List<Direction> getDirectionPreferenceList(WorldState world) {
 		List<Direction> directionPreferenceList = Arrays.asList(allDirections);
 		directionPreferenceList.sort(
 			(Direction a, Direction b) -> {
-				WorldState wa = world.transition(a, false);
-				WorldState wb = world.transition(b, false);
+				WorldState wa = world.transition(a, this.canUsePortals);
+				WorldState wb = world.transition(b, this.canUsePortals);
 				if (wa == null) {
 					return -1;
 				} else if (wb == null) {
@@ -37,22 +48,40 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 				return L2a.compareTo(L2b);
 			}
 		);
-		pq.add(world);
-		
-		int maxNodes = 100;
+		return directionPreferenceList;
+	}
+	
+	/**
+	 * Classes that implement this interface can be used as heuristics for the
+	 * {@link IntelligentMovementStrategy#chooseSeekMove(WorldState, Heuristic)
+	 * chooseSeekMove(WorldState, Heuristic)} function.
+	 */
+	private interface Heuristic {
+		public int calculate(WorldState world);
+	}
+	
+	/**
+	 * Node-limited A* search to bring the enemy to a state with a better
+	 * heuristic.
+	 * @param world WorldState to perform search on
+	 * @param h heuristic to use
+	 * @return best found move (<code>can be null</code>)
+	 */
+	private Direction chooseSeekMove(WorldState world, Heuristic h) {
+		List<Direction> directionPreferenceList = this.getDirectionPreferenceList(world);
 		
 		boolean[][] visited = new boolean[world.getWidth()][world.getHeight()];
-		
 		visited[world.getMyX()][world.getMyY()] = true;
 		
+		PriorityQueue<WorldState> pq = new PriorityQueue<WorldState>(
+			(WorldState a, WorldState b) -> Integer.compare(h.calculate(a) + a.getDepth(), h.calculate(b) + b.getDepth())
+		);
+		pq.add(world);
+
 		Direction bestDirection = null;
 		int bestHeuristic = h.calculate(world); 
-		int n = 0;
+		int numNodesExplored = 0;
 		while ((pq.peek() != null)) {
-			n += 1;
-			if (n > maxNodes) {
-				return bestDirection;
-			}
 			
 			WorldState curr = pq.poll();
 			
@@ -66,9 +95,14 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 					bestHeuristic = currHeuristic;
 				}
 			}
+
+			numNodesExplored += 1;
+			if (numNodesExplored > this.maxNodes) {
+				return bestDirection;
+			}
 			
 			for (Direction d : directionPreferenceList) {
-				WorldState next = curr.transition(d, false);
+				WorldState next = curr.transition(d, this.canUsePortals);
 				if (next != null) {
 					if (!visited[next.getMyX()][next.getMyY()]) {
 						visited[next.getMyX()][next.getMyY()] = true;
@@ -80,9 +114,30 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 		return null;
 	}
 	
+	/**
+	 * Choose a move that will immediately increase the L2 distance between us
+	 * and the player.
+	 * @param world WorldState to choose with
+	 * @return best found move (<code>can be null</code>)
+	 */
+	private Direction chooseAvoidMove(WorldState world) {
+		Direction bestDirection = null;
+		double bestL2 = world.L2();
+		
+		for (Direction d : allDirections) {
+			WorldState next = world.transition(d, this.canUsePortals); 
+			if (next != null && next.L2() > bestL2) {
+				bestL2 = world.L2();
+				bestDirection = d;
+			}
+			
+		}
+		return bestDirection;
+	}
+	
 	@Override
 	public Direction chooseMove(WorldState world, boolean seek) {
-		Direction chosenDirection = this.chooseMove(world,
+		Direction chosenDirection = this.chooseSeekMove(world,
 			(WorldState w) ->  w.L1()
 		);
 		if (seek) {
@@ -91,18 +146,7 @@ public class IntelligentMovementStrategy implements Enemy.MovementStrategy {
 			if (chosenDirection == null ) {
 				return null;
 			}
-			Direction bestDirection = null;
-			double bestL2 = world.L2();
-			
-			for (Direction d : allDirections) {
-				WorldState next = world.transition(d, false); 
-				if (next != null && next.L2() > bestL2) {
-					bestL2 = world.L2();
-					bestDirection = d;
-				}
-				
-			}
-			return bestDirection;
+			return this.chooseAvoidMove(world);
 		}
 	}
 }
