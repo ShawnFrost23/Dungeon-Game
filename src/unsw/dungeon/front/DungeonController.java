@@ -32,6 +32,7 @@ import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.GameOverEvent;
 import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.PlayerKilledEvent;
+import unsw.dungeon.back.event.CellKeyDroppedEvent;
 
 public class DungeonController implements Observer {
 	@FXML
@@ -178,6 +179,39 @@ public class DungeonController implements Observer {
 		}
 	}
 
+	private void playKeyAnimation(Cell cell) {
+		int x = cell.getX();
+		int y = cell.getY();
+		ImageView keyPickup = new ImageView();
+		Timeline keyAnimationTimeline = new Timeline();
+		keyAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(0), 
+			(ActionEvent event) -> {
+				this.effectGroup.get(x).get(y).getChildren().add(keyPickup);
+				keyPickup.setImage(this.getImage(new Texture('?', "key_drop_1.png")));
+			}
+		));
+		
+		keyAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), 
+			(ActionEvent event) -> {
+				keyPickup.setImage(this.getImage(new Texture('?', "key_drop_2.png")));
+			}
+		));
+		
+		keyAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), 
+			(ActionEvent event) -> {
+				keyPickup.setImage(this.getImage(new Texture('?', "key_drop_3.png")));
+			}
+		));
+		
+		keyAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), 
+			(ActionEvent event) -> {
+				this.effectGroup.get(x).get(y).getChildren().remove(keyPickup);
+			}
+		));
+		
+		keyAnimationTimeline.play();
+	}
+	
 	private void playSwordAnimation(Cell cell, Direction d) {
 		int x = cell.getX();
 		int y = cell.getY();
@@ -192,43 +226,36 @@ public class DungeonController implements Observer {
 			swordSwing.setRotate(0);
 		}
 		
-		KeyFrame frame1 = new KeyFrame(Duration.millis(0), 
+		Timeline swordAnimationTimeline = new Timeline();
+		
+		swordAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(0), 
 			(ActionEvent event) -> {
 				this.effectGroup.get(x).get(y).getChildren().add(swordSwing);
 				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_1.png")));
 			}
-		);
+		));
 		
-		KeyFrame frame2 = new KeyFrame(Duration.millis(100), 
+		swordAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(100), 
 			(ActionEvent event) -> {
 				swordSwing.setOpacity(0.6);
 				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_2.png")));
 			}
-		);
+		));
 		
-		KeyFrame frame3 = new KeyFrame(Duration.millis(200), 
+		swordAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(200), 
 			(ActionEvent event) -> {
 				swordSwing.setOpacity(0.3);
 				swordSwing.setImage(this.getImage(new Texture('?', "sword_swing_3.png")));
 			}
-		);
+		));
 		
-		
-		KeyFrame frame4 = new KeyFrame(Duration.millis(300), 
+		swordAnimationTimeline.getKeyFrames().add(new KeyFrame(Duration.millis(300), 
 			(ActionEvent event) -> {
 				this.effectGroup.get(x).get(y).getChildren().remove(swordSwing);
 			}
-		);
+		));
 		
-		Timeline swordAnimationTimeline = new Timeline();
-		swordAnimationTimeline.getKeyFrames().add(frame1);
-		swordAnimationTimeline.getKeyFrames().add(frame2);
-		swordAnimationTimeline.getKeyFrames().add(frame3);
-		swordAnimationTimeline.getKeyFrames().add(frame4);
 		swordAnimationTimeline.play();
-		
-		this.effectGroup.get(x).get(y).getChildren().remove(swordSwing);
-		
 	}
 	
 	private Image getImage(Texture texture) {
@@ -356,6 +383,9 @@ public class DungeonController implements Observer {
 				System.out.println("lose");
 				this.pause();
 			}
+		} else if (event instanceof CellKeyDroppedEvent) {
+			Cell cell = ((CellKeyDroppedEvent) event).getCell();			
+			this.playKeyAnimation(cell);
 		}
 	}
 	

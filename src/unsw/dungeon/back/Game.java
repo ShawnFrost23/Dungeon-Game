@@ -350,6 +350,14 @@ public class Game implements Observer, Subject {
 		return this.board.getWidth();
 	}
 
+
+	/**
+	 * Get this Game's player.
+	 * @return this Game's player
+	 */
+	public Player getPlayer() {
+		return this.player;
+	}
 	
 	@Override
 	public void attachListener(Observer observer) {

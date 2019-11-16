@@ -6,8 +6,10 @@ import java.util.List;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.dungeon.back.event.CellEnteredEvent;
+import unsw.dungeon.back.event.CellHitWithSwordEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
+import unsw.dungeon.back.event.CellKeyDroppedEvent;
 import unsw.dungeon.back.event.PlayerKilledEvent;
 import unsw.dungeon.back.event.Subject;
 
@@ -163,14 +165,12 @@ public class Player implements Moveable, Subject, Observer {
 		Key oldHeldKey = this.heldKey;
 		this.heldKey = null;
 		
-		// HACK ...
 		this.location.exit(this);
 		this.location.enter(this);
-		
 		if (!this.isHoldingKey()) {
 			this.heldKey = oldHeldKey;
 		} else {
-			this.location.addEntity(oldHeldKey);
+			this.location.dropKey(oldHeldKey);
 		}
 	}
 

@@ -10,6 +10,7 @@ import unsw.dungeon.back.event.Observer;
 import unsw.dungeon.back.event.Subject;
 import unsw.dungeon.back.event.CellExitedEvent;
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
+import unsw.dungeon.back.event.CellKeyDroppedEvent;
 import unsw.dungeon.back.event.CellPushedEvent;
 import unsw.dungeon.back.event.CellRedrawEvent;
 
@@ -175,6 +176,16 @@ public class Cell implements Subject {
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Drop a key into this cell and notify all listeners of a
+	 * {@link CellKeyDroppedEvent}.
+	 * @param key key to drop
+	 */
+	public void dropKey(Key key) {
+		this.addEntity(key);
+		this.notifyAllOf(new CellKeyDroppedEvent(this));
 	}
 	
 	/**
