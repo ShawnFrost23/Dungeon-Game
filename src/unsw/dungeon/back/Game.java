@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import javafx.beans.property.IntegerProperty;
 import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -265,6 +266,11 @@ public class Game implements Observer {
 	 */
 	public void tickBuffs() {
 		this.player.tickBuffs();
+	}
+	
+	public IntegerProperty getPotionDurProperty() {
+		return player.getBuffValue();
+		
 	}
 	
 	/**

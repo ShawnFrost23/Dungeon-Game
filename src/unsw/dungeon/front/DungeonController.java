@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -32,7 +33,7 @@ public class DungeonController implements Observer {
 	private GridPane squares;
 	
 	@FXML
-	private Label statusPotionDuration;
+	private Label statusPotionDuration = new Label();
 	
 	@FXML
 	private Label statusSwordDurability;
@@ -108,6 +109,8 @@ public class DungeonController implements Observer {
 			cell.attachListener(this);
 			this.redraw(cell);
 		}
+		
+		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
 	}
 	
 	private void redraw(Cell cell) {

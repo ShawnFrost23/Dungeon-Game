@@ -3,6 +3,7 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.IntegerProperty;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -179,6 +180,10 @@ public class Player implements Moveable, Subject, Observer {
 	 */
 	public void tickBuffs() {
 		this.buffs.tick();
+	}
+	
+	public IntegerProperty getBuffValue() {
+		return buffs.getInvincibilityDuration();
 	}
 
 	@Override
