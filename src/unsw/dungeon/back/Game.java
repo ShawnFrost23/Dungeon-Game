@@ -315,29 +315,41 @@ public class Game implements Observer, Subject {
 		}
 	}
 	
-	public void onPlayerKilled(PlayerKilledEvent event) {
+	private void onPlayerKilled(PlayerKilledEvent event) {
 		this.lose();
 	}
 	
-	public void onEnemyKilled(EnemyKilledEvent event) {
+	private void onEnemyKilled(EnemyKilledEvent event) {
 		Enemy who = event.getWhoDied();
 		this.enemies.remove(who);
 		who.detachListener(this);
 	}
 
+	/**
+	 * Get all of the cells that comprise this Game's board, intended for the
+	 * purpose of attaching UI listeners.
+	 * @return a list of the board's cells
+	 */
 	public List<Cell> getCells() {
 		return this.board.getCells();
 	}
 
+	/**
+	 * Get the height of this Game's board.
+	 * @return the board's height
+	 */
 	public int getHeight() {
 		return this.board.getHeight();
 	}
 	
+	/**
+	 * Get the width of this Game's board.
+	 * @return the board's width
+	 */
 	public int getWidth() {
 		return this.board.getWidth();
 	}
-	
-	
+
 	
 	@Override
 	public void attachListener(Observer observer) {
