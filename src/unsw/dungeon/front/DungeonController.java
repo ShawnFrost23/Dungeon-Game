@@ -7,6 +7,7 @@ import java.util.Map;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -81,6 +82,8 @@ public class DungeonController implements Observer {
 		
 		this.squares.getChildren().clear();
 		this.game.detachListener(this);
+		
+		// TODO: also unload bindings
 	}
 	
 	public void loadGame(Game game) {
@@ -129,6 +132,12 @@ public class DungeonController implements Observer {
 			this.redraw(cell);
 		}
 		
+		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
+		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
+	}
+		
+	public DungeonController(Game game) {
+
 	}
 
 	@FXML

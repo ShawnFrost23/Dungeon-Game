@@ -12,6 +12,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import javafx.beans.property.IntegerProperty;
 import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.GameOverEvent;
@@ -266,6 +267,22 @@ public class Game implements Observer, Subject {
 	 */
 	public void tickBuffs() {
 		this.player.tickBuffs();
+	}
+	
+	/**
+	 * Get the Potion duration
+	 * @return IntegerProperty of the Potion duration 
+	 */
+	public IntegerProperty getPotionDurProperty() {
+		return player.getBuffValue();
+	}
+	
+	/**
+	 * Get the Sword durability
+	 * @return IntegerProperty of the Sword durability 
+	 */
+	public IntegerProperty getSwordDurProperty() {
+		return player.getSwordDurabilityValue();
 	}
 	
 	/**
