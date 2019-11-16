@@ -15,9 +15,9 @@
 
 <!-- TODO, give dungeons a min-width at least of the size of the status bar? -->
 
-<Pane id="dungeonPlayer" onKeyPressed="#handleKeyPress" xmlns:fx="http://javafx.com/fxml/1">
+<Pane id="dungeonPlayer" onKeyPressed="#handleKeyPress" xmlns:fx="http://javafx.com/fxml/1" minWidth="256" minHeight="256"  style="-fx-background-image: url('dirt_0_new.png');">
 	<VBox>
-		<HBox id="statusBar" style="-fx-background-color: black">
+		<HBox minWidth="256" id="statusBar" style="-fx-background-color: black">
 			<HBox styleClass="statusElement" style="-fx-padding: 0 10 0 10;">
 				<ImageView fitWidth="16" fitHeight="16">
 					<Image url="greatsword_1_new.png" />
@@ -39,7 +39,7 @@
 		<StackPane>
 			<GridPane id="dungeonArea" fx:id="squares" />
 			<StackPane fx:id="pauseMenu" visible="false">
-				<Label id="overlay-text" text="Paused" textFill="#FFF" style="-fx-font-size: 30; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
+				<Label id="overlay-text" text="Paused" textFill="#FFF" style="-fx-font-size: 29; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
 				<HBox alignment="CENTER">
 					<HBox alignment="CENTER">
 						<Button fx:id="resumeBtn" onAction="#handleResumeBtn" text="Resume"/>
@@ -49,7 +49,7 @@
 				</HBox>
 			</StackPane>
 			<StackPane fx:id="winMenu" visible="false">
-				<Label id="overlay-text" text="You Won!!" textFill="#FFF" style="-fx-font-size: 30; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
+				<Label id="overlay-text" text="You Won!!" textFill="#FFF" style="-fx-font-size: 29; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
 				<HBox alignment="CENTER">
 					<HBox alignment="CENTER">
 						<Button fx:id="restartBtn" onAction="#handleRestartBtnW" text="Restart"/>
@@ -58,7 +58,7 @@
 				</HBox>
 			</StackPane>
 			<StackPane fx:id="loseMenu" visible="false">
-				<Label id="overlay-text" text="I'm sorry! You lost :(" textFill="#FFF" style="-fx-font-size: 30; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
+				<Label id="overlay-text" text="I'm sorry! You lost :(" textFill="#FFF" style="-fx-font-size: 29; -fx-padding: 0 0 55 0; -fx-effect: dropshadow(one-pass-box, #000, 4, 4.5, 0, 0);" />
 				<HBox alignment="CENTER">
 					<HBox alignment="CENTER">
 						<Button fx:id="restartBtn" onAction="#handleRestartBtnW" text="Restart"/>
