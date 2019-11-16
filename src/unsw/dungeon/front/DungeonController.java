@@ -1,5 +1,6 @@
 package unsw.dungeon.front;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,11 +12,13 @@ import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.Group;
 import javafx.util.Duration;
 import unsw.dungeon.back.Board;
@@ -43,7 +46,17 @@ public class DungeonController implements Observer {
 	@FXML
 	private ImageView statusKeyIcon;
 	
+	@FXML
+	private StackPane pauseMenu;
 	
+	@FXML
+	private Button resumeBtn;
+	
+	@FXML
+	private Button restartBtn;
+	
+	@FXML
+	private Button backToMenuBtn;
 	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
@@ -66,6 +79,10 @@ public class DungeonController implements Observer {
 
 	private boolean preventPlayerMovement;
 
+	private boolean isPaused;
+
+	private String jsonPath;
+
 	public void setStartScreen(StartScreen startScreen) {
 		this.startScreen = startScreen;
 	}
@@ -83,13 +100,23 @@ public class DungeonController implements Observer {
 		this.squares.getChildren().clear();
 		this.game.detachListener(this);
 		
-		// TODO: also unload bindings
+		// TODO: also unload bindings?
+		// "Note that JavaFX has all the bind calls implemented through weak listeners.
+		// This means the bound property can be garbage collected and stopped from being
+		// updated."
 	}
 	
-	public void loadGame(Game game) {
+	public void loadGame(String jsonPath) {
+		this.jsonPath = jsonPath;
+		try {
+			this.game = Game.createGame(jsonPath);
+		} catch (FileNotFoundException e) {
+			throw new Error("" + jsonPath + " file not found.");
+		}
+		
 		this.preventPlayerMovement = true;
-		this.game = game;
 		this.game.attachListener(this);
+		this.isPaused = false;
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
 			(ActionEvent event) -> {
@@ -134,10 +161,6 @@ public class DungeonController implements Observer {
 		
 		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
 		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
-	}
-		
-	public DungeonController(Game game) {
-
 	}
 
 	@FXML
@@ -233,6 +256,15 @@ public class DungeonController implements Observer {
 
 	@FXML
 	public void handleKeyPress(KeyEvent event) {
+		switch (event.getCode()) {
+		// TODO: make sure winning / losing prevents all key presses ...
+		case ESCAPE:
+			this.togglePauseMenu();
+			break;
+		default:
+			break;
+		}
+		
 		if (this.preventPlayerMovement) {
 			return;
 		}
@@ -270,6 +302,43 @@ public class DungeonController implements Observer {
 		}
 	}
 
+	private void togglePauseMenu() {
+		if (this.isPaused) {
+			this.isPaused = false;
+			this.play();
+			this.pauseMenu.setVisible(false);
+			squares.requestFocus();
+		} else {
+			this.isPaused = true;
+			this.pause();
+			this.pauseMenu.setVisible(true);
+		}
+	}
+	
+	@FXML
+	public void handleResumeBtn(ActionEvent event) {
+		this.togglePauseMenu();
+	}
+	
+	@FXML
+	public void handleRestartBtn(ActionEvent event) {
+		this.togglePauseMenu();
+		this.pause();
+		this.unloadGame();
+		this.loadGame(this.jsonPath);
+		this.play();
+	}
+	
+	// timers aren't properly unbound ... wah.
+	
+	@FXML
+	public void handleBackToMenuBtn(ActionEvent event) {
+		this.togglePauseMenu();
+		this.pause();
+		this.unloadGame();
+		this.startScreen.start();
+	}
+
 	@Override
 	public void notifyOf(Event event) {
 		if (event instanceof CellRedrawEvent) {
@@ -289,5 +358,8 @@ public class DungeonController implements Observer {
 			}
 		}
 	}
+	
+	
+	
 }
 
