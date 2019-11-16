@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.Group;
 import javafx.util.Duration;
 import unsw.dungeon.back.Board;
@@ -43,7 +44,8 @@ public class DungeonController implements Observer {
 	@FXML
 	private ImageView statusKeyIcon;
 	
-	
+	@FXML
+	private StackPane pauseMenu;
 	
 	/**
 	 *  entityGroup[x][y] is a group of ImageViews displayed in the (x, y)
@@ -65,6 +67,8 @@ public class DungeonController implements Observer {
 	private StartScreen startScreen;
 
 	private boolean preventPlayerMovement;
+
+	private boolean isPaused;
 
 	public void setStartScreen(StartScreen startScreen) {
 		this.startScreen = startScreen;
@@ -90,6 +94,7 @@ public class DungeonController implements Observer {
 		this.preventPlayerMovement = true;
 		this.game = game;
 		this.game.attachListener(this);
+		this.isPaused = false;
 
 		final KeyFrame kfEnemies = new KeyFrame(Duration.millis(500), 
 			(ActionEvent event) -> {
@@ -134,10 +139,6 @@ public class DungeonController implements Observer {
 		
 		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
 		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
-	}
-		
-	public DungeonController(Game game) {
-
 	}
 
 	@FXML
@@ -233,6 +234,14 @@ public class DungeonController implements Observer {
 
 	@FXML
 	public void handleKeyPress(KeyEvent event) {
+		switch (event.getCode()) {
+		case ESCAPE:
+			this.togglePauseMenu();
+			break;
+		default:
+			break;
+		}
+		
 		if (this.preventPlayerMovement) {
 			return;
 		}
@@ -267,6 +276,19 @@ public class DungeonController implements Observer {
 			break;
 		default:
 			break;
+		}
+	}
+
+	private void togglePauseMenu() {
+		if (this.isPaused) {
+			this.isPaused = false;
+			this.play();
+			this.pauseMenu.setVisible(false);
+			squares.requestFocus();
+		} else {
+			this.isPaused = true;
+			this.pause();
+			this.pauseMenu.setVisible(true);
 		}
 	}
 
