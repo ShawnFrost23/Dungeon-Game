@@ -111,6 +111,7 @@ public class DungeonController implements Observer {
 		}
 		
 		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
+		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
 	}
 	
 	private void redraw(Cell cell) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.Observer;
@@ -16,7 +17,7 @@ public class Player implements Moveable, Subject, Observer {
 	
 	private Buffs buffs;
 	private Key heldKey;
-	private int swordDurability;
+	private IntegerProperty swordDurability = new SimpleIntegerProperty();
 	
 	/**
 	 * Create a new Player instance.
@@ -26,7 +27,7 @@ public class Player implements Moveable, Subject, Observer {
 		this.location = c;
 		this.observers = new ArrayList<Observer>();
 		this.heldKey = null;
-		this.swordDurability = 0;
+		this.swordDurability.set(0);
 		this.buffs = new Buffs();
 
 	}
@@ -59,8 +60,8 @@ public class Player implements Moveable, Subject, Observer {
 	public void swingSword(Direction d) {
 		if (this.isHoldingSword()) {
 			this.location.adjacent(d).hitWithSword(d);
-			this.swordDurability -= 1;
-			if (this.swordDurability == 0) {
+			this.swordDurability.set(this.swordDurability.get() - 1);
+			if (this.swordDurability.get() == 0) {
 				// HACK ...
 				this.location.exit(this);
 				this.location.enter(this);
@@ -93,7 +94,7 @@ public class Player implements Moveable, Subject, Observer {
 	 * @return true if the player is holding a sword
 	 */
 	public boolean isHoldingSword() {
-		return this.swordDurability != 0;
+		return this.swordDurability.get() != 0;
 	}
 	
 	/**
@@ -135,7 +136,7 @@ public class Player implements Moveable, Subject, Observer {
 	 */
 	public void take(Sword sword) {
 		this.location.removeEntity(sword);
-		this.swordDurability = 5;
+		this.swordDurability.set(5);
 	}
 	
 	/**
@@ -184,6 +185,10 @@ public class Player implements Moveable, Subject, Observer {
 	
 	public IntegerProperty getBuffValue() {
 		return buffs.getInvincibilityDuration();
+	}
+	
+	public IntegerProperty getSwordDurabilityValue() {
+		return swordDurability;
 	}
 
 	@Override

@@ -270,7 +270,10 @@ public class Game implements Observer {
 	
 	public IntegerProperty getPotionDurProperty() {
 		return player.getBuffValue();
-		
+	}
+	
+	public IntegerProperty getSwordDurProperty() {
+		return player.getSwordDurabilityValue();
 	}
 	
 	/**
