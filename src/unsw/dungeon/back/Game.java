@@ -320,6 +320,10 @@ public class Game implements Observer, Subject {
 		return this.hasLost;
 	}
 	
+	public boolean getKeyStatus() {
+		return player.isHoldingKey();
+	}
+	
 	private void lose() {
 		this.hasLost = true;
 		this.notifyAllOf(new GameOverEvent());
@@ -395,4 +399,5 @@ public class Game implements Observer, Subject {
 			observer.notifyOf(event);
 		}
 	}
+
 }

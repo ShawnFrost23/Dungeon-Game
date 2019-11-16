@@ -266,4 +266,5 @@ public class Player implements Moveable, Subject, Observer {
 			this.touchEnemy((Enemy) who);
 		}
 	}
+	
 }
