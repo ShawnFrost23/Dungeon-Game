@@ -168,7 +168,13 @@ public class DungeonController implements Observer {
 		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
 		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
 		this.statusKeyIcon.visibleProperty().bind((game.getKeyStatusProperty()));
-		this.statusPotionDuration.textFillProperty().bind(Bindings.when(this.statusPotionDuration.textProperty().isEqualTo("3").or(this.statusPotionDuration.textProperty().isEqualTo("2")).or(this.statusPotionDuration.textProperty().isEqualTo("1")).or(this.statusPotionDuration.textProperty().isEqualTo("0"))).then(Color.RED).otherwise(Color.WHITE));
+		this.statusPotionDuration.textFillProperty().bind(Bindings.
+				when(this.statusPotionDuration.textProperty().isEqualTo("3").
+						or(this.statusPotionDuration.textProperty().isEqualTo("2")).
+						or(this.statusPotionDuration.textProperty().isEqualTo("1")).
+						or(this.statusPotionDuration.textProperty().isEqualTo("0"))).
+				then(Color.RED).
+				otherwise(Color.WHITE));
 
 	}
 
