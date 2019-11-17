@@ -413,11 +413,9 @@ public class DungeonController implements Observer {
 			this.playSwordAnimation(cell, d);
 		} else if (event instanceof GameOverEvent) {
 			if (this.game.getHasWon()) {
-				System.out.println("win");
 				this.toggleWinMenu();
 				this.pause();
 			} else if (this.game.getHasLost()) {
-				System.out.println("lose");
 				this.toggleLoseMenu();
 				this.pause();
 			}

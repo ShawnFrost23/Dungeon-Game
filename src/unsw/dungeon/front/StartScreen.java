@@ -18,7 +18,7 @@ public class StartScreen {
 		this.stage = stage;
 		this.title = "Start Screen";
 
-		this.controller = new StartController();
+		this.controller = new StartController(stage);
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("StartView.fxml"));
 		loader.setController(controller);
 

@@ -13,9 +13,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 
-<!-- TODO, give dungeons a min-width at least of the size of the status bar? -->
-
-<Pane id="dungeonPlayer" onKeyPressed="#handleKeyPress" xmlns:fx="http://javafx.com/fxml/1" minWidth="256" minHeight="256"  style="-fx-background-image: url('dirt_0_new.png');">
+<Pane id="dungeonPlayer" onKeyPressed="#handleKeyPress" xmlns:fx="http://javafx.com/fxml/1" minWidth="256" minHeight="192"  style="-fx-background-image: url('dirt_0_new.png');">
 	<VBox>
 		<HBox minWidth="256" id="statusBar" style="-fx-background-color: black">
 			<HBox styleClass="statusElement" style="-fx-padding: 0 10 0 10;">

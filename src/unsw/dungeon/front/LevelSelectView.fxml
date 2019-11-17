@@ -15,16 +15,15 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.control.ToggleGroup?>
 
-
-<StackPane id="levelSelect" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane prefWidth="350" prefHeight="256" id="levelSelect" xmlns:fx="http://javafx.com/fxml/1">
 	<VBox>
-		<ScrollPane maxHeight="100">
+		<ScrollPane prefHeight="200">
 			<VBox fx:id="levelList">
 			</VBox>
 		</ScrollPane>
-		<HBox>
-			<Button fx:id="menuBtn" onAction="#handleMenuBtn" text="Back to menu" />
-			<Button fx:id="playBtn" onAction="#handlePlayBtn" disable="true" text="Play this level" />
+		<HBox alignment="CENTER">
+			<Button fx:id="menuBtn" onAction="#handleMenuBtn" prefHeight="40" prefWidth="100" text="Back to menu" />
+			<Button fx:id="playBtn" onAction="#handlePlayBtn" prefHeight="40" prefWidth="100" disable="true" text="Play this level" />
 		</HBox>
 	</VBox>
 </StackPane>
