@@ -166,12 +166,8 @@ public class DungeonController implements Observer {
 		
 		this.statusPotionDuration.textProperty().bind(Bindings.convert(game.getPotionDurProperty()));
 		this.statusSwordDurability.textProperty().bind(Bindings.convert(game.getSwordDurProperty()));
-		
-		if (game.getKeyStatus() == true) {
-			this.statusKeyIcon.setVisible(true);
-		} else {
-			this.statusKeyIcon.setVisible(false);
-		}
+		this.statusKeyIcon.visibleProperty().bind((game.getKeyStatusProperty()));
+
 	}
 
 	@FXML

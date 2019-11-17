@@ -3,7 +3,9 @@ package unsw.dungeon.back;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import unsw.dungeon.back.event.CellEnteredEvent;
 import unsw.dungeon.back.event.CellHitWithSwordEvent;
@@ -16,7 +18,7 @@ import unsw.dungeon.back.event.Subject;
 public class Player implements Moveable, Subject, Observer {
 	private Cell location;
 	private List<Observer> observers;
-	
+	private BooleanProperty keyStatus = new SimpleBooleanProperty();
 	private Buffs buffs;
 	private Key heldKey;
 	private IntegerProperty swordDurability = new SimpleIntegerProperty();
@@ -31,7 +33,7 @@ public class Player implements Moveable, Subject, Observer {
 		this.heldKey = null;
 		this.swordDurability.set(0);
 		this.buffs = new Buffs();
-
+		this.keyStatus.set(false);
 	}
 	
 	/**
@@ -123,6 +125,10 @@ public class Player implements Moveable, Subject, Observer {
 		}
 		return this.heldKey.getID() == ID;
 	}
+	
+	public BooleanProperty getKeyProp() {
+		return this.keyStatus;
+	}
 
 	/**
 	 * Take a {@link Key} entity off of the ground, and place it in the player's
@@ -133,6 +139,7 @@ public class Player implements Moveable, Subject, Observer {
 	public void take(Key key) {
 		this.location.removeEntity(key);
 		this.heldKey = key;
+		this.keyStatus.set(true);
 	}
 
 	/**
@@ -164,7 +171,6 @@ public class Player implements Moveable, Subject, Observer {
 	public void swapKey() {
 		Key oldHeldKey = this.heldKey;
 		this.heldKey = null;
-		
 		this.location.exit(this);
 		this.location.enter(this);
 		if (!this.isHoldingKey()) {
@@ -179,6 +185,7 @@ public class Player implements Moveable, Subject, Observer {
 	 */
 	public void consumeHeldKey() {
 		this.heldKey = null;
+		this.keyStatus.set(false);
 	}
 	
 	/**

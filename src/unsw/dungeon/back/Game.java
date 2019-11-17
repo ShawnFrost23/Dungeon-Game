@@ -12,7 +12,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.value.ObservableValue;
 import unsw.dungeon.back.event.EnemyKilledEvent;
 import unsw.dungeon.back.event.Event;
 import unsw.dungeon.back.event.GameOverEvent;
@@ -398,6 +400,10 @@ public class Game implements Observer, Subject {
 		for (Observer observer : new ArrayList<Observer>(this.observers)) {
 			observer.notifyOf(event);
 		}
+	}
+
+	public BooleanProperty getKeyStatusProperty() {
+		return player.getKeyProp();
 	}
 
 }
