@@ -32,7 +32,6 @@ public class LevelSelectScreen {
 		
 		stage.setTitle(title);
 		stage.setScene(scene);
-		stage.setResizable(true);
 		stage.show();
 	}
 
