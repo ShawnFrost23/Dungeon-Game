@@ -30,6 +30,7 @@ public class StartScreen {
 	public void start() {
 		stage.setTitle(title);
 		stage.setScene(scene);
+		stage.setResizable(true);
 		stage.show();
 	}
 
