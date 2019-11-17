@@ -22,8 +22,8 @@
 			</VBox>
 		</ScrollPane>
 		<HBox alignment="CENTER">
-			<Button fx:id="menuBtn" onAction="#handleMenuBtn" prefHeight="40" prefWidth="100" text="Back to menu" />
-			<Button fx:id="playBtn" onAction="#handlePlayBtn" prefHeight="40" prefWidth="100" disable="true" text="Play this level" />
+			<Button fx:id="menuBtn" onAction="#handleMenuBtn" prefHeight="40" prefWidth="150" text="Back to menu" />
+			<Button fx:id="playBtn" onAction="#handlePlayBtn" prefHeight="40" prefWidth="150" disable="true" text="Play this level" />
 		</HBox>
 	</VBox>
 </StackPane>
